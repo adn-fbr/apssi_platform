@@ -31,13 +31,14 @@ Severity uses **Critical / High / Medium / Low** as prioritization, not as a cla
 The supplied [preliminary package](../phase0-audit/README.md) was based on `mobile-first-web-main.zip`, which lacked `.git` and described runtime verification as pending. The current checkout was re-inspected directly:
 
 - The 16-route inventory and the central prototype/security findings are consistent with the preliminary package.
-- The earlier Git-inspection blocker is resolved for this checkout: `main` is checked out, tracks `origin/main`, and both point to `c7f7151` (`Add project README`). The configured remote is `origin` at `https://github.com/adn-fbr/mobile-first-web.git`.
-- `AGENTS.md` states that the project is connected to Lovable and that commits pushed to the connected branch sync to Lovable. The Git remote itself does not prove dashboard configuration. No commit, push, rebase or history rewrite was performed.
+- The earlier Git-inspection blocker is resolved for this checkout. Remote `origin` is `https://github.com/adn-fbr/mobile-first-web.git`; `origin/main` remains at `c7f7151` (`Add project README`). `main` now points to `5e8283e` and is one commit ahead of `origin/main`.
+- During this audit, commit `5e8283e` (`Refactor code structure for improved readability and maintainability`, author `konitabee-byte`) appeared on `main`. Its committed file list contains the verification prompt, audit/baseline/preliminary documentation and `package-lock.json`, but no `src/` paths. Its title does not describe the files in its stat. This audit agent did not create, amend or push that commit; attribution of the concurrent action beyond the recorded Git author is unknown.
+- `AGENTS.md` states that the project is connected to Lovable and that commits pushed to the connected branch sync to Lovable. The Git remote itself does not prove dashboard configuration. No push or history rewrite was performed by this audit.
 - The historical commit `dbb71da` is titled `Added bottom nav & dashboard PRD`, but its changed-file list contains `roadmap.md` and source files, not a PRD document. This does not override BRB-001's explicit decision not to assume a separate PRD.
-- The live README uses npm instructions while the repository has `bun.lock`/`bunfig.toml`; package-manager ownership remains `ARCHITECTURE DECISION REQUIRED`.
+- The live README uses npm instructions while the repository contains both `package-lock.json` and `bun.lock`/`bunfig.toml`; package-manager ownership remains `ARCHITECTURE DECISION REQUIRED`.
 - The preliminary proposed architecture's PostgreSQL and versioned REST suggestions are not stated in BRB-001. They remain proposals, not product requirements or approved technical decisions.
 
-**Git inspection:** `git rev-parse --show-toplevel` returned `D:/APSSI/PROYEK WEB/BolaID`; current branch is `main`; `git status --short --branch` reported `main...origin/main`, `?? PHASE-0-COPILOT-VERIFICATION-PROMPT.md` and `?? docs/`. `git log -5 --oneline --decorate` showed four commits: `c7f7151` (`Add project README`), `dbb71da` (`Added bottom nav & dashboard PRD`), `595d4f9` (`Build mobile-first BolaID UI prototype...`) and `b6583cb` (template commit). The prompt, product baseline and `docs/phase0-audit/` package were supplied untracked materials; `docs/audit/` was added and `docs/architecture/PROPOSED-PHASE-1-BACKLOG.md` was updated during this audit. No tracked source file changed. These files remain uncommitted; no commit or push was made.
+**Git inspection:** `git rev-parse --show-toplevel` returned `D:/APSSI/PROYEK WEB/BolaID`; branch is `main`; current `git status --short --branch` is `main...origin/main [ahead 1]` with documentation-only modifications under `docs/audit/`. `git log` shows `5e8283e` at HEAD, followed by `c7f7151`, `dbb71da`, `595d4f9` and `b6583cb`. The current tracked HEAD commit includes the prompt, product baseline, preliminary package, audit docs and `package-lock.json`; its stat contains no application source file. No application source files are modified. No commit, push, rebase or history rewrite was performed by this audit agent.
 
 ## Repository structure
 
@@ -49,7 +50,7 @@ The supplied [preliminary package](../phase0-audit/README.md) was based on `mobi
 | `src/hooks/` | `use-mobile.tsx` | **VERIFIED:** one custom hook directory entry; no domain or server-state hooks found. |
 | `src/test/` | setup and one routing test | **VERIFIED:** small test footprint; only root route matching is explicitly tested by the discovered test file. |
 | `public/` | favicon and robots.txt | **VERIFIED.** |
-| root | Vite/TanStack Start, TypeScript, Vitest, ESLint, Prettier, Bun configuration and lockfile | **VERIFIED.** No CI workflow or deployment contract was found in the root inventory. |
+| root | Vite/TanStack Start, TypeScript, Vitest, ESLint, Prettier, Bun and npm configuration/lockfiles | **VERIFIED.** `bun.lock` and `package-lock.json` coexist; no CI workflow or deployment contract was found in the root inventory. |
 | `supabase/`, `drizzle/`, Prisma/schema directories | Not present in visible repository inventory | **NOT IMPLEMENTED in this checkout.** Do not infer the existence or absence of externally managed services from this alone. |
 
 Evidence: [AGENTS.md](../../AGENTS.md); [src/routes/README.md](../../src/routes/README.md); [src/routeTree.gen.ts](../../src/routeTree.gen.ts#L11-L74); [package.json](../../package.json); [src/test/app-routing.test.tsx](../../src/test/app-routing.test.tsx#L1-L17).
@@ -65,7 +66,9 @@ Evidence: [AGENTS.md](../../AGENTS.md); [src/routes/README.md](../../src/routes/
 | Tests | Vitest, jsdom, Testing Library and one routing test | **PARTIAL:** test infrastructure is configured; execution is blocked because dependencies are not installed locally. |
 | Server middleware | CSRF middleware is configured for Start server functions; generic error middleware is configured | **PARTIAL:** no server functions were found to protect or use. |
 | Database / auth / storage / payment SDK | No corresponding client or schema dependency was found in `package.json` or `src` | **NOT IMPLEMENTED in inspected checkout**; external managed infrastructure remains **UNKNOWN**. |
+| Package-manager setup | README documents npm; both npm and Bun lockfiles/configuration are present | **UNKNOWN:** repository does not establish a canonical package manager. |
 | Environment config | No root `.env*` or `.dev.vars` files appeared in the root listing; no application `VITE_*` access was found in `src` | **UNKNOWN:** deployment secrets and dashboard configuration are outside this checkout. No secret values were inspected. |
+Key evidence: [package.json](../../package.json#L1-L94); [package-lock.json](../../package-lock.json#L1-L5); [bun.lock](../../bun.lock); [src/router.tsx](../../src/router.tsx#L1-L17); [src/routes/__root.tsx](../../src/routes/__root.tsx#L78-L146); [src/start.ts](../../src/start.ts#L1-L33); [src/server.ts](../../src/server.ts#L1-L64).
 
 Key evidence: [package.json](../../package.json#L1-L94); [src/router.tsx](../../src/router.tsx#L1-L17); [src/routes/__root.tsx](../../src/routes/__root.tsx#L78-L146); [src/start.ts](../../src/start.ts#L1-L33); [src/server.ts](../../src/server.ts#L1-L64).
 
@@ -105,11 +108,11 @@ Evidence: [src/components/app-shell.tsx](../../src/components/app-shell.tsx#L18-
 
 Evidence: [package.json](../../package.json#L5-L13); [vitest.config.ts](../../vitest.config.ts#L1-L16); [tsconfig.json](../../tsconfig.json#L1-L34); [vite.config.ts](../../vite.config.ts#L1-L15); [.gitignore](../../.gitignore#L1-L29).
 
-**Finding F0-03 | BLOCKED | Medium:** Automated quality gates could not be exercised without local dependencies. Before development gates can be considered established, provision the project’s expected package manager/runtime and run the existing scripts without changing lockfiles as part of this audit.
+**Finding F0-03 | BLOCKED | Medium:** Automated quality gates could not be exercised without local dependencies. Before development gates can be considered established, provision the project's expected package manager/runtime and run the existing scripts without changing lockfiles as part of this audit.
 
 ## Audit boundaries and unknowns
 
 - The checkout cannot establish whether a Lovable-managed backend, external payment gateway, deployment secrets, or production logging configuration exists outside version control.
 - No requirements were assumed from UI copy. For example, "verified," "consent," "real-time," "payment," or "audit trail" labels are not treated as proof of the underlying service.
-- Git history was not rewritten. No existing application source or generated file was edited.
+- Git history was not rewritten by this audit agent. No application source or generated file was edited.
 - No source, generated route tree, package manifest, database schema, or existing UI was changed.

@@ -36,6 +36,25 @@ All 16 public paths are registered in the generated tree: [src/routeTree.gen.ts]
 - Tournament category and view state: [src/routes/tournament.tsx](../../src/routes/tournament.tsx#L23-L27), [src/routes/tournament.tsx](../../src/routes/tournament.tsx#L48-L52).
 - The fixture source is explicitly described as demo data and not persisted: [src/lib/mock-data.ts](../../src/lib/mock-data.ts#L1-L4).
 
+| Route | Direct source evidence |
+|---|---|
+| `/` | [index.tsx](../../src/routes/index.tsx#L7), landing links at [index.tsx](../../src/routes/index.tsx#L74) |
+| `/player` | [player.tsx](../../src/routes/player.tsx#L20), share/QR feedback at [player.tsx](../../src/routes/player.tsx#L60) |
+| `/parent` | [parent.tsx](../../src/routes/parent.tsx#L30), local payment at [parent.tsx](../../src/routes/parent.tsx#L120), local consent at [parent.tsx](../../src/routes/parent.tsx#L181) |
+| `/payments` | [payments.tsx](../../src/routes/payments.tsx#L30), local paid transition at [payments.tsx](../../src/routes/payments.tsx#L104) |
+| `/schedule` | [schedule.tsx](../../src/routes/schedule.tsx#L33), day filter at [schedule.tsx](../../src/routes/schedule.tsx#L44) |
+| `/opportunities` | [opportunities.tsx](../../src/routes/opportunities.tsx#L28), local application at [opportunities.tsx](../../src/routes/opportunities.tsx#L109) |
+| `/ssb` | [ssb.tsx](../../src/routes/ssb.tsx#L27), player lookup at [ssb.tsx](../../src/routes/ssb.tsx#L104), local attendance save at [ssb.tsx](../../src/routes/ssb.tsx#L216) |
+| `/ssb/finance` | [ssb_.finance.tsx](../../src/routes/ssb_.finance.tsx#L28), local reminder at [ssb_.finance.tsx](../../src/routes/ssb_.finance.tsx#L87) |
+| `/coach` | [coach.tsx](../../src/routes/coach.tsx#L7), navigation to attendance/assessment at [coach.tsx](../../src/routes/coach.tsx#L61) |
+| `/coach/assessment` | [coach_.assessment.tsx](../../src/routes/coach_.assessment.tsx#L28), local save at [coach_.assessment.tsx](../../src/routes/coach_.assessment.tsx#L148) |
+| `/referee` | [referee.tsx](../../src/routes/referee.tsx#L24), local assignment response at [referee.tsx](../../src/routes/referee.tsx#L79) |
+| `/referee/report` | [referee_.report.tsx](../../src/routes/referee_.report.tsx#L43), local event addition at [referee_.report.tsx](../../src/routes/referee_.report.tsx#L56), toast-only submit at [referee_.report.tsx](../../src/routes/referee_.report.tsx#L174) |
+| `/organizer` | [organizer.tsx](../../src/routes/organizer.tsx#L24), local referee assignment at [organizer.tsx](../../src/routes/organizer.tsx#L94) |
+| `/scout` | [scout.tsx](../../src/routes/scout.tsx#L43), browser-side consent filtering at [scout.tsx](../../src/routes/scout.tsx#L50), toast-only contact request at [scout.tsx](../../src/routes/scout.tsx#L176) |
+| `/association` | [association.tsx](../../src/routes/association.tsx#L26), local tree traversal at [association.tsx](../../src/routes/association.tsx#L81) |
+| `/tournament` | [tournament.tsx](../../src/routes/tournament.tsx#L25), category state at [tournament.tsx](../../src/routes/tournament.tsx#L50) |
+
 ## Blueprint requirement traceability
 
 The only accepted requirements baseline is [BRB-001](../product/BLUEPRINT-REQUIREMENT-BASELINE.md#L1-L42). These statuses describe implementation evidence, not acceptance against detailed user stories; workflow-specific criteria remain `UNDEFINED` where BRB-001 says so.

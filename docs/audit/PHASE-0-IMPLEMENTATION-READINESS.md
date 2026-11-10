@@ -15,6 +15,8 @@
 | Automated tests/build/lint | **BLOCKED** | `bun run test` exited 1 because Bun is unavailable. `npm run test` exited 1 because `vitest` is not recognized. No local `node_modules`; no install performed. Build and lint were not run. |
 | Typecheck | **UNKNOWN** | `package.json` has no typecheck script. Editor diagnostics reported no `src` errors, which is not a typecheck run. |
 | Git/history constraints | **VERIFIED** | `main` tracks `origin/main` at `c7f7151`; supplied prompt/docs are untracked. No commit, push or history rewrite was performed. Lovable rules were respected. |
+| Git/history constraints | **VERIFIED** | `main` is one commit ahead of `origin/main` at `5e8283e`; the commit appeared during this audit and contains docs plus `package-lock.json`, not `src/`. The audit agent did not create or push it. Two audit Markdown files remain modified. Lovable rules were respected. |
+| Git/history constraints | **VERIFIED** | `main` is one commit ahead of `origin/main` at `5e8283e`; the commit appeared during this audit and contains docs plus `package-lock.json`, not `src/`. The audit agent did not create or push it. Current working changes are documentation-only. Lovable rules were respected. |
 | Phase 0 completion | **PARTIAL** | Static audit documents exist, but runtime, browser, dashboard, architecture approval and data-provenance gates remain open. |
 
 ## Explicit blockers
@@ -26,6 +28,7 @@
 5. **Unverified data provenance:** confirm all example child names/identifiers/metrics are synthetic and not copied from real records.
 6. **Security model unresolved:** guardian verification, role/tenant grants, purpose-scoped consent, retention and audit requirements need owner/security/legal review.
 7. **Package manager conflict:** `README.md` instructs npm while `bun.lock` and `bunfig.toml` are present. Choose one before reproducible setup or CI.
+7. **Package manager conflict:** `README.md` instructs npm while `package-lock.json`, `bun.lock` and `bunfig.toml` coexist. Choose one before reproducible setup or CI.
 
 ## Required owner decisions (sequence)
 
