@@ -10,9 +10,16 @@ export const Route = createFileRoute("/ssb")({
   head: () => ({
     meta: [
       { title: "Football OS — Dashboard SSB · BolaID" },
-      { name: "description", content: "Kelola pemain, tim, absensi latihan, dan iuran SSB — terhubung langsung dengan Football ID pemain." },
+      {
+        name: "description",
+        content:
+          "Kelola pemain, tim, absensi latihan, dan iuran SSB — terhubung langsung dengan Football ID pemain.",
+      },
       { property: "og:title", content: "Football OS untuk SSB · BolaID" },
-      { property: "og:description", content: "Roster, absensi, dan keuangan SSB dalam satu dashboard mobile." },
+      {
+        property: "og:description",
+        content: "Roster, absensi, dan keuangan SSB dalam satu dashboard mobile.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -26,14 +33,18 @@ const feeLabel = { paid: "Lunas", unpaid: "Belum", late: "Telat" } as const;
 function SsbPage() {
   const [team, setTeam] = useState("U10");
   const [query, setQuery] = useState("");
-  const [present, setPresent] = useState<Set<string>>(new Set(["000123", "000131", "000204", "000257"]));
+  const [present, setPresent] = useState<Set<string>>(
+    new Set(["000123", "000131", "000204", "000257"]),
+  );
   const [lookup, setLookup] = useState("");
   const [found, setFound] = useState(false);
 
   const list = useMemo(
     () =>
       roster.filter(
-        (p) => p.team === team && (p.name.toLowerCase().includes(query.toLowerCase()) || p.id.includes(query)),
+        (p) =>
+          p.team === team &&
+          (p.name.toLowerCase().includes(query.toLowerCase()) || p.id.includes(query)),
       ),
     [team, query],
   );
@@ -55,7 +66,11 @@ function SsbPage() {
         <Stat label="Pemain aktif" value={ssb.players} sub="+12 bulan ini" />
         <Stat label="Tim" value={ssb.teams} sub="U7 – U15" />
         <Stat label="Pelatih" value={ssb.coaches} sub="9 berlisensi" />
-        <Stat label="Iuran terkumpul" value={`${ssb.collection}%`} sub={<Meter value={ssb.collection} className="mt-1" />} />
+        <Stat
+          label="Iuran terkumpul"
+          value={`${ssb.collection}%`}
+          sub={<Meter value={ssb.collection} className="mt-1" />}
+        />
       </div>
 
       {/* Team chips */}
@@ -66,10 +81,20 @@ function SsbPage() {
             onClick={() => setTeam(t.name)}
             className={cn(
               "shrink-0 rounded-full border px-4 py-2 text-sm font-bold transition-colors",
-              t.name === team ? "border-pitch bg-pitch text-pitch-foreground" : "bg-card text-foreground hover:bg-muted",
+              t.name === team
+                ? "border-pitch bg-pitch text-pitch-foreground"
+                : "bg-card text-foreground hover:bg-muted",
             )}
           >
-            {t.name} <span className={cn("ml-1 font-mono text-xs", t.name === team ? "text-pitch-foreground/70" : "text-muted-foreground")}>{t.players}</span>
+            {t.name}{" "}
+            <span
+              className={cn(
+                "ml-1 font-mono text-xs",
+                t.name === team ? "text-pitch-foreground/70" : "text-muted-foreground",
+              )}
+            >
+              {t.players}
+            </span>
           </button>
         ))}
       </div>
@@ -78,10 +103,20 @@ function SsbPage() {
         <div className="space-y-4">
           {/* Today's sessions */}
           <Panel>
-            <SectionTitle eyebrow="Hari ini" title="Sesi latihan" action={<Pill tone="neutral">{sessions.length} sesi</Pill>} />
+            <SectionTitle
+              eyebrow="Hari ini"
+              title="Sesi latihan"
+              action={<Pill tone="neutral">{sessions.length} sesi</Pill>}
+            />
             <ul className="space-y-2.5">
               {sessions.map((s) => (
-                <li key={s.team} className={cn("rounded-xl border p-3", s.team === team && "border-primary bg-secondary")}>
+                <li
+                  key={s.team}
+                  className={cn(
+                    "rounded-xl border p-3",
+                    s.team === team && "border-primary bg-secondary",
+                  )}
+                >
                   <div className="flex items-center justify-between">
                     <Pill tone={s.team === team ? "pitch" : "neutral"}>{s.team}</Pill>
                     <span className="font-mono text-xs font-bold">{s.time}</span>
@@ -98,7 +133,9 @@ function SsbPage() {
           {/* Add via Football ID */}
           <Panel>
             <SectionTitle eyebrow="Registrasi" title="Tambah pemain via Football ID" />
-            <p className="-mt-1 mb-3 text-xs text-muted-foreground">Tanpa isi ulang data. Riwayat pemain tetap milik pemain.</p>
+            <p className="-mt-1 mb-3 text-xs text-muted-foreground">
+              Tanpa isi ulang data. Riwayat pemain tetap milik pemain.
+            </p>
             <form
               className="flex gap-2"
               onSubmit={(e) => {
@@ -108,7 +145,9 @@ function SsbPage() {
               }}
             >
               <div className="relative flex-1">
-                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-mono text-xs text-muted-foreground">IDN-FB-</span>
+                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-mono text-xs text-muted-foreground">
+                  IDN-FB-
+                </span>
                 <input
                   value={lookup}
                   onChange={(e) => {
@@ -131,13 +170,17 @@ function SsbPage() {
                   <p className="flex items-center gap-1 text-sm font-bold">
                     Ilham Saputra <BadgeCheck className="h-4 w-4 text-primary" />
                   </p>
-                  <p className="text-xs text-muted-foreground">2016 · ST · sebelumnya SSB Maros Raya</p>
+                  <p className="text-xs text-muted-foreground">
+                    2016 · ST · sebelumnya SSB Maros Raya
+                  </p>
                 </div>
                 <Btn
                   size="sm"
                   variant="signal"
                   onClick={() => {
-                    toast.success("Permintaan keanggotaan dikirim", { description: "Menunggu persetujuan wali Ilham." });
+                    toast.success("Permintaan keanggotaan dikirim", {
+                      description: "Menunggu persetujuan wali Ilham.",
+                    });
                     setFound(false);
                     setLookup("");
                   }}
@@ -191,7 +234,9 @@ function SsbPage() {
                       <span
                         className={cn(
                           "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border-2 transition-colors",
-                          on ? "border-primary bg-primary text-primary-foreground" : "border-border",
+                          on
+                            ? "border-primary bg-primary text-primary-foreground"
+                            : "border-border",
                         )}
                       >
                         {on && <Check className="h-4 w-4" strokeWidth={3} />}

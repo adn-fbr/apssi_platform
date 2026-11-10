@@ -11,7 +11,11 @@ export const Route = createFileRoute("/opportunities")({
   head: () => ({
     meta: [
       { title: "Peluang: Trial, Seleksi & Beasiswa · BolaID" },
-      { name: "description", content: "Temukan trial akademi, seleksi regional, beasiswa, dan football camp yang cocok dengan profil pemain." },
+      {
+        name: "description",
+        content:
+          "Temukan trial akademi, seleksi regional, beasiswa, dan football camp yang cocok dengan profil pemain.",
+      },
       { property: "og:title", content: "Peluang Pemain · BolaID" },
       { property: "og:description", content: "Daftar trial dan seleksi dengan satu Football ID." },
       { property: "og:type", content: "website" },
@@ -32,7 +36,10 @@ function OpportunitiesPage() {
 
   return (
     <div className="max-w-3xl">
-      <PageHeader eyebrow={isScout ? "Akademi XYZ · Trial terbuka" : "Untuk Rizky · U10"} title={isScout ? "Trial & seleksi" : "Peluang untukmu"} />
+      <PageHeader
+        eyebrow={isScout ? "Akademi XYZ · Trial terbuka" : "Untuk Rizky · U10"}
+        title={isScout ? "Trial & seleksi" : "Peluang untukmu"}
+      />
 
       {!isScout && (
         <Panel className="mb-5 flex items-start gap-3 border-warning/40 bg-warning-soft">
@@ -43,7 +50,10 @@ function OpportunitiesPage() {
               Orang tua mematikan izin scouting. Kamu tetap bisa mendaftar trial secara langsung.
             </p>
           </div>
-          <Link to="/parent" className="shrink-0 text-xs font-bold text-primary underline-offset-2 hover:underline">
+          <Link
+            to="/parent"
+            className="shrink-0 text-xs font-bold text-primary underline-offset-2 hover:underline"
+          >
             Minta izin
           </Link>
         </Panel>
@@ -81,8 +91,12 @@ function OpportunitiesPage() {
                 <h2 className="mt-2 text-lg font-bold leading-snug">{o.title}</h2>
                 <p className="text-sm text-muted-foreground">{o.org}</p>
                 <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1"><CalendarClock className="h-3.5 w-3.5" /> Tutup {o.deadline}</span>
-                  <span className="flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {o.slots} slot</span>
+                  <span className="flex items-center gap-1">
+                    <CalendarClock className="h-3.5 w-3.5" /> Tutup {o.deadline}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Users className="h-3.5 w-3.5" /> {o.slots} slot
+                  </span>
                 </div>
                 {!isScout && (
                   <div className="mt-3">
@@ -95,7 +109,11 @@ function OpportunitiesPage() {
                 )}
                 <div className="mt-4">
                   {isScout ? (
-                    <Btn variant="outline" className="w-full" onClick={() => toast("Daftar pendaftar dibuka")}>
+                    <Btn
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => toast("Daftar pendaftar dibuka")}
+                    >
                       Lihat {Math.round(o.slots * 1.6)} pendaftar
                     </Btn>
                   ) : done ? (

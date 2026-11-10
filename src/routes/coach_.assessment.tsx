@@ -10,9 +10,16 @@ export const Route = createFileRoute("/coach_/assessment")({
   head: () => ({
     meta: [
       { title: "Penilaian Pemain · BolaID" },
-      { name: "description", content: "Nilai perkembangan pemain: teknik, taktik, fisik, mental, dan sosial — bukan hanya gol dan assist." },
+      {
+        name: "description",
+        content:
+          "Nilai perkembangan pemain: teknik, taktik, fisik, mental, dan sosial — bukan hanya gol dan assist.",
+      },
       { property: "og:title", content: "Penilaian Pemain · BolaID" },
-      { property: "og:description", content: "Assessment periodik pelatih untuk perkembangan pemain usia dini." },
+      {
+        property: "og:description",
+        content: "Assessment periodik pelatih untuk perkembangan pemain usia dini.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -22,7 +29,10 @@ export const Route = createFileRoute("/coach_/assessment")({
 
 const players = roster.filter((p) => p.team === "U10");
 const initial = () =>
-  Object.fromEntries(assessmentTemplate.flatMap((g) => g.items.map((i) => [i, 7]))) as Record<string, number>;
+  Object.fromEntries(assessmentTemplate.flatMap((g) => g.items.map((i) => [i, 7]))) as Record<
+    string,
+    number
+  >;
 
 function AssessmentPage() {
   const [pid, setPid] = useState<string>(players[0]!.id);
@@ -37,7 +47,8 @@ function AssessmentPage() {
     return v.reduce((a, b) => a + b, 0) / v.length;
   }, [scores]);
 
-  const groupAvg = (items: string[]) => items.reduce((s, i) => s + (scores[i] ?? 0), 0) / items.length;
+  const groupAvg = (items: string[]) =>
+    items.reduce((s, i) => s + (scores[i] ?? 0), 0) / items.length;
 
   return (
     <div className="max-w-3xl">
@@ -61,7 +72,15 @@ function AssessmentPage() {
               p.id === pid ? "border-pitch bg-pitch text-pitch-foreground" : "bg-card",
             )}
           >
-            <Avatar initials={p.name.split(" ").map((w) => w[0]).join("").slice(0, 2)} tone={p.id === pid ? "signal" : "muted"} className="h-9 w-9 text-xs" />
+            <Avatar
+              initials={p.name
+                .split(" ")
+                .map((w) => w[0])
+                .join("")
+                .slice(0, 2)}
+              tone={p.id === pid ? "signal" : "muted"}
+              className="h-9 w-9 text-xs"
+            />
             <span className="max-w-16 truncate text-[11px] font-bold">{p.name.split(" ")[0]}</span>
             {done.has(p.id) && (
               <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-success text-primary-foreground">
@@ -75,10 +94,14 @@ function AssessmentPage() {
       <Panel className="mb-4 flex items-center gap-4">
         <div className="min-w-0 flex-1">
           <p className="text-lg font-bold leading-tight">{player.name}</p>
-          <p className="font-mono text-xs text-muted-foreground">#{player.id} · {player.pos}</p>
+          <p className="font-mono text-xs text-muted-foreground">
+            #{player.id} · {player.pos}
+          </p>
         </div>
         <div className="text-right">
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Rata-rata</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            Rata-rata
+          </p>
           <p className="font-display text-3xl font-extrabold tabular">{avg.toFixed(1)}</p>
         </div>
       </Panel>
@@ -96,7 +119,9 @@ function AssessmentPage() {
                 <span className="font-display text-base font-bold">{g.group}</span>
                 <span className="flex items-center gap-2">
                   <Pill tone="neutral">{groupAvg(g.items).toFixed(1)}</Pill>
-                  <ChevronDown className={cn("h-4 w-4 transition-transform", open && "rotate-180")} />
+                  <ChevronDown
+                    className={cn("h-4 w-4 transition-transform", open && "rotate-180")}
+                  />
                 </span>
               </button>
               {open && (
@@ -107,7 +132,9 @@ function AssessmentPage() {
                         <label htmlFor={item} className="font-semibold">
                           {item}
                         </label>
-                        <span className="font-mono font-bold">{(scores[item] ?? 0).toFixed(1)}</span>
+                        <span className="font-mono font-bold">
+                          {(scores[item] ?? 0).toFixed(1)}
+                        </span>
                       </div>
                       <input
                         id={item}
@@ -116,7 +143,9 @@ function AssessmentPage() {
                         max={10}
                         step={0.5}
                         value={scores[item]}
-                        onChange={(e) => setScores((s) => ({ ...s, [item]: Number(e.target.value) }))}
+                        onChange={(e) =>
+                          setScores((s) => ({ ...s, [item]: Number(e.target.value) }))
+                        }
                         className="h-2 w-full cursor-pointer accent-primary"
                       />
                     </li>

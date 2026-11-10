@@ -38,7 +38,8 @@ export type AppPath =
   | "/association"
   | "/tournament";
 
-export type RoleId = "player" | "parent" | "ssb" | "coach" | "referee" | "organizer" | "scout" | "association";
+export type RoleId =
+  "player" | "parent" | "ssb" | "coach" | "referee" | "organizer" | "scout" | "association";
 
 export type NavTab = { to: AppPath; label: string; icon: LucideIcon };
 
@@ -190,9 +191,8 @@ const matches = (pathname: string, to: string) =>
 
 /** The tab whose path is the longest match for the current pathname. */
 export function activeTab(tabs: NavTab[], pathname: string) {
-  return tabs
-    .filter((t) => matches(pathname, t.to))
-    .sort((a, b) => b.to.length - a.to.length)[0]?.to;
+  return tabs.filter((t) => matches(pathname, t.to)).sort((a, b) => b.to.length - a.to.length)[0]
+    ?.to;
 }
 
 /** Most specific role that owns this path (e.g. /ssb/finance → ssb). */
@@ -200,7 +200,8 @@ export function ownerOf(pathname: string): RoleId | undefined {
   let best: { id: RoleId; len: number } | undefined;
   for (const r of roles) {
     for (const p of r.owns) {
-      if (matches(pathname, p) && (!best || p.length > best.len)) best = { id: r.id, len: p.length };
+      if (matches(pathname, p) && (!best || p.length > best.len))
+        best = { id: r.id, len: p.length };
     }
   }
   return best?.id;
@@ -226,7 +227,8 @@ export function RoleProvider({ children }: { children: ReactNode }) {
   // After hydration, restore the last chosen role on shared pages (Jadwal, Turnamen…).
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY) as RoleId | null;
-    if (saved && roles.some((r) => r.id === saved)) setRoleId((cur) => resolveRole(saved, pathname) ?? cur);
+    if (saved && roles.some((r) => r.id === saved))
+      setRoleId((cur) => resolveRole(saved, pathname) ?? cur);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -239,7 +241,9 @@ export function RoleProvider({ children }: { children: ReactNode }) {
   }, [roleId]);
 
   return (
-    <RoleContext.Provider value={{ role: roleById(roleId), setRole: setRoleId }}>{children}</RoleContext.Provider>
+    <RoleContext.Provider value={{ role: roleById(roleId), setRole: setRoleId }}>
+      {children}
+    </RoleContext.Provider>
   );
 }
 

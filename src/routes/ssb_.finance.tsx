@@ -10,9 +10,15 @@ export const Route = createFileRoute("/ssb_/finance")({
   head: () => ({
     meta: [
       { title: "Keuangan SSB Garuda Muda · BolaID" },
-      { name: "description", content: "Pantau tagihan iuran, tingkat pembayaran, dan tunggakan pemain SSB." },
+      {
+        name: "description",
+        content: "Pantau tagihan iuran, tingkat pembayaran, dan tunggakan pemain SSB.",
+      },
       { property: "og:title", content: "Keuangan SSB · BolaID" },
-      { property: "og:description", content: "Iuran, invoice, dan pengingat pembayaran otomatis untuk SSB." },
+      {
+        property: "og:description",
+        content: "Iuran, invoice, dan pengingat pembayaran otomatis untuk SSB.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -20,7 +26,8 @@ export const Route = createFileRoute("/ssb_/finance")({
   component: FinancePage,
 });
 
-const shortRp = (n: number) => `Rp${(n / 1_000_000).toLocaleString("id-ID", { maximumFractionDigits: 1 })} jt`;
+const shortRp = (n: number) =>
+  `Rp${(n / 1_000_000).toLocaleString("id-ID", { maximumFractionDigits: 1 })} jt`;
 // Demo collection rate per team
 const teamRate = [96, 91, 88, 82, 79, 85, 74, 90, 93];
 
@@ -35,7 +42,11 @@ function FinancePage() {
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Stat label="Ditagihkan" value={shortRp(ssbFinance.billed)} sub="186 pemain" />
-        <Stat label="Terkumpul" value={shortRp(ssbFinance.collected)} sub={<Meter value={pct} className="mt-1" />} />
+        <Stat
+          label="Terkumpul"
+          value={shortRp(ssbFinance.collected)}
+          sub={<Meter value={pct} className="mt-1" />}
+        />
         <Stat label="Tingkat bayar" value={`${pct}%`} sub="Target 90%" />
         <Stat label="Menunggak" value={ssbFinance.overdue} sub="pemain > 7 hari" />
       </div>
@@ -49,14 +60,19 @@ function FinancePage() {
                 <div key={m.m} className="flex flex-1 flex-col items-center gap-1.5">
                   <span className="font-mono text-[10px] font-bold">{m.v}%</span>
                   <div
-                    className={cn("w-full rounded-t-lg", i === ssbFinance.months.length - 1 ? "bg-signal" : "bg-primary")}
+                    className={cn(
+                      "w-full rounded-t-lg",
+                      i === ssbFinance.months.length - 1 ? "bg-signal" : "bg-primary",
+                    )}
                     style={{ height: `${(m.v / maxM) * 100}%` }}
                   />
                   <span className="text-[11px] text-muted-foreground">{m.m}</span>
                 </div>
               ))}
             </div>
-            <p className="mt-3 text-xs text-muted-foreground">November masih berjalan — jatuh tempo 15 Nov.</p>
+            <p className="mt-3 text-xs text-muted-foreground">
+              November masih berjalan — jatuh tempo 15 Nov.
+            </p>
           </Panel>
 
           <Panel>
@@ -68,7 +84,10 @@ function FinancePage() {
                     <span className="font-bold">{t.name}</span>
                     <span className="font-mono">{teamRate[i]}%</span>
                   </div>
-                  <Meter value={teamRate[i] ?? 0} tone={(teamRate[i] ?? 0) < 80 ? "warning" : "primary"} />
+                  <Meter
+                    value={teamRate[i] ?? 0}
+                    tone={(teamRate[i] ?? 0) < 80 ? "warning" : "primary"}
+                  />
                 </li>
               ))}
             </ul>
@@ -86,7 +105,9 @@ function FinancePage() {
                   variant="outline"
                   onClick={() => {
                     setReminded(new Set(ssbFinance.overdueList.map((o) => o.name)));
-                    toast.success("Pengingat dikirim ke semua wali", { description: "Lewat notifikasi aplikasi & WhatsApp" });
+                    toast.success("Pengingat dikirim ke semua wali", {
+                      description: "Lewat notifikasi aplikasi & WhatsApp",
+                    });
                   }}
                 >
                   Ingatkan semua
@@ -98,11 +119,22 @@ function FinancePage() {
                 const done = reminded.has(o.name);
                 return (
                   <li key={o.name} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
-                    <Avatar initials={o.name.split(" ").map((w) => w[0]).join("").slice(0, 2)} tone="muted" className="h-9 w-9 text-xs" />
+                    <Avatar
+                      initials={o.name
+                        .split(" ")
+                        .map((w) => w[0])
+                        .join("")
+                        .slice(0, 2)}
+                      tone="muted"
+                      className="h-9 w-9 text-xs"
+                    />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-semibold">{o.name}</p>
                       <p className="text-xs text-muted-foreground">
-                        {o.team} · {rupiah(o.amount)} · <span className={cn(o.days > 30 && "font-bold text-destructive")}>{o.days} hari</span>
+                        {o.team} · {rupiah(o.amount)} ·{" "}
+                        <span className={cn(o.days > 30 && "font-bold text-destructive")}>
+                          {o.days} hari
+                        </span>
                       </p>
                     </div>
                     {done ? (
@@ -132,9 +164,12 @@ function FinancePage() {
             <div className="flex items-start gap-3">
               <Sparkles className="h-5 w-5 shrink-0 text-primary" />
               <div>
-                <p className="text-sm font-bold text-secondary-foreground">Paket Growth · Rp499rb/bulan</p>
+                <p className="text-sm font-bold text-secondary-foreground">
+                  Paket Growth · Rp499rb/bulan
+                </p>
                 <p className="mt-0.5 text-xs text-secondary-foreground/70">
-                  Hingga 250 pemain, pembayaran online, dan laporan perkembangan. Founding SSB: gratis 6 bulan.
+                  Hingga 250 pemain, pembayaran online, dan laporan perkembangan. Founding SSB:
+                  gratis 6 bulan.
                 </p>
               </div>
             </div>

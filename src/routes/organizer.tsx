@@ -3,16 +3,29 @@ import { useState } from "react";
 import { CheckCircle2, Circle, Flag, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 import { Btn, Meter, PageHeader, Panel, Pill, SectionTitle, Stat } from "@/components/kit";
-import { availableRefs, organizerSteps, registrations, tournament, unassignedMatches } from "@/lib/mock-data";
+import {
+  availableRefs,
+  organizerSteps,
+  registrations,
+  tournament,
+  unassignedMatches,
+} from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/organizer")({
   head: () => ({
     meta: [
       { title: "Kelola Turnamen · Makassar Youth Cup 2027 · BolaID" },
-      { name: "description", content: "Pendaftaran tim, pembayaran, verifikasi roster Football ID, drawing, dan penugasan wasit." },
+      {
+        name: "description",
+        content:
+          "Pendaftaran tim, pembayaran, verifikasi roster Football ID, drawing, dan penugasan wasit.",
+      },
       { property: "og:title", content: "Kelola Turnamen · BolaID" },
-      { property: "og:description", content: "Semua operasional turnamen usia dini dalam satu dashboard." },
+      {
+        property: "og:description",
+        content: "Semua operasional turnamen usia dini dalam satu dashboard.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -27,11 +40,18 @@ function OrganizerPage() {
 
   return (
     <div>
-      <PageHeader eyebrow={`${tournament.dates} · ${tournament.categories.join(" · ")}`} title={tournament.name} />
+      <PageHeader
+        eyebrow={`${tournament.dates} · ${tournament.categories.join(" · ")}`}
+        title={tournament.name}
+      />
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Stat label="Tim terdaftar" value={tournament.teams} sub="16 per kategori" />
-        <Stat label="Pemain" value={tournament.players.toLocaleString("id-ID")} sub={`${tournament.verified}% terverifikasi`} />
+        <Stat
+          label="Pemain"
+          value={tournament.players.toLocaleString("id-ID")}
+          sub={`${tournament.verified}% terverifikasi`}
+        />
         <Stat label="Pendapatan" value="Rp96 jt" sub="58 dari 64 lunas" />
         <Stat label="Wasit" value={`${refsDone}/22`} sub="laga tertugaskan" />
       </div>
@@ -53,10 +73,21 @@ function OrganizerPage() {
                   )}
                   <div className="min-w-0 flex-1">
                     <div className="flex justify-between gap-2 text-sm">
-                      <span className={cn("font-semibold", complete && "text-muted-foreground")}>{s.label}</span>
-                      <span className="font-mono text-xs">{done.toLocaleString("id-ID")}/{total.toLocaleString("id-ID")}</span>
+                      <span className={cn("font-semibold", complete && "text-muted-foreground")}>
+                        {s.label}
+                      </span>
+                      <span className="font-mono text-xs">
+                        {done.toLocaleString("id-ID")}/{total.toLocaleString("id-ID")}
+                      </span>
                     </div>
-                    {!complete && <Meter value={done} max={total} className="mt-1 h-1.5" tone={done === 0 ? "warning" : "primary"} />}
+                    {!complete && (
+                      <Meter
+                        value={done}
+                        max={total}
+                        className="mt-1 h-1.5"
+                        tone={done === 0 ? "warning" : "primary"}
+                      />
+                    )}
                   </div>
                 </li>
               );
@@ -66,22 +97,33 @@ function OrganizerPage() {
 
         <div className="space-y-4">
           <Panel>
-            <SectionTitle eyebrow={`${unassignedMatches.length - Object.keys(assigned).length} laga`} title="Belum ada wasit" />
+            <SectionTitle
+              eyebrow={`${unassignedMatches.length - Object.keys(assigned).length} laga`}
+              title="Belum ada wasit"
+            />
             <ul className="space-y-2">
               {unassignedMatches.map((m) => {
                 const ref = assigned[m.id];
                 return (
                   <li key={m.id} className="rounded-xl border p-3">
                     <div className="flex items-center gap-3">
-                      <Flag className={cn("h-4 w-4 shrink-0", ref ? "text-success" : "text-warning")} />
+                      <Flag
+                        className={cn("h-4 w-4 shrink-0", ref ? "text-success" : "text-warning")}
+                      />
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-semibold">{m.label}</p>
-                        <p className="text-xs text-muted-foreground">{m.time} · {m.venue}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {m.time} · {m.venue}
+                        </p>
                       </div>
                       {ref ? (
                         <Pill tone="success">{ref}</Pill>
                       ) : (
-                        <Btn size="sm" variant="outline" onClick={() => setPicking(picking === m.id ? null : m.id)}>
+                        <Btn
+                          size="sm"
+                          variant="outline"
+                          onClick={() => setPicking(picking === m.id ? null : m.id)}
+                        >
                           <UserPlus className="h-3.5 w-3.5" /> Tugaskan
                         </Btn>
                       )}
@@ -94,7 +136,9 @@ function OrganizerPage() {
                             onClick={() => {
                               setAssigned((a) => ({ ...a, [m.id]: r }));
                               setPicking(null);
-                              toast.success(`${r} ditugaskan`, { description: "Notifikasi dikirim ke aplikasi wasit." });
+                              toast.success(`${r} ditugaskan`, {
+                                description: "Notifikasi dikirim ke aplikasi wasit.",
+                              });
                             }}
                             className="rounded-full bg-muted px-3 py-1.5 text-xs font-bold hover:bg-secondary"
                           >
@@ -121,7 +165,9 @@ function OrganizerPage() {
                     <p className="truncate text-sm font-semibold">{r.team}</p>
                     <p className="text-xs text-muted-foreground">Roster {r.roster}</p>
                   </div>
-                  <Pill tone={r.paid ? "success" : "warning"}>{r.paid ? "Lunas" : "Belum bayar"}</Pill>
+                  <Pill tone={r.paid ? "success" : "warning"}>
+                    {r.paid ? "Lunas" : "Belum bayar"}
+                  </Pill>
                 </li>
               ))}
             </ul>

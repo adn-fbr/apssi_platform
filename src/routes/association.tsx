@@ -9,9 +9,16 @@ export const Route = createFileRoute("/association")({
   head: () => ({
     meta: [
       { title: "Grassroots Football Dashboard · BolaID" },
-      { name: "description", content: "Data agregat pemain, SSB, pelatih, dan pertandingan dari nasional hingga SSB untuk asosiasi & federasi." },
+      {
+        name: "description",
+        content:
+          "Data agregat pemain, SSB, pelatih, dan pertandingan dari nasional hingga SSB untuk asosiasi & federasi.",
+      },
       { property: "og:title", content: "Grassroots Football Dashboard · BolaID" },
-      { property: "og:description", content: "Drill-down Indonesia → Provinsi → Kab/Kota → SSB, tanpa data pribadi anak." },
+      {
+        property: "og:description",
+        content: "Drill-down Indonesia → Provinsi → Kab/Kota → SSB, tanpa data pribadi anak.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -36,10 +43,16 @@ function AssociationPage() {
 
   return (
     <div>
-      <PageHeader eyebrow="Askot PSSI Makassar · akses wilayah" title="Grassroots Football Dashboard" />
+      <PageHeader
+        eyebrow="Askot PSSI Makassar · akses wilayah"
+        title="Grassroots Football Dashboard"
+      />
 
       {/* Breadcrumb */}
-      <nav aria-label="Wilayah" className="no-scrollbar -mx-4 mb-4 flex items-center gap-1 overflow-x-auto px-4 text-sm sm:mx-0 sm:px-0">
+      <nav
+        aria-label="Wilayah"
+        className="no-scrollbar -mx-4 mb-4 flex items-center gap-1 overflow-x-auto px-4 text-sm sm:mx-0 sm:px-0"
+      >
         {trail.map((r, i) => (
           <span key={r.name} className="flex shrink-0 items-center gap-1">
             {i > 0 && <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />}
@@ -47,7 +60,9 @@ function AssociationPage() {
               onClick={() => setPath(path.slice(0, i))}
               className={cn(
                 "rounded-full px-3 py-1 font-semibold transition-colors",
-                i === trail.length - 1 ? "bg-pitch text-pitch-foreground" : "bg-card text-muted-foreground hover:text-foreground",
+                i === trail.length - 1
+                  ? "bg-pitch text-pitch-foreground"
+                  : "bg-card text-muted-foreground hover:text-foreground",
               )}
             >
               {r.name}
@@ -71,7 +86,8 @@ function AssociationPage() {
           />
           {kids.length === 0 ? (
             <div className="rounded-xl bg-muted p-4 text-sm text-muted-foreground">
-              Level terendah yang dapat diakses asosiasi. Data per pemain hanya tersedia untuk SSB, pelatih, dan wali yang berwenang.
+              Level terendah yang dapat diakses asosiasi. Data per pemain hanya tersedia untuk SSB,
+              pelatih, dan wali yang berwenang.
             </div>
           ) : (
             <ul className="space-y-1">
@@ -89,7 +105,9 @@ function AssociationPage() {
                       <span className="text-sm font-bold">{k.name}</span>
                       <span className="flex items-center gap-1 font-mono text-xs">
                         {fmt(k.players)}
-                        {k.children && <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />}
+                        {k.children && (
+                          <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
+                        )}
                       </span>
                     </div>
                     <Meter value={k.players} max={maxPlayers} className="h-1.5" />
@@ -111,7 +129,10 @@ function AssociationPage() {
                 <div key={g.m} className="flex flex-1 flex-col items-center gap-1">
                   <span className="font-mono text-[10px] font-bold">{g.v}</span>
                   <div
-                    className={cn("w-full rounded-t-lg", i === growth.length - 1 ? "bg-signal" : "bg-primary")}
+                    className={cn(
+                      "w-full rounded-t-lg",
+                      i === growth.length - 1 ? "bg-signal" : "bg-primary",
+                    )}
                     style={{ height: `${(g.v / maxG) * 100}%` }}
                   />
                   <span className="text-[11px] text-muted-foreground">{g.m}</span>
@@ -123,7 +144,9 @@ function AssociationPage() {
           <Panel className="flex items-start gap-3 bg-secondary">
             <Lock className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
             <p className="text-xs text-secondary-foreground">
-              <span className="font-bold">Hanya data agregat.</span> Asosiasi melihat data di wilayah kewenangannya tanpa identitas pribadi anak. Setiap akses tercatat di audit trail.
+              <span className="font-bold">Hanya data agregat.</span> Asosiasi melihat data di
+              wilayah kewenangannya tanpa identitas pribadi anak. Setiap akses tercatat di audit
+              trail.
             </p>
           </Panel>
         </div>

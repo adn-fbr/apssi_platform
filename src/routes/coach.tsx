@@ -1,6 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BadgeCheck, ClipboardCheck, FileText, MapPin, Timer, Users, ChevronRight } from "lucide-react";
-import { Avatar, Meter, PageHeader, Panel, Pill, SectionTitle, Stat, buttonVariants } from "@/components/kit";
+import {
+  BadgeCheck,
+  ClipboardCheck,
+  FileText,
+  MapPin,
+  Timer,
+  Users,
+  ChevronRight,
+} from "lucide-react";
+import {
+  Avatar,
+  Meter,
+  PageHeader,
+  Panel,
+  Pill,
+  SectionTitle,
+  Stat,
+  buttonVariants,
+} from "@/components/kit";
 import { coach, roster, sessionPlan } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
@@ -8,9 +25,16 @@ export const Route = createFileRoute("/coach")({
   head: () => ({
     meta: [
       { title: "Dashboard Pelatih · BolaID" },
-      { name: "description", content: "Sesi latihan hari ini, absensi tim, dan penilaian perkembangan pemain untuk pelatih SSB." },
+      {
+        name: "description",
+        content:
+          "Sesi latihan hari ini, absensi tim, dan penilaian perkembangan pemain untuk pelatih SSB.",
+      },
       { property: "og:title", content: "Dashboard Pelatih · BolaID" },
-      { property: "og:description", content: "Rencana latihan, absensi, dan penilaian pemain dalam satu layar." },
+      {
+        property: "og:description",
+        content: "Rencana latihan, absensi, dan penilaian pemain dalam satu layar.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -47,14 +71,22 @@ function CoachPage() {
               <Pill tone="signal">Hari ini · U10</Pill>
               <span className="font-mono text-lg font-bold">16.00</span>
             </div>
-            <h2 className="mt-3 text-xl font-bold leading-tight">First touch & receiving under pressure</h2>
+            <h2 className="mt-3 text-xl font-bold leading-tight">
+              First touch & receiving under pressure
+            </h2>
             <p className="mt-1 flex items-center gap-1.5 text-sm text-pitch-foreground/75">
-              <MapPin className="h-4 w-4" /> Lapangan Karebosi · <Timer className="h-4 w-4" /> {total} menit
+              <MapPin className="h-4 w-4" /> Lapangan Karebosi · <Timer className="h-4 w-4" />{" "}
+              {total} menit
             </p>
             <ol className="mt-4 space-y-1.5">
               {sessionPlan.map((b, i) => (
-                <li key={b.title} className="flex items-center gap-3 rounded-xl bg-pitch-foreground/10 px-3 py-2">
-                  <span className="font-mono text-xs font-bold text-signal">{String(i + 1).padStart(2, "0")}</span>
+                <li
+                  key={b.title}
+                  className="flex items-center gap-3 rounded-xl bg-pitch-foreground/10 px-3 py-2"
+                >
+                  <span className="font-mono text-xs font-bold text-signal">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-semibold">{b.title}</p>
                     <p className="truncate text-[11px] text-pitch-foreground/65">{b.note}</p>
@@ -94,10 +126,20 @@ function CoachPage() {
             <ul className="space-y-2">
               {needs.map((p) => (
                 <li key={p.id} className="flex items-center gap-3">
-                  <Avatar initials={p.name.split(" ").map((w) => w[0]).join("").slice(0, 2)} tone="muted" className="h-9 w-9 text-xs" />
+                  <Avatar
+                    initials={p.name
+                      .split(" ")
+                      .map((w) => w[0])
+                      .join("")
+                      .slice(0, 2)}
+                    tone="muted"
+                    className="h-9 w-9 text-xs"
+                  />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-semibold">{p.name}</p>
-                    <p className="text-xs text-muted-foreground">{p.pos} · hadir {p.att}%</p>
+                    <p className="text-xs text-muted-foreground">
+                      {p.pos} · hadir {p.att}%
+                    </p>
                   </div>
                   <Pill tone="warning">{p.att}%</Pill>
                 </li>
@@ -111,8 +153,12 @@ function CoachPage() {
           >
             <FileText className="h-5 w-5 text-primary" />
             <span className="flex-1">
-              <span className="block text-sm font-bold">{coach.pendingAssessments} penilaian Q4 belum selesai</span>
-              <span className="block text-xs text-muted-foreground">Batas hari ini pukul 20.00</span>
+              <span className="block text-sm font-bold">
+                {coach.pendingAssessments} penilaian Q4 belum selesai
+              </span>
+              <span className="block text-xs text-muted-foreground">
+                Batas hari ini pukul 20.00
+              </span>
             </span>
             <ChevronRight className="h-5 w-5 text-muted-foreground" />
           </Link>

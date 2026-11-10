@@ -36,18 +36,18 @@ The decisions in this record are not a separate PRD. Missing workflow details re
 
 ## 4. Owner decision summary
 
-| Decision ID | Decision | Status |
-|---|---|---|
-| OD-01 | npm is the sole official package manager. | **APPROVED** |
-| OD-02 | LF is the repository-wide standard line ending. | **APPROVED** |
-| OD-03 | Managed Backend using Supabase. | **APPROVED** |
-| OD-04 | Supabase is the database service; schema and migrations are managed through the official repository workflow. | **APPROVED** |
-| OD-05 | Supabase Auth is the sole official authentication service. | **APPROVED** |
-| OD-06 | Many-to-many guardian-player relationship. | **APPROVED** |
-| OD-07 | Purpose-specific, recorded, reviewable, revocable consent. | **APPROVED** |
-| OD-08 | Shared multi-tenant PostgreSQL with Row Level Security (RLS) as the primary data-isolation control. | **APPROVED** |
-| OD-09 | RBAC + Resource-Based + Relationship-Based + Attribute-Based + Purpose-Based Authorization, with default-deny. | **APPROVED** |
-| OD-10 | Centralized, append-oriented audit logging with restricted access and documented retention policies. | **APPROVED** |
+| Decision ID | Decision                                                                                                       | Status       |
+| ----------- | -------------------------------------------------------------------------------------------------------------- | ------------ |
+| OD-01       | npm is the sole official package manager.                                                                      | **APPROVED** |
+| OD-02       | LF is the repository-wide standard line ending.                                                                | **APPROVED** |
+| OD-03       | Managed Backend using Supabase.                                                                                | **APPROVED** |
+| OD-04       | Supabase is the database service; schema and migrations are managed through the official repository workflow.  | **APPROVED** |
+| OD-05       | Supabase Auth is the sole official authentication service.                                                     | **APPROVED** |
+| OD-06       | Many-to-many guardian-player relationship.                                                                     | **APPROVED** |
+| OD-07       | Purpose-specific, recorded, reviewable, revocable consent.                                                     | **APPROVED** |
+| OD-08       | Shared multi-tenant PostgreSQL with Row Level Security (RLS) as the primary data-isolation control.            | **APPROVED** |
+| OD-09       | RBAC + Resource-Based + Relationship-Based + Attribute-Based + Purpose-Based Authorization, with default-deny. | **APPROVED** |
+| OD-10       | Centralized, append-oriented audit logging with restricted access and documented retention policies.           | **APPROVED** |
 
 ## 5. Detailed OD-01 through OD-10 records
 
@@ -314,6 +314,6 @@ This record is an authoritative owner-direction document, not a proof that the r
 
 ## 12. Change log
 
-| Date | Change | Authority |
-|---|---|---|
+| Date       | Change                                                                           | Authority                                              |
+| ---------- | -------------------------------------------------------------------------------- | ------------------------------------------------------ |
 | 2026-11-11 | Created the official Phase 0 Owner Decision Record covering OD-01 through OD-10. | Owner-approved direction documented in this repository |

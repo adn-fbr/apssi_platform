@@ -10,9 +10,16 @@ export const Route = createFileRoute("/schedule")({
   head: () => ({
     meta: [
       { title: "Jadwal Minggu Ini · BolaID" },
-      { name: "description", content: "Agenda latihan, pertandingan, penugasan wasit, dan jatuh tempo — menyesuaikan peran Anda." },
+      {
+        name: "description",
+        content:
+          "Agenda latihan, pertandingan, penugasan wasit, dan jatuh tempo — menyesuaikan peran Anda.",
+      },
       { property: "og:title", content: "Jadwal · BolaID" },
-      { property: "og:description", content: "Satu kalender untuk pemain, orang tua, SSB, pelatih, dan wasit." },
+      {
+        property: "og:description",
+        content: "Satu kalender untuk pemain, orang tua, SSB, pelatih, dan wasit.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -20,7 +27,14 @@ export const Route = createFileRoute("/schedule")({
   component: SchedulePage,
 });
 
-const kindMeta: Record<AgendaKind, { label: string; icon: typeof Dumbbell; tone: "success" | "signal" | "warning" | "pitch" | "neutral" }> = {
+const kindMeta: Record<
+  AgendaKind,
+  {
+    label: string;
+    icon: typeof Dumbbell;
+    tone: "success" | "signal" | "warning" | "pitch" | "neutral";
+  }
+> = {
   training: { label: "Latihan", icon: Dumbbell, tone: "success" },
   match: { label: "Pertandingan", icon: Trophy, tone: "signal" },
   assignment: { label: "Penugasan", icon: Flag, tone: "pitch" },
@@ -63,10 +77,22 @@ function SchedulePage() {
                 w.d === TODAY && !on && "border-primary",
               )}
             >
-              <span className={cn("text-[10px] font-semibold uppercase", on ? "text-pitch-foreground/70" : "text-muted-foreground")}>{w.day}</span>
+              <span
+                className={cn(
+                  "text-[10px] font-semibold uppercase",
+                  on ? "text-pitch-foreground/70" : "text-muted-foreground",
+                )}
+              >
+                {w.day}
+              </span>
               <span className="font-display text-lg font-extrabold leading-tight">{w.d}</span>
               {count > 0 && (
-                <span className={cn("absolute bottom-1.5 h-1 w-1 rounded-full", on ? "bg-signal" : "bg-primary")} />
+                <span
+                  className={cn(
+                    "absolute bottom-1.5 h-1 w-1 rounded-full",
+                    on ? "bg-signal" : "bg-primary",
+                  )}
+                />
               )}
             </button>
           );
@@ -77,7 +103,9 @@ function SchedulePage() {
         <Panel className="flex flex-col items-center gap-2 py-12 text-center">
           <CalendarX2 className="h-8 w-8 text-muted-foreground" />
           <p className="text-sm font-semibold">Tidak ada agenda di hari ini</p>
-          <p className="text-xs text-muted-foreground">Pilih hari lain atau lihat semua agenda minggu ini.</p>
+          <p className="text-xs text-muted-foreground">
+            Pilih hari lain atau lihat semua agenda minggu ini.
+          </p>
         </Panel>
       ) : (
         <div className="space-y-5">
@@ -95,7 +123,10 @@ function SchedulePage() {
                       const m = kindMeta[a.kind];
                       const Icon = m.icon;
                       return (
-                        <li key={a.title + a.time} className="flex items-center gap-3 rounded-2xl border bg-card p-3 shadow-card animate-rise">
+                        <li
+                          key={a.title + a.time}
+                          className="flex items-center gap-3 rounded-2xl border bg-card p-3 shadow-card animate-rise"
+                        >
                           <div className="w-12 shrink-0 text-center">
                             <p className="font-mono text-sm font-bold">{a.time}</p>
                           </div>
@@ -109,7 +140,10 @@ function SchedulePage() {
                           <Pill tone={m.tone} className="hidden sm:inline-flex">
                             <Icon className="h-3 w-3" /> {m.label}
                           </Pill>
-                          <Icon className="h-4 w-4 shrink-0 text-muted-foreground sm:hidden" aria-label={m.label} />
+                          <Icon
+                            className="h-4 w-4 shrink-0 text-muted-foreground sm:hidden"
+                            aria-label={m.label}
+                          />
                         </li>
                       );
                     })}

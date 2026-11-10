@@ -27,8 +27,20 @@ export type JourneyStep = {
 export const journey: JourneyStep[] = [
   { year: 2024, org: "SSB Garuda Muda", label: "Bergabung · U8", kind: "ssb" },
   { year: 2025, org: "SSB Garuda Muda", label: "Naik ke U9 · Kapten tim", kind: "ssb" },
-  { year: 2026, org: "Makassar Youth Cup", label: "U10 · Juara 2 · 4 gol", kind: "tournament", current: true },
-  { year: 2026, org: "Seleksi Regional Sulsel", label: "Lolos tahap 1", kind: "selection", current: true },
+  {
+    year: 2026,
+    org: "Makassar Youth Cup",
+    label: "U10 · Juara 2 · 4 gol",
+    kind: "tournament",
+    current: true,
+  },
+  {
+    year: 2026,
+    org: "Seleksi Regional Sulsel",
+    label: "Lolos tahap 1",
+    kind: "selection",
+    current: true,
+  },
   { year: 2027, org: "Akademi XYZ", label: "Undangan trial U11", kind: "academy", upcoming: true },
 ];
 
@@ -47,16 +59,72 @@ export const developmentTimeline = [
 ];
 
 export const assessmentDetail = [
-  { group: "Teknik", items: [["Kontrol bola", 7.8], ["Passing", 7.8], ["Receiving", 6.6], ["Dribbling", 8.0], ["Shooting", 7.2]] },
-  { group: "Taktik", items: [["Positioning", 6.8], ["Pengambilan keputusan", 7.0], ["Awareness", 6.9]] },
-  { group: "Mental", items: [["Disiplin", 8.2], ["Kerja sama", 8.5], ["Percaya diri", 7.6], ["Mau dilatih", 8.3]] },
+  {
+    group: "Teknik",
+    items: [
+      ["Kontrol bola", 7.8],
+      ["Passing", 7.8],
+      ["Receiving", 6.6],
+      ["Dribbling", 8.0],
+      ["Shooting", 7.2],
+    ],
+  },
+  {
+    group: "Taktik",
+    items: [
+      ["Positioning", 6.8],
+      ["Pengambilan keputusan", 7.0],
+      ["Awareness", 6.9],
+    ],
+  },
+  {
+    group: "Mental",
+    items: [
+      ["Disiplin", 8.2],
+      ["Kerja sama", 8.5],
+      ["Percaya diri", 7.6],
+      ["Mau dilatih", 8.3],
+    ],
+  },
 ] as const;
 
 export const recentMatches = [
-  { date: "02 Nov", comp: "Liga Grassroots Makassar", opp: "SSB Bintang Timur", score: "3–1", result: "M", mins: 50, contrib: "1 gol · 1 assist" },
-  { date: "26 Okt", comp: "Makassar Youth Cup · Final", opp: "SSB Pelita Gowa", score: "1–2", result: "K", mins: 50, contrib: "1 assist" },
-  { date: "25 Okt", comp: "Makassar Youth Cup · SF", opp: "SSB Maros Raya", score: "2–2", result: "S", mins: 45, contrib: "1 gol" },
-  { date: "19 Okt", comp: "Uji coba", opp: "SSB Karebosi", score: "4–0", result: "M", mins: 30, contrib: "2 assist" },
+  {
+    date: "02 Nov",
+    comp: "Liga Grassroots Makassar",
+    opp: "SSB Bintang Timur",
+    score: "3–1",
+    result: "M",
+    mins: 50,
+    contrib: "1 gol · 1 assist",
+  },
+  {
+    date: "26 Okt",
+    comp: "Makassar Youth Cup · Final",
+    opp: "SSB Pelita Gowa",
+    score: "1–2",
+    result: "K",
+    mins: 50,
+    contrib: "1 assist",
+  },
+  {
+    date: "25 Okt",
+    comp: "Makassar Youth Cup · SF",
+    opp: "SSB Maros Raya",
+    score: "2–2",
+    result: "S",
+    mins: 45,
+    contrib: "1 gol",
+  },
+  {
+    date: "19 Okt",
+    comp: "Uji coba",
+    opp: "SSB Karebosi",
+    score: "4–0",
+    result: "M",
+    mins: 30,
+    contrib: "2 assist",
+  },
 ] as const;
 
 export const certificates = [
@@ -75,7 +143,12 @@ export const children = [
     devScore: 7.7,
     devTrend: 0.4,
     training: { time: "16.00", place: "Lapangan Karebosi", coach: "Coach Andi" },
-    match: { day: "Sabtu, 14 Nov", time: "08.30", opp: "SSB Bintang Timur", venue: "Stadion Mini Gowa" },
+    match: {
+      day: "Sabtu, 14 Nov",
+      time: "08.30",
+      opp: "SSB Bintang Timur",
+      venue: "Stadion Mini Gowa",
+    },
     invoice: { label: "Iuran November", amount: 150000, status: "unpaid" as const, due: "15 Nov" },
   },
   {
@@ -88,15 +161,35 @@ export const children = [
     devScore: 7.1,
     devTrend: 0.6,
     training: { time: "15.30", place: "Lapangan Karebosi", coach: "Coach Dewi" },
-    match: { day: "Minggu, 15 Nov", time: "09.00", opp: "SSB Pelita Gowa", venue: "Lapangan Hasanuddin" },
+    match: {
+      day: "Minggu, 15 Nov",
+      time: "09.00",
+      opp: "SSB Pelita Gowa",
+      venue: "Lapangan Hasanuddin",
+    },
     invoice: { label: "Iuran November", amount: 150000, status: "paid" as const, due: "15 Nov" },
   },
 ];
 
 export const parentMessages = [
-  { from: "Coach Andi", role: "Pelatih U10", text: "Latihan hari ini fokus first touch. Bawa botol minum 1L ya.", time: "10.12" },
-  { from: "Admin SSB", role: "SSB Garuda Muda", text: "Jersey musim baru sudah bisa diambil di sekretariat.", time: "Kemarin" },
-  { from: "Panitia MYC", role: "Turnamen", text: "Sertifikat Juara 2 sudah masuk ke Football Passport.", time: "Sen" },
+  {
+    from: "Coach Andi",
+    role: "Pelatih U10",
+    text: "Latihan hari ini fokus first touch. Bawa botol minum 1L ya.",
+    time: "10.12",
+  },
+  {
+    from: "Admin SSB",
+    role: "SSB Garuda Muda",
+    text: "Jersey musim baru sudah bisa diambil di sekretariat.",
+    time: "Kemarin",
+  },
+  {
+    from: "Panitia MYC",
+    role: "Turnamen",
+    text: "Sertifikat Juara 2 sudah masuk ke Football Passport.",
+    time: "Sen",
+  },
 ];
 
 export const auditTrail = [
@@ -139,9 +232,27 @@ export const roster = [
 ] as const;
 
 export const sessions = [
-  { team: "U10", time: "16.00–17.30", coach: "Coach Andi", place: "Lapangan Karebosi", plan: "First touch & receiving under pressure" },
-  { team: "U8", time: "15.30–16.30", coach: "Coach Dewi", place: "Lapangan Karebosi", plan: "Koordinasi & permainan kecil 4v4" },
-  { team: "U13", time: "17.00–18.30", coach: "Coach Rahmat", place: "GOR Sudiang", plan: "Transisi menyerang" },
+  {
+    team: "U10",
+    time: "16.00–17.30",
+    coach: "Coach Andi",
+    place: "Lapangan Karebosi",
+    plan: "First touch & receiving under pressure",
+  },
+  {
+    team: "U8",
+    time: "15.30–16.30",
+    coach: "Coach Dewi",
+    place: "Lapangan Karebosi",
+    plan: "Koordinasi & permainan kecil 4v4",
+  },
+  {
+    team: "U13",
+    time: "17.00–18.30",
+    coach: "Coach Rahmat",
+    place: "GOR Sudiang",
+    plan: "Transisi menyerang",
+  },
 ];
 
 export const tournament = {
@@ -164,10 +275,50 @@ export const standings = [
 ];
 
 export const fixtures = [
-  { status: "live" as const, minute: "34'", home: "SSB Garuda Muda", away: "SSB Karebosi", hs: 2, as: 1, venue: "Lapangan A · Karebosi", ref: "Ahmad S.", group: "Grup A" },
-  { status: "done" as const, minute: "FT", home: "SSB Pelita Gowa", away: "SSB Maros Raya", hs: 1, as: 1, venue: "Lapangan B · Karebosi", ref: "Budi H.", group: "Grup A" },
-  { status: "next" as const, minute: "14.00", home: "SSB Bintang Timur", away: "SSB Takalar FC", hs: null, as: null, venue: "Stadion Mini Gowa", ref: "Irfan M.", group: "Grup B" },
-  { status: "next" as const, minute: "15.30", home: "SSB Hasanuddin", away: "SSB Pangkep Jaya", hs: null, as: null, venue: "Stadion Mini Gowa", ref: "Ahmad S.", group: "Grup B" },
+  {
+    status: "live" as const,
+    minute: "34'",
+    home: "SSB Garuda Muda",
+    away: "SSB Karebosi",
+    hs: 2,
+    as: 1,
+    venue: "Lapangan A · Karebosi",
+    ref: "Ahmad S.",
+    group: "Grup A",
+  },
+  {
+    status: "done" as const,
+    minute: "FT",
+    home: "SSB Pelita Gowa",
+    away: "SSB Maros Raya",
+    hs: 1,
+    as: 1,
+    venue: "Lapangan B · Karebosi",
+    ref: "Budi H.",
+    group: "Grup A",
+  },
+  {
+    status: "next" as const,
+    minute: "14.00",
+    home: "SSB Bintang Timur",
+    away: "SSB Takalar FC",
+    hs: null,
+    as: null,
+    venue: "Stadion Mini Gowa",
+    ref: "Irfan M.",
+    group: "Grup B",
+  },
+  {
+    status: "next" as const,
+    minute: "15.30",
+    home: "SSB Hasanuddin",
+    away: "SSB Pangkep Jaya",
+    hs: null,
+    as: null,
+    venue: "Stadion Mini Gowa",
+    ref: "Ahmad S.",
+    group: "Grup B",
+  },
 ];
 
 // ── Jadwal (shared agenda) ───────────────────────────────────────────
@@ -185,34 +336,182 @@ export const week = [
 export const TODAY = 11;
 
 export type AgendaKind = "training" | "match" | "assignment" | "payment" | "admin";
-export const agenda: { d: number; time: string; title: string; place: string; kind: AgendaKind; roles: RoleId[] }[] = [
-  { d: 9, time: "16.00", title: "Latihan U10", place: "Lapangan Karebosi", kind: "training", roles: ["player", "parent", "coach", "ssb"] },
-  { d: 10, time: "19.00", title: "Rapat panitia MYC", place: "Online", kind: "admin", roles: ["organizer", "association"] },
-  { d: 11, time: "15.30", title: "Latihan U8 · Aisyah", place: "Lapangan Karebosi", kind: "training", roles: ["parent", "ssb"] },
-  { d: 11, time: "16.00", title: "Latihan U10 · First touch", place: "Lapangan Karebosi", kind: "training", roles: ["player", "parent", "coach", "ssb"] },
-  { d: 11, time: "20.00", title: "Batas penilaian Q4", place: "Aplikasi", kind: "admin", roles: ["coach"] },
-  { d: 13, time: "16.00", title: "Latihan U10 · Simulasi", place: "Lapangan Karebosi", kind: "training", roles: ["player", "parent", "coach", "ssb"] },
-  { d: 14, time: "08.30", title: "Garuda Muda vs Bintang Timur", place: "Stadion Mini Gowa", kind: "match", roles: ["player", "parent", "coach", "ssb", "scout"] },
-  { d: 14, time: "08.30", title: "Penugasan: Wasit utama", place: "Stadion Mini Gowa", kind: "assignment", roles: ["referee"] },
-  { d: 14, time: "10.30", title: "Penugasan: Asisten 1", place: "Stadion Mini Gowa", kind: "assignment", roles: ["referee"] },
-  { d: 15, time: "09.00", title: "Garuda Muda U8 vs Pelita Gowa", place: "Lapangan Hasanuddin", kind: "match", roles: ["parent", "ssb"] },
-  { d: 15, time: "23.59", title: "Jatuh tempo iuran November", place: "SSB Garuda Muda", kind: "payment", roles: ["parent", "ssb"] },
-  { d: 15, time: "14.00", title: "Liga Grassroots · Matchday 6", place: "4 venue", kind: "match", roles: ["organizer", "association", "scout", "referee"] },
+export const agenda: {
+  d: number;
+  time: string;
+  title: string;
+  place: string;
+  kind: AgendaKind;
+  roles: RoleId[];
+}[] = [
+  {
+    d: 9,
+    time: "16.00",
+    title: "Latihan U10",
+    place: "Lapangan Karebosi",
+    kind: "training",
+    roles: ["player", "parent", "coach", "ssb"],
+  },
+  {
+    d: 10,
+    time: "19.00",
+    title: "Rapat panitia MYC",
+    place: "Online",
+    kind: "admin",
+    roles: ["organizer", "association"],
+  },
+  {
+    d: 11,
+    time: "15.30",
+    title: "Latihan U8 · Aisyah",
+    place: "Lapangan Karebosi",
+    kind: "training",
+    roles: ["parent", "ssb"],
+  },
+  {
+    d: 11,
+    time: "16.00",
+    title: "Latihan U10 · First touch",
+    place: "Lapangan Karebosi",
+    kind: "training",
+    roles: ["player", "parent", "coach", "ssb"],
+  },
+  {
+    d: 11,
+    time: "20.00",
+    title: "Batas penilaian Q4",
+    place: "Aplikasi",
+    kind: "admin",
+    roles: ["coach"],
+  },
+  {
+    d: 13,
+    time: "16.00",
+    title: "Latihan U10 · Simulasi",
+    place: "Lapangan Karebosi",
+    kind: "training",
+    roles: ["player", "parent", "coach", "ssb"],
+  },
+  {
+    d: 14,
+    time: "08.30",
+    title: "Garuda Muda vs Bintang Timur",
+    place: "Stadion Mini Gowa",
+    kind: "match",
+    roles: ["player", "parent", "coach", "ssb", "scout"],
+  },
+  {
+    d: 14,
+    time: "08.30",
+    title: "Penugasan: Wasit utama",
+    place: "Stadion Mini Gowa",
+    kind: "assignment",
+    roles: ["referee"],
+  },
+  {
+    d: 14,
+    time: "10.30",
+    title: "Penugasan: Asisten 1",
+    place: "Stadion Mini Gowa",
+    kind: "assignment",
+    roles: ["referee"],
+  },
+  {
+    d: 15,
+    time: "09.00",
+    title: "Garuda Muda U8 vs Pelita Gowa",
+    place: "Lapangan Hasanuddin",
+    kind: "match",
+    roles: ["parent", "ssb"],
+  },
+  {
+    d: 15,
+    time: "23.59",
+    title: "Jatuh tempo iuran November",
+    place: "SSB Garuda Muda",
+    kind: "payment",
+    roles: ["parent", "ssb"],
+  },
+  {
+    d: 15,
+    time: "14.00",
+    title: "Liga Grassroots · Matchday 6",
+    place: "4 venue",
+    kind: "match",
+    roles: ["organizer", "association", "scout", "referee"],
+  },
 ];
 
 // ── Peluang ──────────────────────────────────────────────────────────
 export const opportunities = [
-  { id: "trial-xyz", type: "Trial", title: "Trial Akademi XYZ · U11", org: "Akademi XYZ Makassar", deadline: "30 Nov", fit: 92, slots: 24, invited: true },
-  { id: "sel-sulsel", type: "Seleksi", title: "Seleksi Regional Sulsel · Tahap 2", org: "Asprov PSSI Sulsel", deadline: "6 Des", fit: 88, slots: 40, invited: false },
-  { id: "beasiswa", type: "Beasiswa", title: "Beasiswa Pemain Muda 2027", org: "Yayasan Bola Timur", deadline: "20 Des", fit: 74, slots: 10, invited: false },
-  { id: "camp", type: "Camp", title: "Holiday Football Camp U10–U12", org: "Coaching Clinic Celebes", deadline: "15 Des", fit: 100, slots: 60, invited: false },
+  {
+    id: "trial-xyz",
+    type: "Trial",
+    title: "Trial Akademi XYZ · U11",
+    org: "Akademi XYZ Makassar",
+    deadline: "30 Nov",
+    fit: 92,
+    slots: 24,
+    invited: true,
+  },
+  {
+    id: "sel-sulsel",
+    type: "Seleksi",
+    title: "Seleksi Regional Sulsel · Tahap 2",
+    org: "Asprov PSSI Sulsel",
+    deadline: "6 Des",
+    fit: 88,
+    slots: 40,
+    invited: false,
+  },
+  {
+    id: "beasiswa",
+    type: "Beasiswa",
+    title: "Beasiswa Pemain Muda 2027",
+    org: "Yayasan Bola Timur",
+    deadline: "20 Des",
+    fit: 74,
+    slots: 10,
+    invited: false,
+  },
+  {
+    id: "camp",
+    type: "Camp",
+    title: "Holiday Football Camp U10–U12",
+    org: "Coaching Clinic Celebes",
+    deadline: "15 Des",
+    fit: 100,
+    slots: 60,
+    invited: false,
+  },
 ];
 
 // ── Tagihan orang tua ────────────────────────────────────────────────
 export const parentInvoices = [
-  { id: "INV-2611-0123", child: "Rizky", label: "Iuran November · U10", amount: 150000, due: "15 Nov", status: "unpaid" as const },
-  { id: "INV-2611-MYC1", child: "Rizky", label: "Biaya Makassar Youth Cup 2027", amount: 250000, due: "30 Nov", status: "unpaid" as const },
-  { id: "INV-2611-0124", child: "Aisyah", label: "Iuran November · U8", amount: 150000, due: "15 Nov", status: "paid" as const },
+  {
+    id: "INV-2611-0123",
+    child: "Rizky",
+    label: "Iuran November · U10",
+    amount: 150000,
+    due: "15 Nov",
+    status: "unpaid" as const,
+  },
+  {
+    id: "INV-2611-MYC1",
+    child: "Rizky",
+    label: "Biaya Makassar Youth Cup 2027",
+    amount: 250000,
+    due: "30 Nov",
+    status: "unpaid" as const,
+  },
+  {
+    id: "INV-2611-0124",
+    child: "Aisyah",
+    label: "Iuran November · U8",
+    amount: 150000,
+    due: "15 Nov",
+    status: "paid" as const,
+  },
 ];
 export const paymentHistory = [
   { label: "Iuran Oktober · Rizky", amount: 150000, date: "08 Okt", method: "QRIS" },
@@ -276,13 +575,64 @@ export const referee = {
   matches: 48,
 };
 export const assignments = [
-  { id: "a1", comp: "Makassar Youth Cup · U10", home: "SSB Garuda Muda", away: "SSB Bintang Timur", date: "Sab, 14 Nov", time: "08.30", venue: "Stadion Mini Gowa", role: "Wasit utama", crew: "Asisten: Budi H., Irfan M.", status: "pending" as const },
-  { id: "a2", comp: "Makassar Youth Cup · U12", home: "SSB Pelita Gowa", away: "SSB Maros Raya", date: "Sab, 14 Nov", time: "10.30", venue: "Stadion Mini Gowa", role: "Asisten 1", crew: "Wasit: Budi H.", status: "confirmed" as const },
-  { id: "a3", comp: "Liga Grassroots · MD6", home: "SSB Hasanuddin", away: "SSB Takalar FC", date: "Min, 15 Nov", time: "14.00", venue: "Lapangan Karebosi", role: "Wasit utama", crew: "Asisten: Rudi A.", status: "pending" as const },
+  {
+    id: "a1",
+    comp: "Makassar Youth Cup · U10",
+    home: "SSB Garuda Muda",
+    away: "SSB Bintang Timur",
+    date: "Sab, 14 Nov",
+    time: "08.30",
+    venue: "Stadion Mini Gowa",
+    role: "Wasit utama",
+    crew: "Asisten: Budi H., Irfan M.",
+    status: "pending" as const,
+  },
+  {
+    id: "a2",
+    comp: "Makassar Youth Cup · U12",
+    home: "SSB Pelita Gowa",
+    away: "SSB Maros Raya",
+    date: "Sab, 14 Nov",
+    time: "10.30",
+    venue: "Stadion Mini Gowa",
+    role: "Asisten 1",
+    crew: "Wasit: Budi H.",
+    status: "confirmed" as const,
+  },
+  {
+    id: "a3",
+    comp: "Liga Grassroots · MD6",
+    home: "SSB Hasanuddin",
+    away: "SSB Takalar FC",
+    date: "Min, 15 Nov",
+    time: "14.00",
+    venue: "Lapangan Karebosi",
+    role: "Wasit utama",
+    crew: "Asisten: Rudi A.",
+    status: "pending" as const,
+  },
 ];
 export const reportSquads = {
-  home: { name: "SSB Garuda Muda", players: [["4", "Fajar N."], ["7", "Rizky P."], ["9", "Daffa R."], ["11", "Andi B."], ["5", "Muh. Alif"]] },
-  away: { name: "SSB Bintang Timur", players: [["3", "Ilham S."], ["8", "Yoga P."], ["10", "Arif M."], ["14", "Dimas K."], ["6", "Rafi A."]] },
+  home: {
+    name: "SSB Garuda Muda",
+    players: [
+      ["4", "Fajar N."],
+      ["7", "Rizky P."],
+      ["9", "Daffa R."],
+      ["11", "Andi B."],
+      ["5", "Muh. Alif"],
+    ],
+  },
+  away: {
+    name: "SSB Bintang Timur",
+    players: [
+      ["3", "Ilham S."],
+      ["8", "Yoga P."],
+      ["10", "Arif M."],
+      ["14", "Dimas K."],
+      ["6", "Rafi A."],
+    ],
+  },
 } as const;
 
 // ── Penyelenggara ────────────────────────────────────────────────────
@@ -312,19 +662,126 @@ export const availableRefs = ["Rudi A.", "Irfan M.", "Siti N.", "Budi H."];
 
 // ── Scout ────────────────────────────────────────────────────────────
 export const scoutPool = [
-  { id: "2014-000318", initials: "MA", age: "U12", pos: "CB", foot: "Kanan", region: "Kota Makassar", matches: 31, trend: 0.7, score: 7.8, consent: true },
-  { id: "2014-000452", initials: "RS", age: "U12", pos: "CB", foot: "Kiri", region: "Kab. Gowa", matches: 24, trend: 0.5, score: 7.4, consent: true },
-  { id: "2014-000510", initials: "YP", age: "U12", pos: "CM", foot: "Kanan", region: "Kab. Maros", matches: 28, trend: 0.9, score: 8.0, consent: true },
-  { id: "2014-000611", initials: "FD", age: "U12", pos: "ST", foot: "Kanan", region: "Kota Makassar", matches: 22, trend: 0.3, score: 7.1, consent: true },
-  { id: "2016-000123", initials: "RP", age: "U10", pos: "CM", foot: "Kanan", region: "Kota Makassar", matches: 34, trend: 0.4, score: 7.7, consent: false },
-  { id: "2016-000204", initials: "DR", age: "U10", pos: "ST", foot: "Kanan", region: "Kota Makassar", matches: 29, trend: 0.6, score: 7.5, consent: true },
-  { id: "2012-000077", initials: "AH", age: "U14", pos: "CB", foot: "Kanan", region: "Kab. Takalar", matches: 45, trend: 0.2, score: 7.6, consent: true },
-  { id: "2014-000733", initials: "KN", age: "U12", pos: "CB", foot: "Kanan", region: "Kab. Bone", matches: 19, trend: 0.8, score: 7.3, consent: false },
-  { id: "2012-000102", initials: "BS", age: "U14", pos: "GK", foot: "Kanan", region: "Kota Parepare", matches: 38, trend: 0.4, score: 7.9, consent: true },
+  {
+    id: "2014-000318",
+    initials: "MA",
+    age: "U12",
+    pos: "CB",
+    foot: "Kanan",
+    region: "Kota Makassar",
+    matches: 31,
+    trend: 0.7,
+    score: 7.8,
+    consent: true,
+  },
+  {
+    id: "2014-000452",
+    initials: "RS",
+    age: "U12",
+    pos: "CB",
+    foot: "Kiri",
+    region: "Kab. Gowa",
+    matches: 24,
+    trend: 0.5,
+    score: 7.4,
+    consent: true,
+  },
+  {
+    id: "2014-000510",
+    initials: "YP",
+    age: "U12",
+    pos: "CM",
+    foot: "Kanan",
+    region: "Kab. Maros",
+    matches: 28,
+    trend: 0.9,
+    score: 8.0,
+    consent: true,
+  },
+  {
+    id: "2014-000611",
+    initials: "FD",
+    age: "U12",
+    pos: "ST",
+    foot: "Kanan",
+    region: "Kota Makassar",
+    matches: 22,
+    trend: 0.3,
+    score: 7.1,
+    consent: true,
+  },
+  {
+    id: "2016-000123",
+    initials: "RP",
+    age: "U10",
+    pos: "CM",
+    foot: "Kanan",
+    region: "Kota Makassar",
+    matches: 34,
+    trend: 0.4,
+    score: 7.7,
+    consent: false,
+  },
+  {
+    id: "2016-000204",
+    initials: "DR",
+    age: "U10",
+    pos: "ST",
+    foot: "Kanan",
+    region: "Kota Makassar",
+    matches: 29,
+    trend: 0.6,
+    score: 7.5,
+    consent: true,
+  },
+  {
+    id: "2012-000077",
+    initials: "AH",
+    age: "U14",
+    pos: "CB",
+    foot: "Kanan",
+    region: "Kab. Takalar",
+    matches: 45,
+    trend: 0.2,
+    score: 7.6,
+    consent: true,
+  },
+  {
+    id: "2014-000733",
+    initials: "KN",
+    age: "U12",
+    pos: "CB",
+    foot: "Kanan",
+    region: "Kab. Bone",
+    matches: 19,
+    trend: 0.8,
+    score: 7.3,
+    consent: false,
+  },
+  {
+    id: "2012-000102",
+    initials: "BS",
+    age: "U14",
+    pos: "GK",
+    foot: "Kanan",
+    region: "Kota Parepare",
+    matches: 38,
+    trend: 0.4,
+    score: 7.9,
+    consent: true,
+  },
 ];
 
 // ── Asosiasi ─────────────────────────────────────────────────────────
-export type Region = { name: string; level: string; players: number; ssb: number; coaches: number; matches: number; children?: Region[] };
+export type Region = {
+  name: string;
+  level: string;
+  players: number;
+  ssb: number;
+  coaches: number;
+  matches: number;
+  children?: Region[];
+};
 export const nationTree: Region = {
   name: "Indonesia",
   level: "Nasional",
@@ -349,20 +806,76 @@ export const nationTree: Region = {
           coaches: 402,
           matches: 2104,
           children: [
-            { name: "SSB Garuda Muda", level: "SSB", players: 186, ssb: 1, coaches: 12, matches: 142 },
+            {
+              name: "SSB Garuda Muda",
+              level: "SSB",
+              players: 186,
+              ssb: 1,
+              coaches: 12,
+              matches: 142,
+            },
             { name: "SSB Karebosi", level: "SSB", players: 164, ssb: 1, coaches: 10, matches: 118 },
-            { name: "SSB Hasanuddin", level: "SSB", players: 151, ssb: 1, coaches: 9, matches: 104 },
+            {
+              name: "SSB Hasanuddin",
+              level: "SSB",
+              players: 151,
+              ssb: 1,
+              coaches: 9,
+              matches: 104,
+            },
           ],
         },
-        { name: "Kab. Gowa", level: "Kab/Kota", players: 5320, ssb: 61, coaches: 188, matches: 870 },
-        { name: "Kab. Maros", level: "Kab/Kota", players: 3110, ssb: 37, coaches: 104, matches: 512 },
+        {
+          name: "Kab. Gowa",
+          level: "Kab/Kota",
+          players: 5320,
+          ssb: 61,
+          coaches: 188,
+          matches: 870,
+        },
+        {
+          name: "Kab. Maros",
+          level: "Kab/Kota",
+          players: 3110,
+          ssb: 37,
+          coaches: 104,
+          matches: 512,
+        },
         { name: "Kab. Bone", level: "Kab/Kota", players: 2860, ssb: 33, coaches: 91, matches: 401 },
       ],
     },
-    { name: "Jawa Timur", level: "Provinsi", players: 24310, ssb: 288, coaches: 912, matches: 3820 },
-    { name: "Jawa Barat", level: "Provinsi", players: 21980, ssb: 251, coaches: 840, matches: 3412 },
-    { name: "Sumatera Utara", level: "Provinsi", players: 9870, ssb: 119, coaches: 360, matches: 1390 },
-    { name: "Sulawesi Tengah", level: "Provinsi", players: 4120, ssb: 52, coaches: 140, matches: 610 },
+    {
+      name: "Jawa Timur",
+      level: "Provinsi",
+      players: 24310,
+      ssb: 288,
+      coaches: 912,
+      matches: 3820,
+    },
+    {
+      name: "Jawa Barat",
+      level: "Provinsi",
+      players: 21980,
+      ssb: 251,
+      coaches: 840,
+      matches: 3412,
+    },
+    {
+      name: "Sumatera Utara",
+      level: "Provinsi",
+      players: 9870,
+      ssb: 119,
+      coaches: 360,
+      matches: 1390,
+    },
+    {
+      name: "Sulawesi Tengah",
+      level: "Provinsi",
+      players: 4120,
+      ssb: 52,
+      coaches: 140,
+      matches: 610,
+    },
   ],
 };
 export const growth = [
@@ -375,4 +888,8 @@ export const growth = [
 ];
 
 export const rupiah = (n: number) =>
-  new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
+  new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+  }).format(n);

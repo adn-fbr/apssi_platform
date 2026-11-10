@@ -11,6 +11,7 @@
 For Phase 0 and subsequent implementation, the supplied Blueprint v0.1 is the sole initial source of product requirements. No separate PRD is assumed to exist.
 
 The Blueprint is authoritative for:
+
 - Product vision and positioning.
 - Stakeholder ecosystem.
 - Football ID and identity principles.
@@ -33,24 +34,25 @@ The Blueprint is authoritative for:
 
 ## 3. Requirement themes extracted from the Blueprint
 
-| ID | Requirement theme | Baseline statement |
-|---|---|---|
-| BR-01 | Player journey ownership | Player journey and persistent football identity must not be owned by an SSB or tournament organizer. |
-| BR-02 | Persistent Football ID | A player identity must persist across organizations and activities. |
-| BR-03 | Historical relationships | Player-organization membership must preserve historical periods rather than overwrite prior affiliation. |
-| BR-04 | Person and roles | One person may hold multiple roles; avoid separate person accounts for each role. |
-| BR-05 | Organization model | Support organization types including SSB, club, academy, tournament organizer, association, and federation. |
-| BR-06 | Guardian relationship | A youth player must be connectable to a parent/guardian. |
-| BR-07 | Consent and privacy | Consent, access control, audit trail, revocation, and data minimization are foundational. |
-| BR-08 | Competition | Competition lifecycle includes registration, roster, groups/draw, schedule, venue, referee, matches, results, standings, statistics, and certificates. |
-| BR-09 | Football operations | SSB operations include player registration, teams, training, attendance, staff, and finance. |
-| BR-10 | Player development | Development includes technical, tactical, physical, psychological/behavioural, and social dimensions. |
-| BR-11 | API-first direction | The platform should be designed to integrate with external football organizations and systems. |
-| BR-12 | MVP focus | Initial focus is Football Identity + Competition + SSB; Player and Parent are central users. |
+| ID    | Requirement theme        | Baseline statement                                                                                                                                     |
+| ----- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| BR-01 | Player journey ownership | Player journey and persistent football identity must not be owned by an SSB or tournament organizer.                                                   |
+| BR-02 | Persistent Football ID   | A player identity must persist across organizations and activities.                                                                                    |
+| BR-03 | Historical relationships | Player-organization membership must preserve historical periods rather than overwrite prior affiliation.                                               |
+| BR-04 | Person and roles         | One person may hold multiple roles; avoid separate person accounts for each role.                                                                      |
+| BR-05 | Organization model       | Support organization types including SSB, club, academy, tournament organizer, association, and federation.                                            |
+| BR-06 | Guardian relationship    | A youth player must be connectable to a parent/guardian.                                                                                               |
+| BR-07 | Consent and privacy      | Consent, access control, audit trail, revocation, and data minimization are foundational.                                                              |
+| BR-08 | Competition              | Competition lifecycle includes registration, roster, groups/draw, schedule, venue, referee, matches, results, standings, statistics, and certificates. |
+| BR-09 | Football operations      | SSB operations include player registration, teams, training, attendance, staff, and finance.                                                           |
+| BR-10 | Player development       | Development includes technical, tactical, physical, psychological/behavioural, and social dimensions.                                                  |
+| BR-11 | API-first direction      | The platform should be designed to integrate with external football organizations and systems.                                                         |
+| BR-12 | MVP focus                | Initial focus is Football Identity + Competition + SSB; Player and Parent are central users.                                                           |
 
 ## 4. Explicitly undefined at this baseline
 
 The Blueprint does not fully specify:
+
 - Detailed user stories and acceptance criteria for every workflow.
 - Account creation, authentication provider, OTP policy, account recovery, and identity proofing.
 - Exact Football ID issuance, uniqueness, collision handling, correction, merge, and duplicate-resolution rules.
@@ -66,6 +68,6 @@ The Blueprint does not fully specify:
 
 ## 5. Change log
 
-| Date | Change | Authority |
-|---|---|---|
+| Date       | Change                                                             | Authority              |
+| ---------- | ------------------------------------------------------------------ | ---------------------- |
 | 2026-11-11 | Blueprint v0.1 confirmed as the sole initial requirement baseline. | Explicit user decision |

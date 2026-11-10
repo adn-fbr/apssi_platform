@@ -27,16 +27,19 @@ Re-run Phase 0 against the actual cloned Git repository. Reconcile the prelimina
 ## Work
 
 ### A. Repository and Git inspection
+
 - Confirm repository root, current branch, status, remotes, latest commits, and whether there are uncommitted changes.
 - Identify whether the working branch is connected to Lovable and explain implications of commits.
 - Compare actual files against the supplied preliminary audit.
 
 ### B. Requirement traceability
+
 - Map Blueprint themes to existing screens/components and domain implementation evidence.
 - Distinguish UI present, client-only behavior, server-backed behavior, and absent functionality.
 - Do not treat labels, toast messages, mock data, or local state as completed business workflows.
 
 ### C. Runtime verification
+
 - First inspect package manager and lockfiles.
 - If lockfile/package manager conflict exists, report it; do not choose silently.
 - Only run install/build/lint/test/typecheck if dependencies are already installed or the owner has approved installation.
@@ -44,6 +47,7 @@ Re-run Phase 0 against the actual cloned Git repository. Reconcile the prelimina
 - Inspect whether a typecheck script exists; do not claim type safety from editor diagnostics alone.
 
 ### D. Security verification
+
 - Verify actual authentication, server-side authorization, guardian relationship, consent persistence/revocation, data access scoping, and audit trail.
 - Specifically test whether scout results are filtered on the server by active purpose-specific consent.
 - Check cross-organization and cross-guardian access paths.
@@ -51,7 +55,9 @@ Re-run Phase 0 against the actual cloned Git repository. Reconcile the prelimina
 - Treat CSRF middleware as request protection, not authentication or authorization.
 
 ### E. Phase 0 documents
+
 Create or update:
+
 - `docs/audit/PHASE-0-REPOSITORY-INVENTORY.md`
 - `docs/audit/PHASE-0-ROUTE-FUNCTIONAL-AUDIT.md`
 - `docs/audit/PHASE-0-ARCHITECTURE-ASSESSMENT.md`
@@ -65,6 +71,7 @@ Every material finding must include path and line references where possible, sev
 ## Status vocabulary
 
 Use only:
+
 - `VERIFIED` — directly evidenced and checked.
 - `PARTIAL` — some implementation/evidence exists, but acceptance is incomplete.
 - `NOT IMPLEMENTED` — no implementation found after inspecting relevant paths.

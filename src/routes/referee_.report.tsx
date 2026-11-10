@@ -10,9 +10,15 @@ export const Route = createFileRoute("/referee_/report")({
   head: () => ({
     meta: [
       { title: "Laporan Pertandingan · BolaID" },
-      { name: "description", content: "Catat skor, kartu, pergantian, dan insiden pertandingan langsung dari lapangan." },
+      {
+        name: "description",
+        content: "Catat skor, kartu, pergantian, dan insiden pertandingan langsung dari lapangan.",
+      },
       { property: "og:title", content: "Laporan Pertandingan · BolaID" },
-      { property: "og:description", content: "Match report wasit yang langsung memperbarui hasil dan klasemen." },
+      {
+        property: "og:description",
+        content: "Match report wasit yang langsung memperbarui hasil dan klasemen.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -53,7 +59,9 @@ function ReportPage() {
   const squad = reportSquads[side];
 
   const add = (player: string) => {
-    setEvents((ev) => [...ev, { id: Date.now(), minute, side, type, player }].sort((a, b) => a.minute - b.minute));
+    setEvents((ev) =>
+      [...ev, { id: Date.now(), minute, side, type, player }].sort((a, b) => a.minute - b.minute),
+    );
     toast(`${eventMeta[type].label} · ${player} (${minute}′)`);
   };
 
@@ -64,18 +72,32 @@ function ReportPage() {
       {/* Scoreboard */}
       <div className="pitch-stripes rounded-3xl p-5 text-pitch-foreground shadow-lift">
         <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 text-center">
-          <p className="font-display text-sm font-bold leading-tight sm:text-base">{reportSquads.home.name}</p>
+          <p className="font-display text-sm font-bold leading-tight sm:text-base">
+            {reportSquads.home.name}
+          </p>
           <p className="rounded-2xl bg-pitch-deep/60 px-4 py-2 font-mono text-4xl font-bold tabular">
             {score("home")}–{score("away")}
           </p>
-          <p className="font-display text-sm font-bold leading-tight sm:text-base">{reportSquads.away.name}</p>
+          <p className="font-display text-sm font-bold leading-tight sm:text-base">
+            {reportSquads.away.name}
+          </p>
         </div>
         <div className="mt-4 flex items-center justify-center gap-3">
-          <Btn variant="chalkOutline" size="icon" aria-label="Kurangi menit" onClick={() => setMinute((m) => Math.max(0, m - 1))}>
+          <Btn
+            variant="chalkOutline"
+            size="icon"
+            aria-label="Kurangi menit"
+            onClick={() => setMinute((m) => Math.max(0, m - 1))}
+          >
             <Minus className="h-4 w-4" />
           </Btn>
           <span className="min-w-20 text-center font-mono text-2xl font-bold">{minute}′</span>
-          <Btn variant="chalkOutline" size="icon" aria-label="Tambah menit" onClick={() => setMinute((m) => Math.min(70, m + 1))}>
+          <Btn
+            variant="chalkOutline"
+            size="icon"
+            aria-label="Tambah menit"
+            onClick={() => setMinute((m) => Math.min(70, m + 1))}
+          >
             <Plus className="h-4 w-4" />
           </Btn>
         </div>
@@ -119,7 +141,9 @@ function ReportPage() {
             );
           })}
         </div>
-        <p className="mb-2 mt-4 text-xs font-semibold text-muted-foreground">Pilih pemain (ketuk untuk mencatat)</p>
+        <p className="mb-2 mt-4 text-xs font-semibold text-muted-foreground">
+          Pilih pemain (ketuk untuk mencatat)
+        </p>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {squad.players.map(([no, name]) => (
             <button
@@ -127,7 +151,9 @@ function ReportPage() {
               onClick={() => add(`${no} · ${name}`)}
               className="flex items-center gap-2 rounded-xl border bg-card p-2.5 text-left text-sm font-semibold transition-colors hover:bg-muted active:scale-[0.98]"
             >
-              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-muted font-mono text-xs font-bold">{no}</span>
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-muted font-mono text-xs font-bold">
+                {no}
+              </span>
               <span className="truncate">{name}</span>
             </button>
           ))}
@@ -138,16 +164,31 @@ function ReportPage() {
       <Panel className="mt-4">
         <SectionTitle eyebrow={`${events.length} kejadian`} title="Kronologi" />
         {events.length === 0 ? (
-          <p className="py-6 text-center text-sm text-muted-foreground">Belum ada kejadian tercatat.</p>
+          <p className="py-6 text-center text-sm text-muted-foreground">
+            Belum ada kejadian tercatat.
+          </p>
         ) : (
           <ul className="space-y-2">
             {events.map((e) => {
               const M = eventMeta[e.type];
               const Icon = M.icon;
               return (
-                <li key={e.id} className={cn("flex items-center gap-3", e.side === "away" && "flex-row-reverse text-right")}>
-                  <span className="w-9 shrink-0 text-center font-mono text-xs font-bold">{e.minute}′</span>
-                  <span className={cn("flex h-8 w-8 shrink-0 items-center justify-center rounded-lg", M.cls)}>
+                <li
+                  key={e.id}
+                  className={cn(
+                    "flex items-center gap-3",
+                    e.side === "away" && "flex-row-reverse text-right",
+                  )}
+                >
+                  <span className="w-9 shrink-0 text-center font-mono text-xs font-bold">
+                    {e.minute}′
+                  </span>
+                  <span
+                    className={cn(
+                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg",
+                      M.cls,
+                    )}
+                  >
                     <Icon className="h-4 w-4" />
                   </span>
                   <div className="min-w-0 flex-1">
@@ -172,7 +213,11 @@ function ReportPage() {
         size="lg"
         className="mt-4 w-full"
         disabled={phase !== "ft"}
-        onClick={() => toast.success("Laporan terkirim", { description: "Hasil & klasemen turnamen diperbarui otomatis." })}
+        onClick={() =>
+          toast.success("Laporan terkirim", {
+            description: "Hasil & klasemen turnamen diperbarui otomatis.",
+          })
+        }
       >
         {phase === "ft" ? "Kirim laporan resmi" : "Kirim setelah pertandingan selesai"}
       </Btn>

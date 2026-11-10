@@ -16,14 +16,14 @@ These goals operationalize requirement themes BR-01 through BR-12 as design ques
 
 ## Proposed logical layers
 
-| Layer | Responsibility | Boundary |
-|---|---|---|
-| Experience | TanStack routes, shared shell, accessible UI state and view composition | No trust decisions; no authoritative mutation. Keep `src/routes/` and shared UI focused on interaction/rendering. |
-| Application | Use cases such as create consent, request membership, record attendance, submit assessment, create payment request, assign referee, submit match report | Authenticate actor; validate input; authorize resource/tenant/purpose; coordinate transaction; return typed result. |
-| Domain | Identity, guardian authority, organization membership, team, competition, match, consent, assessment, payment and audit invariants | Independent of React; explicit state transitions and domain events; no direct UI dependencies. |
-| Infrastructure | Database, authentication provider, payment provider, file storage, notifications, telemetry | Implement only approved interfaces; isolate secrets and provider-specific callbacks; use environment-scoped credentials. |
-| Policy | Centralized RBAC plus resource/relationship/attribute/consent checks | Run server-side for every protected read/write. Deny by default; validate tenant and purpose from trusted state. |
-| Operations | Audit, monitoring, backups, deployment, incident/privacy request response | Define owners, retention, alerts, restore tests and incident procedures before production. |
+| Layer          | Responsibility                                                                                                                                          | Boundary                                                                                                                 |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Experience     | TanStack routes, shared shell, accessible UI state and view composition                                                                                 | No trust decisions; no authoritative mutation. Keep `src/routes/` and shared UI focused on interaction/rendering.        |
+| Application    | Use cases such as create consent, request membership, record attendance, submit assessment, create payment request, assign referee, submit match report | Authenticate actor; validate input; authorize resource/tenant/purpose; coordinate transaction; return typed result.      |
+| Domain         | Identity, guardian authority, organization membership, team, competition, match, consent, assessment, payment and audit invariants                      | Independent of React; explicit state transitions and domain events; no direct UI dependencies.                           |
+| Infrastructure | Database, authentication provider, payment provider, file storage, notifications, telemetry                                                             | Implement only approved interfaces; isolate secrets and provider-specific callbacks; use environment-scoped credentials. |
+| Policy         | Centralized RBAC plus resource/relationship/attribute/consent checks                                                                                    | Run server-side for every protected read/write. Deny by default; validate tenant and purpose from trusted state.         |
+| Operations     | Audit, monitoring, backups, deployment, incident/privacy request response                                                                               | Define owners, retention, alerts, restore tests and incident procedures before production.                               |
 
 **Integration recommendation:** use TanStack Start server functions/loaders or a separately approved API as the only business-data boundary. The owner must choose; do not create both patterns without a contract. Keep TanStack Query only where client caching/freshness improves the workflow, with identity/tenant-aware cache lifecycle and invalidation. Do not assume the framework's CSRF middleware provides access control.
 

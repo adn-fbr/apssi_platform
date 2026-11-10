@@ -21,9 +21,17 @@ export const Route = createFileRoute("/player")({
   head: () => ({
     meta: [
       { title: "Football Passport — Rizky Pratama · BolaID" },
-      { name: "description", content: "Football ID, perjalanan, perkembangan, dan riwayat pertandingan pemain dalam satu passport digital." },
+      {
+        name: "description",
+        content:
+          "Football ID, perjalanan, perkembangan, dan riwayat pertandingan pemain dalam satu passport digital.",
+      },
       { property: "og:title", content: "Football Passport · BolaID" },
-      { property: "og:description", content: "Identitas sepak bola seumur hidup: riwayat SSB, turnamen, dan perkembangan pemain." },
+      {
+        property: "og:description",
+        content:
+          "Identitas sepak bola seumur hidup: riwayat SSB, turnamen, dan perkembangan pemain.",
+      },
       { property: "og:type", content: "profile" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -57,11 +65,19 @@ function PlayerPage() {
           <Btn
             variant="outline"
             className="flex-1"
-            onClick={() => toast.success("Tautan passport disalin", { description: "Hanya data level Football yang dibagikan." })}
+            onClick={() =>
+              toast.success("Tautan passport disalin", {
+                description: "Hanya data level Football yang dibagikan.",
+              })
+            }
           >
             <Share2 className="h-4 w-4" /> Bagikan
           </Btn>
-          <Btn variant="primary" className="flex-1" onClick={() => toast("QR Football ID ditampilkan untuk check-in turnamen")}>
+          <Btn
+            variant="primary"
+            className="flex-1"
+            onClick={() => toast("QR Football ID ditampilkan untuk check-in turnamen")}
+          >
             Tampilkan QR
           </Btn>
         </div>
@@ -74,14 +90,21 @@ function PlayerPage() {
           ].map(([k, v]) => (
             <div key={k} className="rounded-2xl border bg-card p-2.5 text-center shadow-card">
               <p className="font-display text-xl font-extrabold tabular">{v}</p>
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{k}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                {k}
+              </p>
             </div>
           ))}
         </div>
       </div>
 
       <div className="space-y-4">
-        <Segmented options={tabs} value={tab} onChange={setTab} className="sticky top-16 z-20 lg:static" />
+        <Segmented
+          options={tabs}
+          value={tab}
+          onChange={setTab}
+          className="sticky top-16 z-20 lg:static"
+        />
 
         {tab === "journey" && (
           <Panel className="animate-rise">
@@ -94,12 +117,18 @@ function PlayerPage() {
                     <span
                       className={cn(
                         "absolute -left-[37px] flex h-7 w-7 items-center justify-center rounded-full border-2 border-background",
-                        j.upcoming ? "bg-signal text-signal-foreground" : j.current ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground",
+                        j.upcoming
+                          ? "bg-signal text-signal-foreground"
+                          : j.current
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted text-muted-foreground",
                       )}
                     >
                       <Icon className="h-3.5 w-3.5" />
                     </span>
-                    <p className="font-mono text-[11px] font-bold text-muted-foreground">{j.year}</p>
+                    <p className="font-mono text-[11px] font-bold text-muted-foreground">
+                      {j.year}
+                    </p>
                     <p className="font-display text-base font-bold">{j.org}</p>
                     <div className="mt-0.5 flex flex-wrap items-center gap-2">
                       <p className="text-sm text-muted-foreground">{j.label}</p>
@@ -141,7 +170,13 @@ function PlayerPage() {
                         </div>
                         <div className="flex gap-1">
                           {developmentTimeline.map((t, i) => (
-                            <Meter key={t.period} value={t[k]} max={10} tone={i === developmentTimeline.length - 1 ? "primary" : "signal"} className={cn(i < 2 && "opacity-60")} />
+                            <Meter
+                              key={t.period}
+                              value={t[k]}
+                              max={10}
+                              tone={i === developmentTimeline.length - 1 ? "primary" : "signal"}
+                              className={cn(i < 2 && "opacity-60")}
+                            />
                           ))}
                         </div>
                       </div>
@@ -152,11 +187,15 @@ function PlayerPage() {
             </Panel>
 
             <Panel className="border-primary/30 bg-secondary">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-secondary-foreground/70">Catatan pelatih</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-secondary-foreground/70">
+                Catatan pelatih
+              </p>
               <p className="mt-1.5 font-display text-base font-semibold leading-snug text-secondary-foreground">
                 “Area yang paling perlu perhatian 3 bulan ke depan: receiving under pressure.”
               </p>
-              <p className="mt-2 text-xs text-secondary-foreground/70">Coach Andi · Lisensi D PSSI</p>
+              <p className="mt-2 text-xs text-secondary-foreground/70">
+                Coach Andi · Lisensi D PSSI
+              </p>
             </Panel>
 
             <div className="grid gap-3 sm:grid-cols-3">
@@ -170,7 +209,12 @@ function PlayerPage() {
                           <span>{name}</span>
                           <span className="font-mono font-bold">{v.toFixed(1)}</span>
                         </div>
-                        <Meter value={v} max={10} className="mt-1 h-1.5" tone={v < 7 ? "warning" : "primary"} />
+                        <Meter
+                          value={v}
+                          max={10}
+                          className="mt-1 h-1.5"
+                          tone={v < 7 ? "warning" : "primary"}
+                        />
                       </li>
                     ))}
                   </ul>
@@ -183,8 +227,16 @@ function PlayerPage() {
         {tab === "matches" && (
           <div className="space-y-4 animate-rise">
             <div className="grid grid-cols-2 gap-3">
-              <Stat label="Menit bermain" value={s.minutes.toLocaleString("id-ID")} sub="Musim 2026/27" />
-              <Stat label="Kontribusi gol" value={s.goals + s.assists} sub={`${s.goals} gol · ${s.assists} assist`} />
+              <Stat
+                label="Menit bermain"
+                value={s.minutes.toLocaleString("id-ID")}
+                sub="Musim 2026/27"
+              />
+              <Stat
+                label="Kontribusi gol"
+                value={s.goals + s.assists}
+                sub={`${s.goals} gol · ${s.assists} assist`}
+              />
             </div>
             <Panel className="p-0 sm:p-0">
               <div className="p-4 pb-2 sm:p-5 sm:pb-2">

@@ -26,10 +26,34 @@ export const Route = createFileRoute("/")({
 });
 
 const roles = [
-  { to: "/player", icon: IdCard, title: "Pemain", desc: "Football Passport, riwayat & perkembangan.", tag: "Football ID" },
-  { to: "/parent", icon: Users, title: "Orang Tua", desc: "Jadwal, pembayaran, dan izin data anak.", tag: "Keluarga" },
-  { to: "/ssb", icon: Shield, title: "SSB / Klub", desc: "Roster, absensi latihan, dan iuran.", tag: "Football OS" },
-  { to: "/tournament", icon: Trophy, title: "Turnamen", desc: "Pendaftaran, jadwal, hasil & klasemen.", tag: "Competition" },
+  {
+    to: "/player",
+    icon: IdCard,
+    title: "Pemain",
+    desc: "Football Passport, riwayat & perkembangan.",
+    tag: "Football ID",
+  },
+  {
+    to: "/parent",
+    icon: Users,
+    title: "Orang Tua",
+    desc: "Jadwal, pembayaran, dan izin data anak.",
+    tag: "Keluarga",
+  },
+  {
+    to: "/ssb",
+    icon: Shield,
+    title: "SSB / Klub",
+    desc: "Roster, absensi latihan, dan iuran.",
+    tag: "Football OS",
+  },
+  {
+    to: "/tournament",
+    icon: Trophy,
+    title: "Turnamen",
+    desc: "Pendaftaran, jadwal, hasil & klasemen.",
+    tag: "Competition",
+  },
 ] as const;
 
 const journey = ["SSB", "U9", "Turnamen", "Seleksi", "Akademi"];
@@ -72,7 +96,9 @@ function Index() {
       <section>
         <div className="mb-4 flex items-end justify-between">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Masuk sebagai</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              Masuk sebagai
+            </p>
             <h2 className="text-2xl font-bold">Satu ekosistem, banyak peran</h2>
           </div>
         </div>
@@ -86,7 +112,9 @@ function Index() {
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-secondary-foreground transition-colors group-hover:bg-signal group-hover:text-signal-foreground">
                 <Icon className="h-5 w-5" />
               </span>
-              <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">{tag}</p>
+              <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                {tag}
+              </p>
               <h3 className="mt-0.5 text-lg font-bold">{title}</h3>
               <p className="mt-1 text-[13px] leading-snug text-muted-foreground">{desc}</p>
               <ArrowRight className="mt-3 h-4 w-4 text-primary transition-transform group-hover:translate-x-1" />
@@ -98,10 +126,15 @@ function Index() {
       {/* Journey + principle */}
       <section className="grid gap-3 lg:grid-cols-[1.4fr_1fr]">
         <div className="pitch-stripes overflow-hidden rounded-3xl p-5 text-pitch-foreground sm:p-7">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-pitch-muted">The player owns the journey</p>
-          <h2 className="mt-2 max-w-md text-2xl font-bold sm:text-3xl">Pindah SSB? Riwayatnya tetap utuh.</h2>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-pitch-muted">
+            The player owns the journey
+          </p>
+          <h2 className="mt-2 max-w-md text-2xl font-bold sm:text-3xl">
+            Pindah SSB? Riwayatnya tetap utuh.
+          </h2>
           <p className="mt-2 max-w-md text-sm text-pitch-foreground/75">
-            SSB hanya punya hubungan keanggotaan — bukan kepemilikan. Data pemain ikut ke mana pun ia bermain.
+            SSB hanya punya hubungan keanggotaan — bukan kepemilikan. Data pemain ikut ke mana pun
+            ia bermain.
           </p>
           <ol className="no-scrollbar mt-6 flex items-center gap-1.5 overflow-x-auto pb-1">
             {journey.map((s, i) => (
@@ -109,7 +142,9 @@ function Index() {
                 <span
                   className={cn(
                     "whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-bold",
-                    i === journey.length - 1 ? "bg-signal text-signal-foreground" : "bg-pitch-foreground/10",
+                    i === journey.length - 1
+                      ? "bg-signal text-signal-foreground"
+                      : "bg-pitch-foreground/10",
                   )}
                 >
                   {s}
@@ -122,14 +157,20 @@ function Index() {
 
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-1">
           <div className="rounded-3xl border bg-card p-5 shadow-card">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Verified Active Players</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Verified Active Players
+            </p>
             <p className="mt-2 font-display text-4xl font-extrabold tabular">1.248</p>
             <p className="mt-1 text-xs text-muted-foreground">Pilot Makassar · 14 SSB</p>
           </div>
           <div className="rounded-3xl border bg-card p-5 shadow-card">
             <ShieldCheck className="h-6 w-6 text-primary" />
-            <p className="mt-2 font-display text-base font-bold leading-tight">Persetujuan wali di setiap data anak</p>
-            <p className="mt-1 text-xs text-muted-foreground">Scout hanya melihat pemain yang diizinkan.</p>
+            <p className="mt-2 font-display text-base font-bold leading-tight">
+              Persetujuan wali di setiap data anak
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Scout hanya melihat pemain yang diizinkan.
+            </p>
           </div>
         </div>
       </section>

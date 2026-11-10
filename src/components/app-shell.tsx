@@ -137,7 +137,9 @@ function ShellInner({ children }: { children: ReactNode }) {
       {/* Desktop sidebar */}
       <aside className="sticky top-0 hidden h-screen flex-col overflow-y-auto bg-sidebar p-5 text-sidebar-foreground lg:flex">
         <Logo onDark />
-        <p className="mt-2 text-xs text-sidebar-foreground/60">Every player has a football journey.</p>
+        <p className="mt-2 text-xs text-sidebar-foreground/60">
+          Every player has a football journey.
+        </p>
 
         <p className="mt-7 font-mono text-[10px] uppercase tracking-[0.18em] text-sidebar-foreground/50">
           {role.label} · {role.product}
@@ -160,13 +162,17 @@ function ShellInner({ children }: { children: ReactNode }) {
           ))}
         </nav>
 
-        <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.18em] text-sidebar-foreground/50">Ganti peran</p>
+        <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.18em] text-sidebar-foreground/50">
+          Ganti peran
+        </p>
         <div className="mt-2">
           <RoleList dark onPick={switchRole} />
         </div>
 
         <div className="mt-6 rounded-2xl border border-sidebar-border bg-sidebar-accent p-4">
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-sidebar-foreground/60">Pilot</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-sidebar-foreground/60">
+            Pilot
+          </p>
           <p className="mt-1 font-display text-sm font-semibold">Makassar · Sulawesi Selatan</p>
           <p className="mt-1 text-xs text-sidebar-foreground/60">Prototipe UI — data contoh</p>
         </div>

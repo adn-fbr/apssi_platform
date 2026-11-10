@@ -87,12 +87,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "BolaID — Ekosistem Sepak Bola Usia Dini" },
       {
         name: "description",
-        content: "Satu Football ID untuk seluruh perjalanan sepak bola anak: pemain, orang tua, SSB, dan turnamen.",
+        content:
+          "Satu Football ID untuk seluruh perjalanan sepak bola anak: pemain, orang tua, SSB, dan turnamen.",
       },
       { property: "og:title", content: "BolaID — Ekosistem Sepak Bola Usia Dini" },
       {
         property: "og:description",
-        content: "Satu Football ID untuk seluruh perjalanan sepak bola anak: pemain, orang tua, SSB, dan turnamen.",
+        content:
+          "Satu Football ID untuk seluruh perjalanan sepak bola anak: pemain, orang tua, SSB, dan turnamen.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
