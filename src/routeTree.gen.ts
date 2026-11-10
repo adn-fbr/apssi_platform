@@ -10,14 +10,45 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AssociationRouteImport } from './routes/association'
+import { Route as CoachRouteImport } from './routes/coach'
+import { Route as OpportunitiesRouteImport } from './routes/opportunities'
+import { Route as OrganizerRouteImport } from './routes/organizer'
 import { Route as ParentRouteImport } from './routes/parent'
+import { Route as PaymentsRouteImport } from './routes/payments'
 import { Route as PlayerRouteImport } from './routes/player'
+import { Route as RefereeRouteImport } from './routes/referee'
+import { Route as ScheduleRouteImport } from './routes/schedule'
+import { Route as ScoutRouteImport } from './routes/scout'
 import { Route as SsbRouteImport } from './routes/ssb'
 import { Route as TournamentRouteImport } from './routes/tournament'
+import { Route as CoachAssessmentRouteImport } from './routes/coach_.assessment'
+import { Route as RefereeReportRouteImport } from './routes/referee_.report'
+import { Route as SsbFinanceRouteImport } from './routes/ssb_.finance'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssociationRoute = AssociationRouteImport.update({
+  id: '/association',
+  path: '/association',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoachRoute = CoachRouteImport.update({
+  id: '/coach',
+  path: '/coach',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpportunitiesRoute = OpportunitiesRouteImport.update({
+  id: '/opportunities',
+  path: '/opportunities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrganizerRoute = OrganizerRouteImport.update({
+  id: '/organizer',
+  path: '/organizer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ParentRoute = ParentRouteImport.update({
@@ -25,9 +56,29 @@ const ParentRoute = ParentRouteImport.update({
   path: '/parent',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PaymentsRoute = PaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlayerRoute = PlayerRouteImport.update({
   id: '/player',
   path: '/player',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefereeRoute = RefereeRouteImport.update({
+  id: '/referee',
+  path: '/referee',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScheduleRoute = ScheduleRouteImport.update({
+  id: '/schedule',
+  path: '/schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScoutRoute = ScoutRouteImport.update({
+  id: '/scout',
+  path: '/scout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SsbRoute = SsbRouteImport.update({
@@ -40,43 +91,151 @@ const TournamentRoute = TournamentRouteImport.update({
   path: '/tournament',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoachAssessmentRoute = CoachAssessmentRouteImport.update({
+  id: '/coach_/assessment',
+  path: '/coach/assessment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefereeReportRoute = RefereeReportRouteImport.update({
+  id: '/referee_/report',
+  path: '/referee/report',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SsbFinanceRoute = SsbFinanceRouteImport.update({
+  id: '/ssb_/finance',
+  path: '/ssb/finance',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/association': typeof AssociationRoute
+  '/coach': typeof CoachRoute
+  '/opportunities': typeof OpportunitiesRoute
+  '/organizer': typeof OrganizerRoute
   '/parent': typeof ParentRoute
+  '/payments': typeof PaymentsRoute
   '/player': typeof PlayerRoute
+  '/referee': typeof RefereeRoute
+  '/schedule': typeof ScheduleRoute
+  '/scout': typeof ScoutRoute
   '/ssb': typeof SsbRoute
   '/tournament': typeof TournamentRoute
+  '/coach/assessment': typeof CoachAssessmentRoute
+  '/referee/report': typeof RefereeReportRoute
+  '/ssb/finance': typeof SsbFinanceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/association': typeof AssociationRoute
+  '/coach': typeof CoachRoute
+  '/opportunities': typeof OpportunitiesRoute
+  '/organizer': typeof OrganizerRoute
   '/parent': typeof ParentRoute
+  '/payments': typeof PaymentsRoute
   '/player': typeof PlayerRoute
+  '/referee': typeof RefereeRoute
+  '/schedule': typeof ScheduleRoute
+  '/scout': typeof ScoutRoute
   '/ssb': typeof SsbRoute
   '/tournament': typeof TournamentRoute
+  '/coach/assessment': typeof CoachAssessmentRoute
+  '/referee/report': typeof RefereeReportRoute
+  '/ssb/finance': typeof SsbFinanceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/association': typeof AssociationRoute
+  '/coach': typeof CoachRoute
+  '/opportunities': typeof OpportunitiesRoute
+  '/organizer': typeof OrganizerRoute
   '/parent': typeof ParentRoute
+  '/payments': typeof PaymentsRoute
   '/player': typeof PlayerRoute
+  '/referee': typeof RefereeRoute
+  '/schedule': typeof ScheduleRoute
+  '/scout': typeof ScoutRoute
   '/ssb': typeof SsbRoute
   '/tournament': typeof TournamentRoute
+  '/coach_/assessment': typeof CoachAssessmentRoute
+  '/referee_/report': typeof RefereeReportRoute
+  '/ssb_/finance': typeof SsbFinanceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/parent' | '/player' | '/ssb' | '/tournament'
+  fullPaths:
+    | '/'
+    | '/association'
+    | '/coach'
+    | '/opportunities'
+    | '/organizer'
+    | '/parent'
+    | '/payments'
+    | '/player'
+    | '/referee'
+    | '/schedule'
+    | '/scout'
+    | '/ssb'
+    | '/tournament'
+    | '/coach/assessment'
+    | '/referee/report'
+    | '/ssb/finance'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/parent' | '/player' | '/ssb' | '/tournament'
-  id: '__root__' | '/' | '/parent' | '/player' | '/ssb' | '/tournament'
+  to:
+    | '/'
+    | '/association'
+    | '/coach'
+    | '/opportunities'
+    | '/organizer'
+    | '/parent'
+    | '/payments'
+    | '/player'
+    | '/referee'
+    | '/schedule'
+    | '/scout'
+    | '/ssb'
+    | '/tournament'
+    | '/coach/assessment'
+    | '/referee/report'
+    | '/ssb/finance'
+  id:
+    | '__root__'
+    | '/'
+    | '/association'
+    | '/coach'
+    | '/opportunities'
+    | '/organizer'
+    | '/parent'
+    | '/payments'
+    | '/player'
+    | '/referee'
+    | '/schedule'
+    | '/scout'
+    | '/ssb'
+    | '/tournament'
+    | '/coach_/assessment'
+    | '/referee_/report'
+    | '/ssb_/finance'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssociationRoute: typeof AssociationRoute
+  CoachRoute: typeof CoachRoute
+  OpportunitiesRoute: typeof OpportunitiesRoute
+  OrganizerRoute: typeof OrganizerRoute
   ParentRoute: typeof ParentRoute
+  PaymentsRoute: typeof PaymentsRoute
   PlayerRoute: typeof PlayerRoute
+  RefereeRoute: typeof RefereeRoute
+  ScheduleRoute: typeof ScheduleRoute
+  ScoutRoute: typeof ScoutRoute
   SsbRoute: typeof SsbRoute
   TournamentRoute: typeof TournamentRoute
+  CoachAssessmentRoute: typeof CoachAssessmentRoute
+  RefereeReportRoute: typeof RefereeReportRoute
+  SsbFinanceRoute: typeof SsbFinanceRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -88,6 +247,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/association': {
+      id: '/association'
+      path: '/association'
+      fullPath: '/association'
+      preLoaderRoute: typeof AssociationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/coach': {
+      id: '/coach'
+      path: '/coach'
+      fullPath: '/coach'
+      preLoaderRoute: typeof CoachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/opportunities': {
+      id: '/opportunities'
+      path: '/opportunities'
+      fullPath: '/opportunities'
+      preLoaderRoute: typeof OpportunitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/organizer': {
+      id: '/organizer'
+      path: '/organizer'
+      fullPath: '/organizer'
+      preLoaderRoute: typeof OrganizerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/parent': {
       id: '/parent'
       path: '/parent'
@@ -95,11 +282,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ParentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/payments': {
+      id: '/payments'
+      path: '/payments'
+      fullPath: '/payments'
+      preLoaderRoute: typeof PaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/player': {
       id: '/player'
       path: '/player'
       fullPath: '/player'
       preLoaderRoute: typeof PlayerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/referee': {
+      id: '/referee'
+      path: '/referee'
+      fullPath: '/referee'
+      preLoaderRoute: typeof RefereeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/schedule': {
+      id: '/schedule'
+      path: '/schedule'
+      fullPath: '/schedule'
+      preLoaderRoute: typeof ScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scout': {
+      id: '/scout'
+      path: '/scout'
+      fullPath: '/scout'
+      preLoaderRoute: typeof ScoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ssb': {
@@ -116,15 +331,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TournamentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/coach_/assessment': {
+      id: '/coach_/assessment'
+      path: '/coach/assessment'
+      fullPath: '/coach/assessment'
+      preLoaderRoute: typeof CoachAssessmentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/referee_/report': {
+      id: '/referee_/report'
+      path: '/referee/report'
+      fullPath: '/referee/report'
+      preLoaderRoute: typeof RefereeReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ssb_/finance': {
+      id: '/ssb_/finance'
+      path: '/ssb/finance'
+      fullPath: '/ssb/finance'
+      preLoaderRoute: typeof SsbFinanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssociationRoute: AssociationRoute,
+  CoachRoute: CoachRoute,
+  OpportunitiesRoute: OpportunitiesRoute,
+  OrganizerRoute: OrganizerRoute,
   ParentRoute: ParentRoute,
+  PaymentsRoute: PaymentsRoute,
   PlayerRoute: PlayerRoute,
+  RefereeRoute: RefereeRoute,
+  ScheduleRoute: ScheduleRoute,
+  ScoutRoute: ScoutRoute,
   SsbRoute: SsbRoute,
   TournamentRoute: TournamentRoute,
+  CoachAssessmentRoute: CoachAssessmentRoute,
+  RefereeReportRoute: RefereeReportRoute,
+  SsbFinanceRoute: SsbFinanceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
