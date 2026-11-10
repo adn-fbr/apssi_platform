@@ -8,9 +8,9 @@
 |---|---|---|
 | Presentation and navigation | React route components, shared `AppShell`, custom UI kit, generated TanStack route tree | **VERIFIED** |
 | Client navigation role | `RoleProvider`, hard-coded role/person catalog, URL route ownership and browser `localStorage` | **PARTIAL:** UX role selection only; no authenticated principal or policy enforcement. |
-| Client/server data boundary | TanStack Query provider exists; inspected routes consume constants from `mock-data.ts`; no query functions, server functions, route loaders, or API clients found | **NOT IMPLEMENTED** for business reads/writes in checked-in source. |
-| Domain/application services | No service/use-case layer found; route components own UI state and workflow-shaped handlers | **NOT IMPLEMENTED** in inspected checkout. |
-| Persistence | Mock data states it is not persisted; no schema or database client found | **NOT IMPLEMENTED in checkout / UNKNOWN externally.** |
+| Client/server data boundary | TanStack Query provider exists; inspected routes consume constants from `mock-data.ts`; no query functions, server functions, route loaders, or API clients found | **NOT VERIFIED** as a server-backed business data boundary. |
+| Domain/application services | No service/use-case layer found; route components own UI state and workflow-shaped handlers | **NOT VERIFIED** in the checked-in source. |
+| Persistence | Mock data states it is not persisted; no schema or database client found | **NOT VERIFIED** in checkout; external persistence is outside repository evidence. |
 | Validation | Zod and React Hook Form are declared; inspected flows use component state/native fields without business schemas | **PARTIAL** at dependency level; no business validation implementation evidenced. |
 | Server runtime | TanStack Start SSR entry, middleware and error wrapper | **VERIFIED** infrastructure capability; no domain endpoint is evidenced. |
 | Tests | One route-matching test | **PARTIAL** infrastructure; domain and security behavior are untested. |
@@ -52,7 +52,7 @@ The status values below use the accepted [BRB-001 baseline](../product/BLUEPRINT
 | BR-07 | Consent, privacy, access control, audit, revocation and minimization | Local toggles, browser scout filter, seeded audit display | **PARTIAL** |
 | BR-08, BR-09 | Competition lifecycle and SSB operations | Broad route coverage with static data/local state | **PARTIAL** |
 | BR-10 | Technical, tactical, physical, psychological/behavioural and social development | Sample assessment template/ratings; no persistence | **PARTIAL** |
-| BR-11 | API-first integration direction | No API/use-case boundary found in checked-in source | **NOT IMPLEMENTED** |
+| BR-11 | API-first integration direction | No API/use-case boundary found in checked-in source | **NOT VERIFIED** |
 | BR-12 | MVP priority: Football Identity + Competition + SSB; Player/Parent central | Corresponding screens exist, but no production workflow | **PARTIAL** |
 
 ## Architectural findings
@@ -62,7 +62,7 @@ The status values below use the accepted [BRB-001 baseline](../product/BLUEPRINT
 | AR-01 / **High** | BRB-001 is present, but original Blueprint text, detailed workflow acceptance criteria and an approved technical architecture are not in the live checkout. | [BRB-001](../product/BLUEPRINT-REQUIREMENT-BASELINE.md#L1-L28) records Blueprint v0.1 as the sole requirement baseline and identifies undefined details. | Use BR-01 through BR-12 for traceability. Obtain owner decisions for undefined requirements and approve architecture; do not describe proposed PostgreSQL/REST choices from preliminary notes as requirements. |
 | AR-02 / **High** | UI routes directly consume a broad mock-data module and hold write-shaped state in components. | `mock-data.ts` declares all sample areas; route examples show local `setPaid`, `setConsent`, attendance/event state. | UI and domain behavior are coupled; no durable transaction boundary. Introduce server-side use cases behind explicit contracts, not direct database calls from components. |
 | AR-03 / **Critical** | Application identity and role model is a client-side persona selector, not a security principal. | `roles.tsx` role catalog and `localStorage` persistence. | Any future protected data exposed by these screens would lack an evidenced trusted authorization decision. Keep authorization server-side and deny by default. |
-| AR-04 / **High** | No persistence/API boundary is present in the inspected application source. | Route imports and repository-wide searches found mock imports and no data API/server function calls. | No consistency, concurrent writes, idempotency, or server validation. Select backend and data ownership with owners, then establish a domain application boundary. |
+| AR-04 / **High** | No persistence/API boundary was evidenced in the inspected application source. | Route imports and repository-wide searches found mock imports and no data API/server function calls. | Consistency, concurrent writes, idempotency, and server validation are not established. Select backend and data ownership with owners, then establish a domain application boundary. |
 | AR-05 / **High** | Domain invariants are not represented as a coherent model. | Domain data is flat, static objects/string IDs/booleans in `mock-data.ts`. | Identity uniqueness, consent propagation, membership history, match/competition lifecycle, and audit invariants cannot be guaranteed. Model and test invariants before implementation. |
 | AR-06 / **Medium** | `QueryClientProvider` is present without observable remote query use. | Root route wraps the app; routes read fixture constants. | Can create a misleading impression that data fetching/caching is already architected. Document the intended cache and server invalidation strategy before adding mutation workflows. |
 | AR-07 / **Medium** | Route test coverage does not exercise domain or multi-role workflows. | The only discovered test checks matching `/`. | Regressions in role resolution, children/consent, payments, match reporting, and access policies are undetected by current tests. |
@@ -81,7 +81,7 @@ External dependencies to decide/verify:
 - Operational logging, alerting, backup/restore and incident response.
 - Deployment environment, secret handling, data residency/retention and privacy/legal review.
 
-All are **UNKNOWN** beyond repository evidence. `AGENTS.md` says database/schema changes are managed through Lovable and must not be added manually to migration directories. The supplied preliminary architecture proposed PostgreSQL, modular monolith and versioned REST; BRB-001 only states API-first direction, so the former are `ARCHITECTURE DECISION REQUIRED`, not settled baseline constraints.
+These external dependencies are **NOT VERIFIED** in this repository. `AGENTS.md` says database/schema changes are managed through Lovable and must not be added manually to migration directories. The supplied preliminary architecture proposed PostgreSQL, modular monolith and versioned REST; BRB-001 only states API-first direction, so the former remain `ARCHITECTURE DECISION REQUIRED`, not settled baseline constraints.
 
 ## Recommended architecture direction (not approved)
 
@@ -89,10 +89,4 @@ See [PHASE-0-RECOMMENDED-TARGET-ARCHITECTURE.md](PHASE-0-RECOMMENDED-TARGET-ARCH
 
 ## Owner decisions required
 
-1. Approve access to the original Blueprint text if it is controlled separately; refine BRB-001 into versioned workflow acceptance criteria and approve a technical architecture. A separate PRD is not assumed under the current owner decision.
-2. Confirm identity issuer/authority for Football ID and how duplicates, corrections, and deceased/withdrawn records are handled.
-3. Choose identity, persistence, server API and deployment owners; clarify Lovable Cloud versus a user-managed backend.
-4. Ratify organization hierarchy, role grants, delegated guardianship, and data ownership/portability.
-5. Approve child data consent purposes, age/guardian proof, visibility, retention, deletion, and revocation semantics.
-6. Approve authoritative competition/match result workflow and payment provider/reconciliation contract.
-7. Decide audit log access, retention, tamper-resistance and incident response ownership.
+See the [Owner Decision Register](PHASE-0-IMPLEMENTATION-READINESS.md#owner-decision-register) for the complete list of open choices, options, impacts, recommendations, and approval status. No owner decision is made by this assessment.

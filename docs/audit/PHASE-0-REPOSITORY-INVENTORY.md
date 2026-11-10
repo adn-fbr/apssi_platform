@@ -5,11 +5,11 @@
 
 ## Status vocabulary
 
-- **VERIFIED:** directly present in inspected repository evidence.
-- **PARTIAL:** a UI or limited local implementation exists, but the complete production capability is not evidenced.
-- **NOT IMPLEMENTED:** no implementation was found in the inspected repository.
-- **UNKNOWN:** repository evidence is insufficient to determine the answer.
-- **BLOCKED:** the question or verification depends on an unavailable artifact, tool, or owner decision.
+- **VERIFIED:** directly evidenced by the repository or by an executed check.
+- **PARTIAL:** some evidence exists, but the requirement or acceptance is incomplete.
+- **NOT VERIFIED:** evidence is insufficient to establish the control or result; this does not assert that external controls are absent.
+- **BLOCKED:** verification depends on an unavailable decision, access, environment, or prerequisite.
+- **NOT APPLICABLE:** the requirement does not apply to the stated scope; include the rationale.
 
 Severity uses **Critical / High / Medium / Low** as prioritization, not as a claim of exploitability. Recommendations below are proposals, not approved architecture.
 
@@ -18,8 +18,8 @@ Severity uses **Critical / High / Medium / Low** as prioritization, not as a cla
 | Artifact | Status | Evidence / implication |
 |---|---|---|
 | Product requirement authority | **VERIFIED** | [BRB-001 Blueprint Requirement Baseline](../product/BLUEPRINT-REQUIREMENT-BASELINE.md) records the dated owner decision that Blueprint v0.1 is the sole initial requirements baseline; no separate PRD is assumed. The original Blueprint source itself is not separately present in this checkout. |
-| Detailed user stories / acceptance criteria | **UNKNOWN** | BRB-001 explicitly lists detailed workflow criteria as undefined. Product compliance can only be traced to the 12 requirement themes, not per-screen acceptance tests. |
-| Approved technical architecture | **UNKNOWN** | No approved architecture contract or ADR set was found. Architecture documents in this package are recommendations only. |
+| Detailed user stories / acceptance criteria | **PARTIAL** | BRB-001 supplies 12 themes but explicitly leaves workflow-level criteria undefined. Product compliance cannot be signed off per workflow. |
+| Approved technical architecture | **BLOCKED** | No approved architecture contract or ADR set was found. Architecture documents in this package are recommendations only; owner decisions are needed. |
 | `AGENTS.md` | **VERIFIED** | Lovable project rules and project-structure guidance are present. They prohibit manual edits to generated files and database migrations and specify static mock data as prototype input. |
 | `README.md` / `roadmap.md` | **VERIFIED, supporting only** | README describes Lovable and local development. Roadmap identifies planned screens and role-adaptive navigation; neither is a PRD or an approved architecture. |
 | Source code | **VERIFIED** | 16 file-based route definitions plus shared shell, mock data, components, and setup/configuration are present. Source demonstrates current behavior only. |
@@ -28,17 +28,16 @@ Severity uses **Critical / High / Medium / Low** as prioritization, not as a cla
 
 ## Reconciliation with supplied preliminary package
 
-The supplied preliminary package was based on `mobile-first-web-main.zip`, which lacked `.git` and described runtime verification as pending. Its copied audit documents have been removed after reconciliation; this directory now contains the canonical audit.
+The supplied preliminary package was based on `mobile-first-web-main.zip`, which lacked `.git` and described runtime verification as pending. Its copied documents were removed in commit `b36376a` after reconciliation. This history change is documented: the nested prompt and baseline duplicated canonical files; the nested backlog and six audit files were ZIP-based preliminary versions superseded by `docs/audit/`; the nested README repeated their inventory and limitations. Findings were compared and carried forward where applicable. The source documents remain available in Git history; no history was rewritten.
 
 - The 16-route inventory and the central prototype/security findings are consistent with the preliminary package.
-- The earlier Git-inspection blocker is resolved for this checkout. Remote `origin` is `https://github.com/adn-fbr/mobile-first-web.git`; `main`, `origin/main`, and `origin/HEAD` now point to `382555e` (`Update audit documentation with Git history verification and route source evidence`).
+**Git inspection at audit start:** root `D:/APSSI/PROYEK WEB/BolaID`; remote `origin` is `https://github.com/adn-fbr/mobile-first-web.git`; `main`, `origin/main`, and `origin/HEAD` at `b36376a`; worktree clean. `git log -5` listed `b36376a`, `382555e`, `5e8283e`, `c7f7151`, and `dbb71da`. `AGENTS.md` states pushes to the connected branch sync to Lovable; the remote itself does not verify dashboard state. No commit or push was made in this audit continuation.
 - The previous audit observed commit `5e8283e` (`Refactor code structure for improved readability and maintainability`, author `konitabee-byte`), whose stat contains documentation and `package-lock.json` but no `src/` paths. Its title did not describe the files in its stat. No commit, amend or push was performed by this audit agent.
 - `AGENTS.md` states that the project is connected to Lovable and that commits pushed to the connected branch sync to Lovable. The Git remote itself does not prove dashboard configuration. No push or history rewrite was performed by this audit.
 - The historical commit `dbb71da` is titled `Added bottom nav & dashboard PRD`, but its changed-file list contains `roadmap.md` and source files, not a PRD document. This does not override BRB-001's explicit decision not to assume a separate PRD.
 - The live README uses npm instructions while the repository contains both `package-lock.json` and `bun.lock`/`bunfig.toml`; package-manager ownership remains `ARCHITECTURE DECISION REQUIRED`.
 - The preliminary proposed architecture's PostgreSQL and versioned REST suggestions are not stated in BRB-001. They remain proposals, not product requirements or approved technical decisions.
 
-**Git inspection:** `git rev-parse --show-toplevel` returned `D:/APSSI/PROYEK WEB/BolaID`; branch `main` is synchronized with `origin/main` at `382555e`. Current uncommitted changes are the audit-document edits/deletions from deduplication and a status `M` marker on generated `src/routeTree.gen.ts`. Its index and working-tree blob IDs match and `git diff` shows no content change; this audit did not edit it. No commit, push, rebase or history rewrite was performed by this audit agent.
 
 ## Repository structure
 
@@ -51,7 +50,7 @@ The supplied preliminary package was based on `mobile-first-web-main.zip`, which
 | `src/test/` | setup and one routing test | **VERIFIED:** small test footprint; only root route matching is explicitly tested by the discovered test file. |
 | `public/` | favicon and robots.txt | **VERIFIED.** |
 | root | Vite/TanStack Start, TypeScript, Vitest, ESLint, Prettier, Bun and npm configuration/lockfiles | **VERIFIED.** `bun.lock` and `package-lock.json` coexist; no CI workflow or deployment contract was found in the root inventory. |
-| `supabase/`, `drizzle/`, Prisma/schema directories | Not present in visible repository inventory | **NOT IMPLEMENTED in this checkout.** Do not infer the existence or absence of externally managed services from this alone. |
+| `supabase/`, `drizzle/`, Prisma/schema directories | Not present in visible repository inventory | **NOT VERIFIED.** No schema/client was found in this checkout; external managed infrastructure was not inspected. |
 
 Evidence: [AGENTS.md](../../AGENTS.md); [src/routes/README.md](../../src/routes/README.md); [src/routeTree.gen.ts](../../src/routeTree.gen.ts#L11-L74); [package.json](../../package.json); [src/test/app-routing.test.tsx](../../src/test/app-routing.test.tsx#L1-L17).
 
@@ -65,9 +64,9 @@ Evidence: [AGENTS.md](../../AGENTS.md); [src/routes/README.md](../../src/routes/
 | Forms / schemas | React Hook Form, Zod, and resolver packages are declared | **PARTIAL:** dependencies exist, but inspected business forms use direct state/native inputs and no route schema validation was found. |
 | Tests | Vitest, jsdom, Testing Library and one routing test | **VERIFIED:** `npm run test` passed 1 test in 1 test file; the suite remains very small. |
 | Server middleware | CSRF middleware is configured for Start server functions; generic error middleware is configured | **PARTIAL:** no server functions were found to protect or use. |
-| Database / auth / storage / payment SDK | No corresponding client or schema dependency was found in `package.json` or `src` | **NOT IMPLEMENTED in inspected checkout**; external managed infrastructure remains **UNKNOWN**. |
-| Package-manager setup | README documents npm; both npm and Bun lockfiles/configuration are present | **UNKNOWN:** repository does not establish a canonical package manager. |
-| Environment config | No root `.env*` or `.dev.vars` files appeared in the root listing; no application `VITE_*` access was found in `src` | **UNKNOWN:** deployment secrets and dashboard configuration are outside this checkout. No secret values were inspected. |
+| Database / auth / storage / payment SDK | No corresponding client or schema dependency was found in `package.json` or `src` | **NOT VERIFIED:** no in-repository implementation was found; external managed infrastructure was not inspected. |
+| Package-manager setup | README documents npm; both npm and Bun lockfiles/configuration are present | **BLOCKED:** owner must select one package manager/lockfile policy before reproducible setup and CI. |
+| Environment config | No root `.env*` or `.dev.vars` files appeared in the root listing; no application `VITE_*` access was found in `src` | **NOT VERIFIED:** deployment secrets and dashboard configuration are outside this checkout. No secret values were inspected. |
 Key evidence: [package.json](../../package.json#L1-L94); [package-lock.json](../../package-lock.json#L1-L5); [bun.lock](../../bun.lock); [src/router.tsx](../../src/router.tsx#L1-L17); [src/routes/__root.tsx](../../src/routes/__root.tsx#L78-L146); [src/start.ts](../../src/start.ts#L1-L33); [src/server.ts](../../src/server.ts#L1-L64).
 
 ## Application entry and request flow

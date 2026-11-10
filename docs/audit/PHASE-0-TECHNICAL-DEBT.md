@@ -28,9 +28,9 @@ This document records observed maintainability and delivery risks. Findings do n
 - Editor diagnostics returned no errors for `src`; this gives limited static-editor signal only.
 - `npm run test` exited 0: 1 test file and 1 test passed.
 - `npm run build` exited 0 for client, SSR and Nitro output; Vite and Nitro emitted configuration warnings.
-- `node_modules\\.bin\\tsc.cmd --noEmit` exited 0 without diagnostics; no typecheck script is declared.
+- `node_modules\.bin\tsc.cmd --noEmit` exited 0 without diagnostics; no typecheck script is declared.
 - `npm run lint` exited 1 with 8,745 Prettier `Delete ␍` errors and 13 warnings. No autofix was run.
-- No runtime/browser checks were conducted, so UI behavior beyond source-level interactions is **UNKNOWN**.
+- No runtime/browser checks were conducted, so UI behavior beyond source-level interactions is **NOT VERIFIED**.
 
 ## Technical debt owner decisions
 

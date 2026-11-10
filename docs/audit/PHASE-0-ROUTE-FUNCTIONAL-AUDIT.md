@@ -60,7 +60,7 @@ The only accepted requirements baseline is [BRB-001](../product/BLUEPRINT-REQUIR
 | BR-08 | Competition lifecycle | Organizer/tournament/referee/report routes | **PARTIAL** | Static UI covers several listed concepts; no persisted lifecycle, roster/draw/schedule/result transactions, or calculated standings. See route rows above. |
 | BR-09 | Football operations | SSB roster, training, attendance and finance routes | **PARTIAL** | Static fixtures and local attendance/reminder state; player registration/team/staff/finance writes are absent. |
 | BR-10 | Player development | Coach assessment and player development views | **PARTIAL** | Domains/template exist as sample UI; no saved/versioned assessments, methodology approval or access rules. |
-| BR-11 | API-first direction | No API/server-function call found in inspected route/source paths | **NOT IMPLEMENTED** | External integration contracts, server API and provider are `ARCHITECTURE DECISION REQUIRED`; no API-first service boundary is evidenced. |
+| BR-11 | API-first direction | No API/server-function call found in inspected route/source paths | **NOT VERIFIED** | External integration contracts, server API and provider are `ARCHITECTURE DECISION REQUIRED`; no API-first service boundary is evidenced. |
 | BR-12 | MVP focus | Player/parent, SSB, competition screens all exist | **PARTIAL** | UI coverage exists, but identity/competition/SSB workflows are not backed by production behavior; screen presence is not MVP completion. |
 
 BRB-001 explicitly leaves detailed workflows and acceptance criteria undefined; do not infer missing policy (such as age cut-offs, tie-breaks, or payment rules) from the prototype.
@@ -75,7 +75,7 @@ BRB-001 explicitly leaves detailed workflows and acceptance criteria undefined; 
 | RF-04 / **Medium** | Selected tournament category does not drive category-specific results; week/date is hard-coded; data is seeded at disparate dates. | Define authoritative competition/calendar semantics and acceptance cases with product owners. |
 | RF-05 / **Medium** | The only discovered test checks that `/` matches a route; no route behavior, access, persistence, form validation, or role boundary tests were found. | Define critical workflow and security tests before enabling real data. |
 
-## Unknowns / owner questions
+## Unverified items / owner questions
 
 - Which screens and workflows are in the initial production release, and what are their acceptance criteria?
 - Are demo identities and event records entirely synthetic and approved for continued use? Do not use real child records in the mock module.
