@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project structure
+- App shell (mobile bottom tabs + desktop sidebar) lives in src/components/app-shell.tsx and wraps <Outlet /> in __root — so every page shares one nav.
+- Prototype screens read static demo data from src/lib/mock-data.ts — swap for real queries when a backend is added.
+- Shared UI primitives (Panel, Pill, Btn, Stat, Switch, Segmented) live in src/components/kit.tsx with cva variants on design tokens — keeps styling in the design system.
