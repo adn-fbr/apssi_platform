@@ -28,17 +28,17 @@ Severity uses **Critical / High / Medium / Low** as prioritization, not as a cla
 
 ## Reconciliation with supplied preliminary package
 
-The supplied [preliminary package](../phase0-audit/README.md) was based on `mobile-first-web-main.zip`, which lacked `.git` and described runtime verification as pending. The current checkout was re-inspected directly:
+The supplied preliminary package was based on `mobile-first-web-main.zip`, which lacked `.git` and described runtime verification as pending. Its copied audit documents have been removed after reconciliation; this directory now contains the canonical audit.
 
 - The 16-route inventory and the central prototype/security findings are consistent with the preliminary package.
-- The earlier Git-inspection blocker is resolved for this checkout. Remote `origin` is `https://github.com/adn-fbr/mobile-first-web.git`; `origin/main` remains at `c7f7151` (`Add project README`). `main` now points to `5e8283e` and is one commit ahead of `origin/main`.
-- During this audit, commit `5e8283e` (`Refactor code structure for improved readability and maintainability`, author `konitabee-byte`) appeared on `main`. Its committed file list contains the verification prompt, audit/baseline/preliminary documentation and `package-lock.json`, but no `src/` paths. Its title does not describe the files in its stat. This audit agent did not create, amend or push that commit; attribution of the concurrent action beyond the recorded Git author is unknown.
+- The earlier Git-inspection blocker is resolved for this checkout. Remote `origin` is `https://github.com/adn-fbr/mobile-first-web.git`; `main`, `origin/main`, and `origin/HEAD` now point to `382555e` (`Update audit documentation with Git history verification and route source evidence`).
+- The previous audit observed commit `5e8283e` (`Refactor code structure for improved readability and maintainability`, author `konitabee-byte`), whose stat contains documentation and `package-lock.json` but no `src/` paths. Its title did not describe the files in its stat. No commit, amend or push was performed by this audit agent.
 - `AGENTS.md` states that the project is connected to Lovable and that commits pushed to the connected branch sync to Lovable. The Git remote itself does not prove dashboard configuration. No push or history rewrite was performed by this audit.
 - The historical commit `dbb71da` is titled `Added bottom nav & dashboard PRD`, but its changed-file list contains `roadmap.md` and source files, not a PRD document. This does not override BRB-001's explicit decision not to assume a separate PRD.
 - The live README uses npm instructions while the repository contains both `package-lock.json` and `bun.lock`/`bunfig.toml`; package-manager ownership remains `ARCHITECTURE DECISION REQUIRED`.
 - The preliminary proposed architecture's PostgreSQL and versioned REST suggestions are not stated in BRB-001. They remain proposals, not product requirements or approved technical decisions.
 
-**Git inspection:** `git rev-parse --show-toplevel` returned `D:/APSSI/PROYEK WEB/BolaID`; branch is `main`; current `git status --short --branch` is `main...origin/main [ahead 1]` with documentation-only modifications under `docs/audit/`. `git log` shows `5e8283e` at HEAD, followed by `c7f7151`, `dbb71da`, `595d4f9` and `b6583cb`. The current tracked HEAD commit includes the prompt, product baseline, preliminary package, audit docs and `package-lock.json`; its stat contains no application source file. No application source files are modified. No commit, push, rebase or history rewrite was performed by this audit agent.
+**Git inspection:** `git rev-parse --show-toplevel` returned `D:/APSSI/PROYEK WEB/BolaID`; branch `main` is synchronized with `origin/main` at `382555e`. Current uncommitted changes are the audit-document edits/deletions from deduplication and a status `M` marker on generated `src/routeTree.gen.ts`. Its index and working-tree blob IDs match and `git diff` shows no content change; this audit did not edit it. No commit, push, rebase or history rewrite was performed by this audit agent.
 
 ## Repository structure
 
@@ -63,14 +63,12 @@ Evidence: [AGENTS.md](../../AGENTS.md); [src/routes/README.md](../../src/routes/
 | Routing / SSR | TanStack Router and TanStack Start; generated route tree; `src/server.ts` wraps the Start server entry | **VERIFIED.** This is an SSR-capable application shell, not evidence of business APIs. |
 | Client state / data | React component state and a root TanStack Query provider; routes read static exports from `src/lib/mock-data.ts` | **PARTIAL:** query package/provider exist; no query hooks, query functions, or remote data source were found under `src`. |
 | Forms / schemas | React Hook Form, Zod, and resolver packages are declared | **PARTIAL:** dependencies exist, but inspected business forms use direct state/native inputs and no route schema validation was found. |
-| Tests | Vitest, jsdom, Testing Library and one routing test | **PARTIAL:** test infrastructure is configured; execution is blocked because dependencies are not installed locally. |
+| Tests | Vitest, jsdom, Testing Library and one routing test | **VERIFIED:** `npm run test` passed 1 test in 1 test file; the suite remains very small. |
 | Server middleware | CSRF middleware is configured for Start server functions; generic error middleware is configured | **PARTIAL:** no server functions were found to protect or use. |
 | Database / auth / storage / payment SDK | No corresponding client or schema dependency was found in `package.json` or `src` | **NOT IMPLEMENTED in inspected checkout**; external managed infrastructure remains **UNKNOWN**. |
 | Package-manager setup | README documents npm; both npm and Bun lockfiles/configuration are present | **UNKNOWN:** repository does not establish a canonical package manager. |
 | Environment config | No root `.env*` or `.dev.vars` files appeared in the root listing; no application `VITE_*` access was found in `src` | **UNKNOWN:** deployment secrets and dashboard configuration are outside this checkout. No secret values were inspected. |
 Key evidence: [package.json](../../package.json#L1-L94); [package-lock.json](../../package-lock.json#L1-L5); [bun.lock](../../bun.lock); [src/router.tsx](../../src/router.tsx#L1-L17); [src/routes/__root.tsx](../../src/routes/__root.tsx#L78-L146); [src/start.ts](../../src/start.ts#L1-L33); [src/server.ts](../../src/server.ts#L1-L64).
-
-Key evidence: [package.json](../../package.json#L1-L94); [src/router.tsx](../../src/router.tsx#L1-L17); [src/routes/__root.tsx](../../src/routes/__root.tsx#L78-L146); [src/start.ts](../../src/start.ts#L1-L33); [src/server.ts](../../src/server.ts#L1-L64).
 
 ## Application entry and request flow
 
@@ -101,14 +99,17 @@ Evidence: [src/components/app-shell.tsx](../../src/components/app-shell.tsx#L18-
 - Scripts include development, production/development builds, preview, lint, formatting, and Vitest runs. TypeScript strictness is enabled with several additional strict checks.
 - Vite uses the Lovable TanStack config wrapper; the config comments describe Cloudflare as a default Nitro target and caution against changing generated plugin setup. This is configuration evidence, not proof of the deployed target.
 - Vitest uses jsdom and includes `src/**/*.{test,spec}.{ts,tsx}`.
-- **Test execution:** attempted `bun run test`; Bun is not installed. Attempted `npm run test`; Vitest was not found. There is no local `node_modules`. No packages were installed, per scope constraints.
-- **Build/lint:** not run because project dependencies are unavailable. This audit does not claim successful build, lint, or test results.
+- **Install:** the user reports `npm install` exited 0.
+- **Test:** `npm run test` exited 0; Vitest 4.1.12 reported 1 test file and 1 test passed.
+- **Lint:** `npm run lint` exited 1 with 8,745 errors and 13 warnings. The errors report Prettier `Delete ␍` line-ending findings; no autofix was run.
+- **Build:** `npm run build` exited 0, including client, SSR and Nitro output. Vite warned that `vite-tsconfig-paths` overlaps native tsconfig path support; Nitro warned `inlineDynamicImports` is ignored with code splitting.
+- **Typecheck:** no `typecheck` script exists. Direct `node_modules\\.bin\\tsc.cmd --noEmit` exited 0 without diagnostics.
 - **Editor diagnostics:** `get_errors` returned "No errors found" for `src`; this is not a substitute for a compiler, lint, test, or production build run.
 - **Environment:** no `.env*` or `.dev.vars` was visible at repository root; no deployment/dashboard secret inventory was available.
 
 Evidence: [package.json](../../package.json#L5-L13); [vitest.config.ts](../../vitest.config.ts#L1-L16); [tsconfig.json](../../tsconfig.json#L1-L34); [vite.config.ts](../../vite.config.ts#L1-L15); [.gitignore](../../.gitignore#L1-L29).
 
-**Finding F0-03 | BLOCKED | Medium:** Automated quality gates could not be exercised without local dependencies. Before development gates can be considered established, provision the project's expected package manager/runtime and run the existing scripts without changing lockfiles as part of this audit.
+**Finding F0-03 | PARTIAL | Medium:** Tests, build, and direct TypeScript checking completed successfully, but lint fails on widespread line-ending formatting findings. Resolve the lint/configuration issue under an owner-approved line-ending policy, then rerun lint; do not use broad autofix without reviewing its scope.
 
 ## Audit boundaries and unknowns
 

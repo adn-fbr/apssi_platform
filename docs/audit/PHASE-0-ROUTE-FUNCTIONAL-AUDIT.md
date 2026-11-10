@@ -1,6 +1,6 @@
 # Phase 0 Route Functional Audit
 
-**Assessment basis:** static source inspection. Interactions marked as local are browser/component state or feedback only; they are not evidence of persistence or a production workflow. There is no PRD to establish acceptance criteria.
+**Assessment basis:** static source inspection against BRB-001. Interactions marked as local are browser/component state or feedback only; they are not evidence of persistence or a production workflow. Detailed workflow acceptance criteria are `UNDEFINED`; no separate PRD is assumed.
 
 | Route | Intended purpose | Available interactions | Mock dependency / observed state | Missing business logic and incomplete workflow | Status |
 |---|---|---|---|---|---|
@@ -23,18 +23,7 @@
 
 ## Route evidence
 
-All 16 public paths are registered in the generated tree: [src/routeTree.gen.ts](../../src/routeTree.gen.ts#L11-L74). Representative direct evidence:
-
-- Landing and public navigation: [src/routes/index.tsx](../../src/routes/index.tsx#L7-L29).
-- Player static imports and toast-only share/QR actions: [src/routes/player.tsx](../../src/routes/player.tsx#L1-L20), [src/routes/player.tsx](../../src/routes/player.tsx#L49-L67).
-- Parent local consent/payment state: [src/routes/parent.tsx](../../src/routes/parent.tsx#L30-L33), [src/routes/parent.tsx](../../src/routes/parent.tsx#L115-L123), [src/routes/parent.tsx](../../src/routes/parent.tsx#L176-L184).
-- Payment state is locally marked paid: [src/routes/payments.tsx](../../src/routes/payments.tsx#L28-L33), [src/routes/payments.tsx](../../src/routes/payments.tsx#L99-L109).
-- SSB lookup/save UI handlers: [src/routes/ssb.tsx](../../src/routes/ssb.tsx#L101-L143), [src/routes/ssb.tsx](../../src/routes/ssb.tsx#L185-L223).
-- Coach assessment local state and save: [src/routes/coach_.assessment.tsx](../../src/routes/coach_.assessment.tsx#L28-L33), [src/routes/coach_.assessment.tsx](../../src/routes/coach_.assessment.tsx#L144-L161).
-- Referee report local event array and toast submit: [src/routes/referee_.report.tsx](../../src/routes/referee_.report.tsx#L43-L60), [src/routes/referee_.report.tsx](../../src/routes/referee_.report.tsx#L170-L180).
-- Scout client filtering and local contact request: [src/routes/scout.tsx](../../src/routes/scout.tsx#L43-L63), [src/routes/scout.tsx](../../src/routes/scout.tsx#L170-L179).
-- Tournament category and view state: [src/routes/tournament.tsx](../../src/routes/tournament.tsx#L23-L27), [src/routes/tournament.tsx](../../src/routes/tournament.tsx#L48-L52).
-- The fixture source is explicitly described as demo data and not persisted: [src/lib/mock-data.ts](../../src/lib/mock-data.ts#L1-L4).
+All 16 public paths are registered in the generated tree: [src/routeTree.gen.ts](../../src/routeTree.gen.ts#L11-L74). The table below provides direct source references for every route; shared fixture evidence is in [src/lib/mock-data.ts](../../src/lib/mock-data.ts#L1-L4).
 
 | Route | Direct source evidence |
 |---|---|

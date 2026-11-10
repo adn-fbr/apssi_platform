@@ -2,7 +2,7 @@
 
 ## Overall decision
 
-**Phase 0: PARTIAL.** The current repository, source routes, baseline themes and security gaps have been inspected, but runtime checks could not execute, external service configuration is unknown, and key owner decisions remain open. Documentation generation alone does not satisfy the exit gates.
+**Phase 0: PARTIAL.** Source and requirement traceability are documented; tests, production build and direct typecheck pass, while lint fails. Backend/security implementation, browser verification, external service configuration and owner decisions remain open. Documentation generation and passing checks do not satisfy the full exit gates.
 
 | Readiness area | Status | Evidence / exit condition |
 |---|---|---|
@@ -12,11 +12,11 @@
 | Route functional audit | **VERIFIED** | All 16 routes and source-level interactions are recorded. Runtime/browser behavior is not verified. |
 | Backend readiness | **NOT IMPLEMENTED** in checked-in source | No auth, business API, database client/schema or storage client found. External Lovable Cloud or user-managed service configuration is **UNKNOWN**. |
 | Security readiness | **PARTIAL** | Security concepts appear in UI; no trusted auth/policy in code. Server enforcement must be implemented and verified before real child data. |
-| Automated tests/build/lint | **BLOCKED** | `bun run test` exited 1 because Bun is unavailable. `npm run test` exited 1 because `vitest` is not recognized. No local `node_modules`; no install performed. Build and lint were not run. |
-| Typecheck | **UNKNOWN** | `package.json` has no typecheck script. Editor diagnostics reported no `src` errors, which is not a typecheck run. |
-| Git/history constraints | **VERIFIED** | `main` tracks `origin/main` at `c7f7151`; supplied prompt/docs are untracked. No commit, push or history rewrite was performed. Lovable rules were respected. |
-| Git/history constraints | **VERIFIED** | `main` is one commit ahead of `origin/main` at `5e8283e`; the commit appeared during this audit and contains docs plus `package-lock.json`, not `src/`. The audit agent did not create or push it. Two audit Markdown files remain modified. Lovable rules were respected. |
-| Git/history constraints | **VERIFIED** | `main` is one commit ahead of `origin/main` at `5e8283e`; the commit appeared during this audit and contains docs plus `package-lock.json`, not `src/`. The audit agent did not create or push it. Current working changes are documentation-only. Lovable rules were respected. |
+| Tests | **VERIFIED** | `npm run test` exited 0; Vitest reports 1 test file and 1 test passed. Coverage is limited to root route matching. |
+| Production build | **VERIFIED** | `npm run build` exited 0 for client, SSR and Nitro output, with Vite/Nitro warnings noted in the inventory. |
+| Lint | **PARTIAL** | `npm run lint` exited 1 with 8,745 Prettier `Delete ␍` errors and 13 warnings. No autofix was run. |
+| Typecheck | **VERIFIED** | No `typecheck` script exists; direct `node_modules\\.bin\\tsc.cmd --noEmit` exited 0 without diagnostics. |
+| Git/history constraints | **VERIFIED** | `main` and `origin/main` are at `382555e`. Deduplication changes are documentation-only. Git marks `src/routeTree.gen.ts` modified, but its blob IDs match and `git diff` shows no content change. |
 | Phase 0 completion | **PARTIAL** | Static audit documents exist, but runtime, browser, dashboard, architecture approval and data-provenance gates remain open. |
 
 ## Explicit blockers
@@ -24,11 +24,10 @@
 1. **Requirement detail:** BRB-001 is the accepted baseline; detailed workflow acceptance criteria and the original Blueprint text are unavailable in this checkout. Do not assume a separate PRD.
 2. **Approved architecture:** provider, persistence, API boundary, deployment and operational decisions remain unapproved/unknown.
 3. **Unknown managed services:** repository cannot prove Lovable Cloud, auth, database, storage, payment or dashboard configuration.
-4. **No local dependencies:** tests, build and lint could not be run; command failures reflect unavailable tools/dependencies, not a demonstrated application-code failure.
+4. **Lint gate:** `npm run lint` exits 1 with CR line-ending Prettier errors and warnings; agree the repository's line-ending policy, resolve safely, and rerun.
 5. **Unverified data provenance:** confirm all example child names/identifiers/metrics are synthetic and not copied from real records.
 6. **Security model unresolved:** guardian verification, role/tenant grants, purpose-scoped consent, retention and audit requirements need owner/security/legal review.
-7. **Package manager conflict:** `README.md` instructs npm while `bun.lock` and `bunfig.toml` are present. Choose one before reproducible setup or CI.
-7. **Package manager conflict:** `README.md` instructs npm while `package-lock.json`, `bun.lock` and `bunfig.toml` coexist. Choose one before reproducible setup or CI.
+7. **Package manager conflict:** `README.md` documents npm while `package-lock.json`, `bun.lock` and `bunfig.toml` coexist. Choose one before reproducible setup or CI.
 
 ## Required owner decisions (sequence)
 
@@ -47,33 +46,7 @@
 
 ## Recommended implementation sequence after blockers resolve
 
-The following is a gated proposal, not an authorized feature commitment.
-
-1. **Baseline requirements and data governance.** Use BRB-001 as authority; define release scope, role matrix, data classification, retention, consent purposes and measurable acceptance criteria without inventing undefined rules.
-2. **Platform and security foundation.** Set up approved runtime/CI; connect server-side auth; establish principal, role grants, organization membership and authorization middleware/policy; add negative cross-tenant tests before adding real data.
-3. **Identity and guardian relationship.** Implement Football ID issuance/lifecycle, guardian verification, child access, consent record/version/withdrawal and audit events. Use synthetic data for tests and verify data minimization.
-4. **Organization and team foundation.** Add organization membership, team membership, season boundaries and player history with explicit transfer invariants.
-5. **Competition and match core.** Implement competition lifecycle, registration, match/official assignment, event submission and result correction; derive/validate standings from approved results.
-6. **Development and communication.** Implement versioned assessment/visibility rules and approved notifications with delivery status and audit where sensitive.
-7. **Payments and finance.** Integrate provider transaction/callback and reconciliation; test duplicate callbacks, failure/refund, and ledger/report accuracy.
-8. **Operational hardening.** Private file access if in scope, log redaction, monitoring, backup/restore, performance, accessibility, privacy/security testing and incident readiness.
-9. **Connect route workflows incrementally.** Replace one workflow's fixture read/write boundary at a time; retain visual UI where accepted and add loading, error, empty, retry, permission-denied and stale/conflict states.
-
-## Proposed Phase 1 backlog (to be refined from BRB-001 owner decisions)
-
-| ID | Candidate work item | Prerequisite | Suggested acceptance focus |
-|---|---|---|---|
-| P1-01 | Publish product, domain and technical authority documents | Owner approval | Requirements IDs, owners, acceptance criteria, traceability and conflict-resolution path are explicit. |
-| P1-02 | Establish CI/runtime and baseline quality gates | Package manager decision | Reproducible install from lockfile; test, typecheck/build, lint run and results recorded. |
-| P1-03 | Data classification and synthetic fixture review | Data/privacy owner | Every fixture's provenance approved; no production child PII bundled; demo state clearly labeled. |
-| P1-04 | Authentication and person/role-grant foundation | Identity provider and role policy selected | Tests prove anonymous, wrong-role and inactive-membership requests are denied server-side. |
-| P1-05 | Organization/team membership and tenant policy | Domain model approved | Cross-organization reads/writes denied; grants are scoped, revocable and audited. |
-| P1-06 | Guardian verification and consent lifecycle | Legal/product decisions | Grant/decline/withdraw/version/history behavior enforced on server for each purpose. |
-| P1-07 | Football ID issuance and profile lifecycle | Identity authority decision | Unique issuance, verification, correction/merge and stable player-owned history behavior tested. |
-| P1-08 | Attendance and assessment persistence | Coach/SSB permissions and domain rubric | Server validation, actor/period, conflict behavior and authorized parent/player visibility tested. |
-| P1-09 | Competition/match/referee result lifecycle | Competition owner approval | Assignment, match event, submission, approval, correction and standings consistency tested. |
-| P1-10 | Payment provider integration and reconciliation | Finance/provider decision | Browser cannot mark paid; provider confirmation/idempotent webhook/reconciliation and audit verified. |
-| P1-11 | Security/privacy and operations baseline | Platform ownership and threat model | Logging redaction, backups, alerts, access review and incident/privacy response exercised. |
+The canonical proposed sequence, dependencies and work items are maintained in the [Phase 1 backlog](../architecture/PROPOSED-PHASE-1-BACKLOG.md). Do not treat it as approved until the listed owner decisions are resolved.
 
 ## Phase 0 completion checklist
 
@@ -85,7 +58,8 @@ The following is a gated proposal, not an authorized feature commitment.
 - [x] Use BRB-001 as the sole current product baseline and trace available source evidence to its themes.
 - [ ] Obtain the controlled Blueprint source if maintained separately; refine undefined workflows and approve a technical architecture.
 - [ ] Verify managed backend, deployment, secrets, storage and provider settings with authorized owners.
-- [ ] Run tests, build and lint in an approved dependency environment; record real results.
+- [x] Run tests, production build, lint and direct typecheck; record actual results.
+- [ ] Resolve the lint failures under an approved line-ending policy and rerun lint.
 - [ ] Confirm fixture provenance and approve child-data/privacy controls.
 - [ ] Secure owner decisions for target architecture and Phase 1 scope.
 

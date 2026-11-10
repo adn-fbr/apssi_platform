@@ -26,13 +26,15 @@ This document records observed maintainability and delivery risks. Findings do n
 ## Validation and confidence
 
 - Editor diagnostics returned no errors for `src`; this gives limited static-editor signal only.
-- `bun run test` could not start because Bun is unavailable. `npm run test` could not find `vitest`; `node_modules` is absent.
-- Build and lint were not run because dependencies are not installed. No dependency installation was performed.
+- `npm run test` exited 0: 1 test file and 1 test passed.
+- `npm run build` exited 0 for client, SSR and Nitro output; Vite and Nitro emitted configuration warnings.
+- `node_modules\\.bin\\tsc.cmd --noEmit` exited 0 without diagnostics; no typecheck script is declared.
+- `npm run lint` exited 1 with 8,745 Prettier `Delete ␍` errors and 13 warnings. No autofix was run.
 - No runtime/browser checks were conducted, so UI behavior beyond source-level interactions is **UNKNOWN**.
 
 ## Technical debt owner decisions
 
-- Which package manager/runtime is authoritative? The repo contains `bun.lock` and `bunfig.toml`, while README instructions use npm.
+- Which package manager/runtime is authoritative? The repo contains `package-lock.json`, `bun.lock` and `bunfig.toml`, while README instructions use npm.
 - Which owner is responsible for backend/service contracts and whether route loaders or server functions are the approved integration boundary?
 - Which shared design-system and accessibility checks are required for every route?
 - Which fixture data may be used, and how should prototype status be communicated to avoid users interpreting UI confirmations as actual writes?
