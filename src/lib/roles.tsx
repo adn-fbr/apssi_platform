@@ -17,6 +17,12 @@ import {
   Search,
   Landmark,
   Users,
+  ShieldCheck,
+  Shirt,
+  BadgeCheck,
+  Star,
+  Network,
+  BarChart3,
   type LucideIcon,
 } from "lucide-react";
 
@@ -36,7 +42,17 @@ export type AppPath =
   | "/scout"
   | "/organizer"
   | "/association"
-  | "/tournament";
+  | "/tournament"
+  | "/parent/consent"
+  | "/ssb/roster"
+  | "/ssb/training"
+  | "/coach/teams"
+  | "/coach/report"
+  | "/referee/profile"
+  | "/organizer/draw"
+  | "/organizer/results"
+  | "/scout/watchlist"
+  | "/association/verification";
 
 export type RoleId =
   "player" | "parent" | "ssb" | "coach" | "referee" | "organizer" | "scout" | "association";
@@ -65,11 +81,12 @@ export const roles: Role[] = [
     icon: Users,
     desc: "Jadwal, tagihan, dan izin data anak.",
     product: "Keluarga",
-    owns: ["/parent", "/payments"],
+    owns: ["/parent", "/payments", "/parent/consent"],
     tabs: [
       { to: "/parent", label: "Beranda", icon: Home },
       { to: "/schedule", label: "Jadwal", icon: CalendarDays },
       { to: "/payments", label: "Tagihan", icon: Wallet },
+      { to: "/parent/consent", label: "Izin", icon: ShieldCheck },
       { to: "/player", label: "Passport", icon: IdCard },
     ],
   },
@@ -97,11 +114,12 @@ export const roles: Role[] = [
     icon: Shield,
     desc: "Roster, absensi, dan keuangan klub.",
     product: "Football OS",
-    owns: ["/ssb", "/ssb/finance"],
+    owns: ["/ssb", "/ssb/finance", "/ssb/roster", "/ssb/training"],
     tabs: [
       { to: "/ssb", label: "Dashboard", icon: LayoutDashboard },
+      { to: "/ssb/roster", label: "Roster", icon: Users },
+      { to: "/ssb/training", label: "Latihan", icon: CalendarDays },
       { to: "/ssb/finance", label: "Keuangan", icon: LineChart },
-      { to: "/schedule", label: "Jadwal", icon: CalendarDays },
       { to: "/tournament", label: "Turnamen", icon: Trophy },
     ],
   },
@@ -113,12 +131,13 @@ export const roles: Role[] = [
     icon: ClipboardCheck,
     desc: "Sesi latihan, absensi, dan penilaian.",
     product: "Coach",
-    owns: ["/coach", "/coach/assessment"],
+    owns: ["/coach", "/coach/assessment", "/coach/teams", "/coach/report"],
     tabs: [
       { to: "/coach", label: "Dashboard", icon: LayoutDashboard },
+      { to: "/coach/teams", label: "Tim", icon: Shirt },
       { to: "/coach/assessment", label: "Penilaian", icon: ClipboardCheck },
+      { to: "/coach/report", label: "Laporan", icon: FileText },
       { to: "/schedule", label: "Jadwal", icon: CalendarDays },
-      { to: "/tournament", label: "Turnamen", icon: Trophy },
     ],
   },
   {
@@ -129,12 +148,12 @@ export const roles: Role[] = [
     icon: Flag,
     desc: "Penugasan dan laporan pertandingan.",
     product: "Referee",
-    owns: ["/referee", "/referee/report"],
+    owns: ["/referee", "/referee/report", "/referee/profile"],
     tabs: [
       { to: "/referee", label: "Penugasan", icon: Flag },
       { to: "/referee/report", label: "Laporan", icon: FileText },
       { to: "/schedule", label: "Jadwal", icon: CalendarDays },
-      { to: "/tournament", label: "Turnamen", icon: Trophy },
+      { to: "/referee/profile", label: "Profil", icon: BadgeCheck },
     ],
   },
   {
@@ -145,11 +164,12 @@ export const roles: Role[] = [
     icon: Trophy,
     desc: "Pendaftaran, drawing, wasit & hasil.",
     product: "Competition",
-    owns: ["/organizer"],
+    owns: ["/organizer", "/organizer/draw", "/organizer/results"],
     tabs: [
       { to: "/organizer", label: "Kelola", icon: Settings2 },
-      { to: "/tournament", label: "Pertandingan", icon: Trophy },
-      { to: "/schedule", label: "Jadwal", icon: CalendarDays },
+      { to: "/organizer/draw", label: "Drawing", icon: Network },
+      { to: "/organizer/results", label: "Hasil", icon: BarChart3 },
+      { to: "/tournament", label: "Klasemen", icon: Trophy },
     ],
   },
   {
@@ -160,9 +180,10 @@ export const roles: Role[] = [
     icon: Search,
     desc: "Cari pemain yang telah diizinkan wali.",
     product: "Football Network",
-    owns: ["/scout"],
+    owns: ["/scout", "/scout/watchlist"],
     tabs: [
       { to: "/scout", label: "Cari", icon: Search },
+      { to: "/scout/watchlist", label: "Watchlist", icon: Star },
       { to: "/tournament", label: "Turnamen", icon: Trophy },
       { to: "/opportunities", label: "Trial", icon: Sparkles },
     ],
@@ -175,11 +196,11 @@ export const roles: Role[] = [
     icon: Landmark,
     desc: "Data agregat wilayah & kompetisi.",
     product: "Intelligence",
-    owns: ["/association"],
+    owns: ["/association", "/association/verification"],
     tabs: [
       { to: "/association", label: "Dashboard", icon: Landmark },
+      { to: "/association/verification", label: "Verifikasi", icon: BadgeCheck },
       { to: "/tournament", label: "Kompetisi", icon: Trophy },
-      { to: "/schedule", label: "Jadwal", icon: CalendarDays },
     ],
   },
 ];
