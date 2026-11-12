@@ -56,7 +56,7 @@ function OrganizerPage() {
         <Stat label="Wasit" value={`${refsDone}/22`} sub="laga tertugaskan" />
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_1.2fr]">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1.2fr]">
         <Panel>
           <SectionTitle eyebrow="Persiapan" title="Checklist turnamen" />
           <ol className="space-y-3">

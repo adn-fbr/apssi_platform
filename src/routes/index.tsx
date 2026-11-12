@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, IdCard, Users, Shield, Trophy, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 import hero from "@/assets/hero-grassroots.jpg";
 import { buttonVariants } from "@/components/kit";
 import { cn } from "@/lib/utils";
+import { roles } from "@/lib/roles";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,36 +26,14 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const roles = [
-  {
-    to: "/player",
-    icon: IdCard,
-    title: "Pemain",
-    desc: "Football Passport, riwayat & perkembangan.",
-    tag: "Football ID",
-  },
-  {
-    to: "/parent",
-    icon: Users,
-    title: "Orang Tua",
-    desc: "Jadwal, pembayaran, dan izin data anak.",
-    tag: "Keluarga",
-  },
-  {
-    to: "/ssb",
-    icon: Shield,
-    title: "SSB / Klub",
-    desc: "Roster, absensi latihan, dan iuran.",
-    tag: "Football OS",
-  },
-  {
-    to: "/tournament",
-    icon: Trophy,
-    title: "Turnamen",
-    desc: "Pendaftaran, jadwal, hasil & klasemen.",
-    tag: "Competition",
-  },
-] as const;
+/** Home role cards come from the same role list as the nav, so all roles stay in sync. */
+const roleCards = roles.map((r) => ({
+  to: r.tabs[0]!.to,
+  icon: r.icon,
+  title: r.label,
+  desc: r.desc,
+  tag: r.product,
+}));
 
 const journey = ["SSB", "U9", "Turnamen", "Seleksi", "Akademi"];
 
@@ -100,14 +79,17 @@ function Index() {
               Masuk sebagai
             </p>
             <h2 className="text-2xl font-bold">Satu ekosistem, banyak peran</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Pilih peran untuk membuka layar utamanya. Menu bawah ikut menyesuaikan.
+            </p>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {roles.map(({ to, icon: Icon, title, desc, tag }) => (
+          {roleCards.map(({ to, icon: Icon, title, desc, tag }) => (
             <Link
               key={to}
               to={to}
-              className="group flex flex-col rounded-2xl border bg-card p-4 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-lift"
+              className="group flex min-h-[176px] flex-col rounded-2xl border bg-card p-4 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-lift"
             >
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-secondary-foreground transition-colors group-hover:bg-signal group-hover:text-signal-foreground">
                 <Icon className="h-5 w-5" />
@@ -116,15 +98,15 @@ function Index() {
                 {tag}
               </p>
               <h3 className="mt-0.5 text-lg font-bold">{title}</h3>
-              <p className="mt-1 text-[13px] leading-snug text-muted-foreground">{desc}</p>
-              <ArrowRight className="mt-3 h-4 w-4 text-primary transition-transform group-hover:translate-x-1" />
+              <p className="mb-3 mt-1 text-[13px] leading-snug text-muted-foreground">{desc}</p>
+              <ArrowRight className="mt-auto h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-1" />
             </Link>
           ))}
         </div>
       </section>
 
       {/* Journey + principle */}
-      <section className="grid gap-3 lg:grid-cols-[1.4fr_1fr]">
+      <section className="grid grid-cols-1 gap-3 lg:grid-cols-[1.4fr_1fr]">
         <div className="pitch-stripes overflow-hidden rounded-3xl p-5 text-pitch-foreground sm:p-7">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-pitch-muted">
             The player owns the journey

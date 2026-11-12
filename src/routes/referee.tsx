@@ -49,7 +49,7 @@ function RefereePage() {
         <Stat label="Laporan tertunda" value={1} />
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-[1.2fr_1fr]">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.2fr_1fr]">
         {first && (
           <div className="pitch-stripes rounded-3xl p-5 text-pitch-foreground shadow-lift">
             <div className="flex items-center justify-between">

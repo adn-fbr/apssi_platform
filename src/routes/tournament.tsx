@@ -82,7 +82,7 @@ function TournamentPage() {
         </div>
       </section>
 
-      <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.4fr_1fr]">
         <div className="space-y-4">
           <Segmented
             options={

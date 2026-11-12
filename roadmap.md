@@ -1,13 +1,15 @@
 # Roadmap
 
 - [x] MVP screens: Beranda, Passport, Keluarga, SSB, Turnamen
-- [ ] Role-adaptive bottom nav + role switcher (mobile sheet, desktop sidebar)
-- [ ] Shared Jadwal (agenda) screen, role-aware
-- [ ] Pemain: Peluang (trial/akademi/beasiswa)
-- [ ] Orang tua: Tagihan & pembayaran
-- [ ] SSB: Keuangan
-- [ ] Coach: Dashboard + Penilaian pemain
-- [ ] Wasit: Penugasan + Laporan pertandingan
-- [ ] Penyelenggara turnamen: Kelola turnamen
-- [ ] Scout: Pencarian pemain (consent-gated)
-- [ ] Asosiasi: Dashboard nasional/regional dengan drill-down
+- [x] Role-adaptive bottom nav + role switcher (mobile sheet, desktop sidebar)
+- [x] Shared Jadwal (agenda) screen, role-aware
+- [x] Pemain: Peluang (trial/akademi/beasiswa)
+- [x] Orang tua: Tagihan & pembayaran
+- [x] SSB: Keuangan
+- [x] Coach: Dashboard + Penilaian pemain
+- [x] Wasit: Penugasan + Laporan pertandingan
+- [x] Penyelenggara turnamen: Kelola turnamen
+- [x] Scout: Pencarian pemain (consent-gated)
+- [x] Asosiasi: Dashboard nasional/regional dengan drill-down
+- [x] Beranda: kartu untuk semua 8 peran
+- [x] QA visual semua layar (HP + desktop)

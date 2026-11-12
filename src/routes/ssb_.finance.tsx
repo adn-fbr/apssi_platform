@@ -51,7 +51,7 @@ function FinancePage() {
         <Stat label="Menunggak" value={ssbFinance.overdue} sub="pemain > 7 hari" />
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-[1.2fr_1fr]">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.2fr_1fr]">
         <div className="space-y-4">
           <Panel>
             <SectionTitle eyebrow="6 bulan terakhir" title="Tingkat pembayaran" />

@@ -73,7 +73,7 @@ function ScoutPage() {
     <div>
       <PageHeader eyebrow="Akademi XYZ · Scout terverifikasi" title="Cari pemain" />
 
-      <div className="grid gap-4 lg:grid-cols-[320px_1fr] lg:items-start">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[320px_1fr] lg:items-start">
         <Panel className="space-y-4 lg:sticky lg:top-10">
           <p className="flex items-center gap-2 text-sm font-bold">
             <SlidersHorizontal className="h-4 w-4" /> Filter · Sulawesi Selatan

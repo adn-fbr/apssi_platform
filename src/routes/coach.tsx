@@ -63,7 +63,7 @@ function CoachPage() {
         <Stat label="Belum dinilai" value={coach.pendingAssessments} />
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-[1.3fr_1fr]">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.3fr_1fr]">
         <div className="space-y-4">
           {/* Today's session */}
           <div className="pitch-stripes rounded-3xl p-5 text-pitch-foreground shadow-lift">

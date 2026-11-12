@@ -78,7 +78,7 @@ function AssociationPage() {
         <Stat label="Pertandingan" value={fmt(node.matches)} sub="Musim 2026/27" />
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-[1.3fr_1fr]">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.3fr_1fr]">
         <Panel>
           <SectionTitle
             eyebrow={kids.length ? `${kids.length} wilayah · ketuk untuk detail` : node.level}

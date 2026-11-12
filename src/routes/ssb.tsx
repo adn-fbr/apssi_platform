@@ -99,7 +99,7 @@ function SsbPage() {
         ))}
       </div>
 
-      <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_1.3fr]">
+      <div className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1.3fr]">
         <div className="space-y-4">
           {/* Today's sessions */}
           <Panel>

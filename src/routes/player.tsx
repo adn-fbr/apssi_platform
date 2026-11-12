@@ -58,7 +58,7 @@ function PlayerPage() {
   const s = player.stats;
 
   return (
-    <div className="grid gap-5 lg:grid-cols-[400px_1fr] lg:items-start lg:gap-8">
+    <div className="grid grid-cols-1 gap-5 lg:grid-cols-[400px_1fr] lg:items-start lg:gap-8">
       <div className="space-y-4 lg:sticky lg:top-10">
         <FootballIdCard className="animate-rise" />
         <div className="flex gap-2">
