@@ -1,9 +1,10 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { Bell, Check, ChevronDown } from "lucide-react";
+import { Bell, Check, ChevronDown, UserCircle } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Drawer } from "vaul";
 import { cn } from "@/lib/utils";
 import { activeTab, RoleProvider, roles, useRole, type RoleId } from "@/lib/roles";
+import { unreadCount, useNotifications } from "@/lib/notifications";
 
 export function Logo({ className, onDark }: { className?: string; onDark?: boolean }) {
   return (
@@ -119,6 +120,13 @@ function MobileRoleSwitcher() {
                 switchRole(id);
               }}
             />
+            <Link
+              to="/account"
+              onClick={() => setOpen(false)}
+              className="mt-3 flex items-center gap-3 rounded-xl border px-3 py-2.5 text-sm font-bold hover:bg-muted"
+            >
+              <UserCircle className="h-[18px] w-[18px]" /> Akun & pengaturan
+            </Link>
           </div>
         </Drawer.Content>
       </Drawer.Portal>
@@ -131,6 +139,7 @@ function ShellInner({ children }: { children: ReactNode }) {
   const { role } = useRole();
   const switchRole = useSwitchRole();
   const current = activeTab(role.tabs, pathname);
+  const unread = unreadCount(useNotifications(role.id));
 
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[256px_1fr]">
@@ -162,6 +171,37 @@ function ShellInner({ children }: { children: ReactNode }) {
           ))}
         </nav>
 
+        <nav
+          className="mt-4 flex flex-col gap-1 border-t border-sidebar-border pt-4"
+          aria-label="Akun"
+        >
+          {(
+            [
+              { to: "/notifications", label: "Notifikasi", icon: Bell, badge: unread },
+              { to: "/account", label: "Akun & pengaturan", icon: UserCircle, badge: 0 },
+            ] as const
+          ).map(({ to, label, icon: Icon, badge }) => (
+            <Link
+              key={to}
+              to={to}
+              className={cn(
+                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors",
+                pathname === to
+                  ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                  : "text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+              )}
+            >
+              <Icon className="h-[18px] w-[18px]" strokeWidth={2.2} />
+              <span className="flex-1">{label}</span>
+              {badge > 0 && (
+                <span className="rounded-full bg-destructive px-1.5 font-mono text-[10px] font-bold text-destructive-foreground">
+                  {badge}
+                </span>
+              )}
+            </Link>
+          ))}
+        </nav>
+
         <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.18em] text-sidebar-foreground/50">
           Ganti peran
         </p>
@@ -184,13 +224,21 @@ function ShellInner({ children }: { children: ReactNode }) {
           <Logo />
           <div className="flex items-center gap-2">
             <MobileRoleSwitcher />
-            <button
-              className="relative flex h-9 w-9 items-center justify-center rounded-full border bg-card"
-              aria-label="Notifikasi"
+            <Link
+              to="/notifications"
+              className={cn(
+                "relative flex h-9 w-9 items-center justify-center rounded-full border bg-card",
+                pathname === "/notifications" && "border-primary bg-secondary",
+              )}
+              aria-label={unread ? `Notifikasi, ${unread} belum dibaca` : "Notifikasi"}
             >
               <Bell className="h-4 w-4" />
-              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-destructive" />
-            </button>
+              {unread > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 font-mono text-[9px] font-bold text-destructive-foreground">
+                  {unread}
+                </span>
+              )}
+            </Link>
           </div>
         </header>
 

@@ -52,7 +52,9 @@ export type AppPath =
   | "/organizer/draw"
   | "/organizer/results"
   | "/scout/watchlist"
-  | "/association/verification";
+  | "/association/verification"
+  | "/notifications"
+  | "/account";
 
 export type RoleId =
   "player" | "parent" | "ssb" | "coach" | "referee" | "organizer" | "scout" | "association";

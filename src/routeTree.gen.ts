@@ -10,8 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AccountRouteImport } from './routes/account'
 import { Route as AssociationRouteImport } from './routes/association'
 import { Route as CoachRouteImport } from './routes/coach'
+import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as OrganizerRouteImport } from './routes/organizer'
 import { Route as ParentRouteImport } from './routes/parent'
@@ -41,6 +43,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AssociationRoute = AssociationRouteImport.update({
   id: '/association',
   path: '/association',
@@ -49,6 +56,11 @@ const AssociationRoute = AssociationRouteImport.update({
 const CoachRoute = CoachRouteImport.update({
   id: '/coach',
   path: '/coach',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OpportunitiesRoute = OpportunitiesRouteImport.update({
@@ -169,8 +181,10 @@ const SsbTrainingRoute = SsbTrainingRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
   '/association': typeof AssociationRoute
   '/coach': typeof CoachRoute
+  '/notifications': typeof NotificationsRoute
   '/opportunities': typeof OpportunitiesRoute
   '/organizer': typeof OrganizerRoute
   '/parent': typeof ParentRoute
@@ -197,8 +211,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
   '/association': typeof AssociationRoute
   '/coach': typeof CoachRoute
+  '/notifications': typeof NotificationsRoute
   '/opportunities': typeof OpportunitiesRoute
   '/organizer': typeof OrganizerRoute
   '/parent': typeof ParentRoute
@@ -226,8 +242,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
   '/association': typeof AssociationRoute
   '/coach': typeof CoachRoute
+  '/notifications': typeof NotificationsRoute
   '/opportunities': typeof OpportunitiesRoute
   '/organizer': typeof OrganizerRoute
   '/parent': typeof ParentRoute
@@ -256,8 +274,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/account'
     | '/association'
     | '/coach'
+    | '/notifications'
     | '/opportunities'
     | '/organizer'
     | '/parent'
@@ -284,8 +304,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/account'
     | '/association'
     | '/coach'
+    | '/notifications'
     | '/opportunities'
     | '/organizer'
     | '/parent'
@@ -312,8 +334,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/account'
     | '/association'
     | '/coach'
+    | '/notifications'
     | '/opportunities'
     | '/organizer'
     | '/parent'
@@ -341,8 +365,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccountRoute: typeof AccountRoute
   AssociationRoute: typeof AssociationRoute
   CoachRoute: typeof CoachRoute
+  NotificationsRoute: typeof NotificationsRoute
   OpportunitiesRoute: typeof OpportunitiesRoute
   OrganizerRoute: typeof OrganizerRoute
   ParentRoute: typeof ParentRoute
@@ -377,6 +403,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/association': {
       id: '/association'
       path: '/association'
@@ -389,6 +422,13 @@ declare module '@tanstack/react-router' {
       path: '/coach'
       fullPath: '/coach'
       preLoaderRoute: typeof CoachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/opportunities': {
@@ -557,8 +597,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccountRoute: AccountRoute,
   AssociationRoute: AssociationRoute,
   CoachRoute: CoachRoute,
+  NotificationsRoute: NotificationsRoute,
   OpportunitiesRoute: OpportunitiesRoute,
   OrganizerRoute: OrganizerRoute,
   ParentRoute: ParentRoute,
