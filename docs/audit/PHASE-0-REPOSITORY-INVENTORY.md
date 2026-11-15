@@ -1,5 +1,48 @@
 # Phase 0 Repository Inventory
 
+## Current Re-audit — 2026-11-15
+
+**Authority:** This section supersedes the historical snapshot below for the checkout at `171182a`. Product requirements remain governed only by [BRB-001](../product/BLUEPRINT-REQUIREMENT-BASELINE.md). Owner-approved technical direction is recorded separately in [PHASE-0-OWNER-DECISION-RECORD.md](PHASE-0-OWNER-DECISION-RECORD.md); approval of direction is not evidence of implementation or deployment.
+
+### Repository and Git
+
+- Root: `D:\APSSI\PROYEK WEB\apssi_platform`; app is a single TanStack Start repository with `src/routes`, `src/components`, `src/lib`, `src/hooks`, `src/test`, `public`, `docs/audit`, and `docs/architecture`.
+- At audit start: branch `main`, HEAD `171182a`; `origin/main` and `origin/HEAD` point to the same commit; worktree was clean. After build, generated `.output`/`.wrangler` artifacts remained ignored and Git status was still clean. The only post-audit changes are the requested documentation edits.
+- Remotes: `origin` is `https://github.com/psrajawalimuda-svg/apssi_platform.git`; `upstream` is `https://github.com/adn-fbr/apssi_platform.git`. Only `main` and `origin/main` appeared in the branch listing; no fetched `upstream/*` branch was listed.
+- Recent history includes `171182a` (dependency/config update), `2499529` (Account and Notifications), and `d352669` (role-specific routes). No history was rewritten and no commit or push was made.
+- At the time of the Phase 0 audit, the README stated that changes made in Lovable were committed directly to this repository and that pushes to `main` synced back to Lovable. This is a historical observation, not current README guidance: the README was subsequently updated to align with OD-11 (2026-11-15), which establishes VS Code as the primary development environment, GitHub as the canonical source of truth, and Lovable as UI design/frontend assistance only, with generated changes reviewed and integrated through Git. The README contains Lovable project ID `534e9573-3c2f-42e3-b9a1-683dc0862811`. Dashboard ownership, connection state, deployment state, and sync health were not independently verified.
+
+### Files, dependencies, and configuration
+
+- `package.json` sets `packageManager` to `npm@11.19.1`; `package-lock.json` (lockfile v3) and `bun.lock` both exist. OD-01 says npm is official; no `bunfig.toml` exists in the current root despite older audit references. npm was the only documented workflow. Dependencies were already present in `node_modules`; no package install, removal, or upgrade was performed in this audit.
+- The manifest contains React 19, TanStack Router/Start, React Query, Vite, Nitro, Vitest, ESLint, Prettier, Zod, and React Hook Form. These are dependency facts only. No Supabase SDK, database client, payment SDK, or storage SDK appears in the manifest.
+- No `.env*` or `.dev.vars` file was found in the repository checkout; `.dev.vars` is ignored. No application environment-variable read was found in `src`. This does not inventory Lovable, Cloudflare, or other dashboard secrets.
+- `.lovable/project.json` identifies a template/revision, not a connected deployment. No `.github` CI workflow, schema/migration directory, Prisma/Drizzle schema, or database integration was found in the visible root/source.
+- `src/routeTree.gen.ts` is generated and must not be edited. It registers 29 routes (28 non-root route files plus `/`) and maps nested underscore filenames to public paths.
+
+### Runtime verification
+
+| Exact command | Result | Recorded evidence |
+| --- | --- | --- |
+| `npm install` | `VERIFIED` from provided terminal context; exit 0 before this audit | Not rerun; dependencies were already present and the owner prohibited package changes. |
+| `npm run lint` | `VERIFIED`; exit 1 | 97 errors and 13 warnings. Errors are predominantly `prettier/prettier` formatting violations, including shared `role-page.tsx` and newer `RolePage` routes; this is not the CRLF-only failure reported by older documents. No autofix. |
+| `npm run test` | `VERIFIED`; exit 0 | Vitest 4.1.12: 2 files and 3 tests passed. |
+| `npm run build` | `VERIFIED`; exit 0 | Client, SSR, and Cloudflare Nitro output built. Warnings: Vite tsconfig-path plugin overlaps native support; Nitro ignores `inlineDynamicImports` with code splitting; client chunk exceeds 500 kB. |
+| `./node_modules/.bin/tsc.cmd --noEmit` | `VERIFIED`; exit 0 | No diagnostics. There is no `typecheck` script in `package.json`. |
+
+### Reconciliation findings
+
+| ID | Description and evidence | Severity | Impact | Recommended action | Dependencies / blockers |
+| --- | --- | --- | --- | --- | --- |
+| INV-01 | Existing 2026-11-11 audit snapshots describe 16 routes, an older remote/HEAD, one test, and prior lint output. Current route tree has 29 routes; current Git state is `171182a`; tests are 3/3; lint is 97 errors/13 warnings. | MEDIUM | Readers could rely on stale repository or quality claims. | Treat the current sections in the requested audit documents as authoritative; retain old content only as historical context. | No blocker; docs consistency review remains useful. |
+| INV-02 | npm is the approved package manager (OD-01) and declared in `package.json`, but `bun.lock` remains alongside `package-lock.json`. | MEDIUM | Tooling/CI could use divergent dependency graphs. | Preserve files in this audit; request owner-approved cleanup or explicit dual-lockfile policy before package changes. | Package-file changes require approval; no CI workflow was found. |
+| INV-03 | At the time of the Phase 0 audit, OD-04 approved repository-managed schema/migrations while `AGENTS.md` still contained the Lovable-managed restriction. OD-11 (2026-11-15) resolved that governance conflict. | HIGH (historical finding; governance conflict resolved) | Before OD-11, schema work lacked an unambiguous authority. External project and migration execution state remain unverified. | Follow OD-11 and current `AGENTS.md`; verify the approved CLI/project workflow before any authorized database work. | No active ownership conflict; project/environment verification and explicit production approval remain required. |
+| INV-04 | Supabase/Auth/RLS directions are approved in OD-03..10, but no SDK, schema, auth middleware, or service configuration is present in this checkout. | HIGH | Approved architecture may not match the deployed environment; security posture cannot be inferred. | Verify service/project/environment configuration through an authorized read-only platform review before implementation. | Dashboard access was not available; no secrets were inspected. |
+
+**Repository inspection status: VERIFIED.** External deployment and dashboard facts remain `UNKNOWN` or `BLOCKED`; see the security and readiness documents.
+
+## Historical Snapshot — 2026-11-11 (superseded for current checkout)
+
 **Audit date:** 2026-11-11  
 **Scope:** Repository evidence available in this checkout. This is an implementation inventory, not a product acceptance sign-off.
 

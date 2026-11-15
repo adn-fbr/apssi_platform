@@ -3,8 +3,8 @@
 ## 1. Document metadata
 
 - **Document:** Phase 0 Owner Decision Record
-- **Scope:** Documentation-only record of approved Phase 0 owner decisions for GARUDA MUDA.
-- **Status:** Authoritative record for OD-01 through OD-10.
+- **Scope:** Record of approved owner decisions for GARUDA MUDA / APSI Platform.
+- **Status:** Authoritative record for OD-01 through OD-11. OD-11 is dated 2026-11-15; earlier decisions are retained and are unchanged except where OD-11 explicitly clarifies the repository/Lovable boundary.
 - **Authority:** This record is subordinate to the approved requirements baseline in [BLUEPRINT-REQUIREMENT-BASELINE.md](../product/BLUEPRINT-REQUIREMENT-BASELINE.md).
 - **Baseline:** BRB-001, Blueprint v0.1, accepted as the sole initial requirements baseline.
 - **Decision date:** 2026-11-11
@@ -14,7 +14,7 @@
 
 This document records the approved owner decisions for the Phase 0 architecture and governance baseline. It exists to:
 
-- provide a single source of truth for OD-01 through OD-10;
+- provide a single source of truth for OD-01 through OD-11;
 - differentiate approved direction from implemented or verified capability;
 - anchor Phase 1 planning to explicit, approved decisions;
 - preserve evidence and traceability to the current requirement baseline and audit package.
@@ -28,7 +28,7 @@ This document is authoritative for the approved Phase 0 owner decisions. It is s
 The following precedence applies:
 
 1. [BLUEPRINT-REQUIREMENT-BASELINE.md](../product/BLUEPRINT-REQUIREMENT-BASELINE.md) — accepted initial requirement baseline.
-2. This owner decision record — authoritative for OD-01 through OD-10.
+2. This owner decision record — authoritative for OD-01 through OD-11.
 3. Existing Phase 0 audit documents — evidence and findings, not requirement authority.
 4. Project implementation evidence — must be evaluated against these decisions and the approved baseline.
 
@@ -48,6 +48,7 @@ The decisions in this record are not a separate PRD. Missing workflow details re
 | OD-08       | Shared multi-tenant PostgreSQL with Row Level Security (RLS) as the primary data-isolation control.            | **APPROVED** |
 | OD-09       | RBAC + Resource-Based + Relationship-Based + Attribute-Based + Purpose-Based Authorization, with default-deny. | **APPROVED** |
 | OD-10       | Centralized, append-oriented audit logging with restricted access and documented retention policies.           | **APPROVED** |
+| OD-11       | VS Code/GitHub is the canonical development and source-control workflow; Supabase database changes are repository-managed; Lovable is limited to reviewed UI assistance. | **APPROVED** |
 
 ## 5. Detailed OD-01 through OD-10 records
 
@@ -100,6 +101,7 @@ The decisions in this record are not a separate PRD. Missing workflow details re
   - Migration application must follow a controlled and reviewed workflow.
   - Existing `AGENTS.md` instructions stating that Lovable manages schema and migrations must be reconciled before implementation.
 - **Outstanding documentation/workflow item:** Do not edit `AGENTS.md` or migrations in this task. Record the existing instruction conflict as an outstanding reconciliation item.
+- **OD-11 follow-up (2026-11-15):** The preceding sentence records the scope of the original Phase 0 task and its then-current conflict; it is not an active restriction. OD-11 resolves the governance conflict and explicitly updates `AGENTS.md`. The separate rule against unauthorized schema/migration and production database changes remains in force.
 - **Implementation note:** Approved direction exists; migration workflow execution remains unverified.
 
 ### OD-05 — Authentication Strategy
@@ -276,12 +278,12 @@ These items remain `UNDEFINED` unless expressly approved or evidenced elsewhere.
 
 ## 9. Existing documentation conflicts
 
-The following known documentation conflict exists and must be reconciled in future implementation planning:
+The following historical documentation conflict was resolved by OD-11 on 2026-11-15:
 
 - [AGENTS.md](../../AGENTS.md) states that Lovable manages database schema and migrations.
-- The approved OD-04 direction requires repository-managed database schema and migration ownership through the official repository workflow.
+- OD-04 already approved repository-managed schema and migrations; OD-11 clarifies that VS Code/GitHub owns that workflow and Lovable must not manage database changes.
 
-This record documents the conflict as an outstanding documentation/workflow reconciliation item. It does not modify `AGENTS.md` in this task.
+The historical conflict is retained here for traceability. Current agent instructions are in [AGENTS.md](../../AGENTS.md), and the controlled process is documented in [DEVELOPMENT-WORKFLOW.md](../architecture/DEVELOPMENT-WORKFLOW.md). Environment secret ownership and actual deployment configuration remain unverified and are not settled by this conflict resolution.
 
 ## 10. Phase 0 Exit Criteria impact
 
@@ -295,7 +297,7 @@ The exit criteria in [PHASE-0-IMPLEMENTATION-READINESS.md](PHASE-0-IMPLEMENTATIO
 - **Runtime verification:** do not change previous test results.
 - **Browser/E2E:** do not claim verification without actual evidence.
 - **Documentation consistency:** preserve historical findings and update references only where necessary.
-- **Owner approvals:** OD-01 through OD-10 are approved, but this record does not invent named reviewers or legal/security approval evidence.
+- **Owner approvals:** OD-01 through OD-10 were approved in the original Phase 0 record; OD-11 was added by explicit owner decision on 2026-11-15. This record does not invent named reviewers or legal/security approval evidence.
 
 The overall Phase 0 status remains a function of actual evidence, not the number of approved decisions.
 
@@ -317,3 +319,19 @@ This record is an authoritative owner-direction document, not a proof that the r
 | Date       | Change                                                                           | Authority                                              |
 | ---------- | -------------------------------------------------------------------------------- | ------------------------------------------------------ |
 | 2026-11-11 | Created the official Phase 0 Owner Decision Record covering OD-01 through OD-10. | Owner-approved direction documented in this repository |
+| 2026-11-15 | Added OD-11: VS Code/GitHub canonical workflow, repository-owned Supabase schema/migrations, and Lovable UI-only boundary. Earlier decisions remain unchanged unless explicitly clarified by OD-11. | Explicit project-owner decision in Phase 1A request |
+
+## 13. OD-11 — Canonical Development, Database, and Lovable Boundaries
+
+- **Decision date:** 2026-11-15
+- **Status:** `APPROVED`
+- **Authority:** Explicit project-owner decision supplied for Phase 1A. This is a technical governance decision, not a change to BRB-001 product requirements.
+- **Owner decision:** VS Code is the primary development environment. GitHub is the canonical source of truth for application code, configuration, documentation, and database migration history. Supabase is the approved backend platform, including PostgreSQL, Auth, RLS, and other services when justified. Database schema and migration files are maintained in the repository and managed through the VS Code/GitHub workflow. Lovable remains available for UI design and UI development assistance only; it is not authoritative for schema, migrations, backend security policies, backend authorization, or production infrastructure. Lovable-generated UI changes require Git review and controlled integration. Business domains should be modular and independently evolvable without unnecessary coupling.
+- **Reason:** Establish one reviewable, auditable source of truth; separate UI-generation assistance from security-sensitive backend/database authority; and reduce uncontrolled cross-domain changes.
+- **Consequences for development workflow:** Work on feature branches; do not directly push to `main`; review the full diff and required checks in a pull request before merging. Lovable work must use a controlled branch or be transferred as a reviewed change; never assume automatic sync is approved integration. Do not allow uncontrolled concurrent edits to the same files.
+- **Migration ownership boundary:** Migration source is versioned in this repository. Supabase CLI is the intended development tool, subject to version and official-documentation verification. Each schema change requires a reviewed migration, including backward-compatibility and security review. Production database changes require an explicit deployment and approval process; no production modification without explicit owner authorization.
+- **Security constraints:** Never expose a Supabase `service_role` key in browser code or commit credentials/secrets. Consider RLS for every exposed application-data table. RLS does not replace server-side authorization or business validation. Do not assume Supabase is configured or connected without evidence.
+- **Lovable boundary:** Lovable may assist with UI design/frontend implementation. Any generated change is reviewed in Git before integration. Lovable is not the database, backend policy, production infrastructure, or canonical history authority. Existing protection against rewriting published history remains unchanged.
+- **Clarification to prior decisions:** OD-04's repository-controlled schema/migration direction remains approved and is made operationally explicit. OD-03's Supabase platform direction remains approved; use of Storage or any additional Supabase service is conditional on a documented use case and justification. OD-01, OD-02, OD-05 through OD-10 remain unchanged. No product requirement, legal rule, authentication flow, schema, policy, or detailed domain rule is added by OD-11.
+- **Secret ownership:** Secret values must remain outside source control. The provider and operational owner for local, staging, and production secrets are `ARCHITECTURE DECISION REQUIRED`; Lovable is not the production infrastructure authority.
+- **Implementation status:** This decision records governance only. It does not establish a connected Supabase project, installed/verified CLI, configured environments, migrations, policies, or deployment controls.

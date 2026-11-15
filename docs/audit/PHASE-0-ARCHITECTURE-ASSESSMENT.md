@@ -1,5 +1,61 @@
 # Phase 0 Architecture Assessment
 
+## Current Assessment — 2026-11-15
+
+**Conclusion:** the checked-in application is a React 19/TanStack Start server-rendered UI prototype with file-based routing, a shared app shell, mock data, and local component state. It has SSR/server runtime infrastructure but no evidenced business-data, persistence, authentication, or authorization boundary. This describes the repository, not external Lovable/Supabase deployment state.
+
+### Actual request and dependency architecture
+
+1. `src/router.tsx` creates a `QueryClient` per router/request and loads generated routes.
+2. `src/start.ts` installs error and CSRF middleware for server functions. It contains a comment about future Supabase bearer-token middleware; it does not configure auth middleware.
+3. `src/server.ts` delegates requests to the TanStack Start server entry and normalizes selected SSR errors.
+4. `src/routes/__root.tsx` wraps the router outlet in the query provider and `AppShell`.
+5. Route components consume `src/lib/mock-data.ts` and local state. Notification data is static and read-state is process-memory only.
+6. Vite configuration uses Lovable's TanStack config wrapper; the observed build target is Cloudflare Nitro. Build target does not prove deployment configuration.
+
+Evidence: [router.tsx](../../src/router.tsx), [start.ts](../../src/start.ts#L17-L35), [server.ts](../../src/server.ts), [__root.tsx](../../src/routes/__root.tsx), [mock-data.ts](../../src/lib/mock-data.ts#L1-L4), [notifications.ts](../../src/lib/notifications.ts#L17-L18), [vite.config.ts](../../vite.config.ts).
+
+### Modularity assessment
+
+The least-risk candidate is a modular monolith with explicit domain/application boundaries behind the approved server boundary; do not introduce separate services or restructure during Phase 0. Current routes and fixtures are coupled by direct shared imports and have no domain service contracts. Recommended ownership below is a design proposal, not a new requirement or approved schema.
+
+| Business domain | Existing implementation / status | Shared dependencies and coupling | Recommended boundary |
+| --- | --- | --- | --- |
+| Identity and Football ID | Player card and mock identifiers; PARTIAL | Person/account, guardian, player profile, competitions | Identity issuance/lifecycle and verification; never let organization own player journey. |
+| User accounts and authentication | Demo account page; NOT IMPLEMENTED | Person, session, recovery, role grants | Authentication adapter and account lifecycle; Supabase Auth is approved direction (OD-05), not connected evidence. |
+| Roles and permissions | Client role catalog/localStorage; PARTIAL UI, NOT IMPLEMENTED security | Account, organization, team, resource, purpose | Server policy module with role grants plus resource/relationship/attribute/purpose checks (OD-09). |
+| Players and Football Passport | Static player, journey, development, matches; PARTIAL | Identity, membership history, assessments, consent | Player profile/history/read projections separate from presentation. |
+| Parents and guardians | Static parent/children view; PARTIAL | Account, player, consent, notifications | Guardian relationship lifecycle; many-to-many direction approved (OD-06), proof process remains undefined. |
+| Consent and privacy | Local switches, seeded log; PARTIAL | Guardian, purpose, scout, player, audit | Purpose-specific decision and policy evaluation boundary; persist/revoke only after semantics are approved. |
+| Organizations and memberships | Static SSB, academy, tournament, association labels; PARTIAL | Person/role, player history, teams, competitions | Organization registry and effective membership/access grants. |
+| SSB management | Dashboard/finance screens, mock totals; PARTIAL | Organization, membership, player, team, invoice | SSB use cases scoped to an authorized organization. |
+| Teams and training | Static teams/sessions; local attendance; PARTIAL | SSB, coach, player, schedule, guardian | Team/session/attendance module with explicit actor and period. |
+| Coaches and player assessment | Static profiles and local scores/notes; PARTIAL | Person/role, team, player, rubric, consent | Assessment use cases with author, period, version, visibility, and history. |
+| Tournaments and competitions | Static tournament, registration, draw/results pages; PARTIAL | Organizer, organization, player, roster, venue, payment | Competition lifecycle and versioned rules separated from match execution. |
+| Match management | Referee report events/score held in local state; PARTIAL | Competition, teams, referee, event/result, audit | Match state machine, attributable event/report submission, result correction policy. |
+| Referee management | Static profile/assignments; local responses; PARTIAL | Person, license, association, competition, match | Credential and assignment lifecycle with conflict/policy decisions. |
+| Scouting and player discovery | Static scout pool; browser filter/shortlist/contact; PARTIAL | Scout identity/grant, player, consent, guardian, audit | Server search projection enforcing purpose-specific consent before results leave server. |
+| Payments and finance | Static invoices/summary; browser sets paid/reminded; PARTIAL | Organization, invoice, provider, ledger, audit | Invoice/payment-attempt/reconciliation boundary; never trust browser paid state. |
+| Notifications | Role fixtures and in-memory read status; PARTIAL | All business modules, user preferences, delivery provider | Domain event-to-notice adapter with persistence and delivery separated from UI. |
+| Association and federation management | Static region tree; local verification queue; PARTIAL | Organization hierarchy, role/territory grant, aggregate privacy | Scoped administrative use cases and privacy-safe aggregation; no scope enforcement now. |
+| Audit logging | Static activity shown; no write path; PARTIAL UI / NOT IMPLEMENTED capability | All sensitive modules, actor/resource/purpose, retention | Central append-oriented audit boundary (OD-10), distinct from diagnostics. |
+
+### Approved direction versus implementation
+
+OD-01..11 in the [Owner Decision Record](PHASE-0-OWNER-DECISION-RECORD.md) approve npm/LF and the Supabase, guardian, consent, shared RLS, layered default-deny authorization, audit, and VS Code/GitHub/Lovable-boundary directions. These are documented technical decisions, not product requirements or evidence of implementation. The OD-04/old-`AGENTS.md` migration ownership conflict identified during Phase 0 was resolved by OD-11 on 2026-11-15. Repository-owned migrations remain subject to review and explicit production approval; no database or migration change was made in Phase 1A.
+
+### Findings
+
+| ID | Description and evidence | Severity | Impact | Recommended action | Dependencies / blockers |
+| --- | --- | --- | --- | --- | --- |
+| AR-01 | UI routes directly consume shared static data; no data-access or use-case boundary was found. Evidence: [mock-data.ts](../../src/lib/mock-data.ts#L1-L4), route implementations, and `src/start.ts`. | HIGH | Components conflate presentation with business-shaped transitions; durable invariants cannot be centralized. | Keep UI intact; define server-side application contracts and domain ownership before implementation. | Supabase project/config verification; approved operations and acceptance criteria. |
+| AR-02 | Role identity is a client-side selection persisted in localStorage at [roles.tsx](../../src/lib/roles.tsx#L252-L263); server auth middleware is absent at [start.ts](../../src/start.ts#L27-L35). | CRITICAL | A browser-selected role cannot establish identity or permissions for future sensitive data. | Require trusted server identity and default-deny authorization before real data. | Supabase Auth approval exists; deployment and session policy remain unverified/undefined. |
+| AR-03 | Shared fixtures contain multiple unrelated domains and no durable relationship/invariant model. | HIGH | Coupling and inconsistent identifiers/consent/history are likely as workflows grow. | Establish domain ownership and explicit contracts; do not split fixtures in this audit. | Owner decisions for detailed lifecycles and acceptance criteria. |
+| AR-04 | Supabase/shared RLS direction is approved, but current source has no Supabase client, schema or RLS evidence. The migration-ownership governance conflict recorded at Phase 0 was resolved by OD-11. | HIGH (implementation gap remains; ownership conflict resolved) | Supabase controls remain unimplemented/unverified; actual project state cannot be inferred. | Verify the project and approved repository/CLI workflow before authorized implementation; do not treat OD-11 as a connected service. | Project access, CLI version/documentation verification, and explicit task/production authorization. |
+| AR-05 | Query provider exists without observed remote query/mutation use; only route and client-role tests exist. | MEDIUM | Future cache scope/invalidation and domain behavior remain unspecified. | Decide loader/server-function/query ownership and test cache isolation when remote data is approved. | Server boundary and tenancy policy. |
+
+## Historical Snapshot — 2026-11-11 (superseded for current checkout)
+
 **Conclusion:** the repository is a coherent, server-rendered React UI prototype with file-based routes and a shared shell. It is not yet a production application architecture for a multi-organization youth-sports ecosystem. This conclusion is evidence about the checked-in implementation, not a judgment against unavailable requirements.
 
 ## Current architecture

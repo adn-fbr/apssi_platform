@@ -1,5 +1,9 @@
 ﻿# Phase 0 Remediation Backlog
 
+## Governance Follow-up — 2026-11-15
+
+This backlog preserves the Phase 0 remediation state recorded before OD-11. The owner decision in [PHASE-0-OWNER-DECISION-RECORD.md](PHASE-0-OWNER-DECISION-RECORD.md) resolves the former conflict between repository-managed migrations and the Lovable-managed instruction. Repository/VS Code/GitHub is now the migration source of truth; Supabase CLI verification, actual project/environment evidence, security implementation, and explicit production deployment approval remain outstanding. Historical work items below are retained and should be read with this governance follow-up.
+
 ## Executive summary
 
 - **Audit outcome:** OUTCOME C — NOT READY FOR PHASE 1
@@ -156,7 +160,7 @@ Prototype UI verification alone does not satisfy the security or data-access clo
 | Epic ID | Workstream | Feature ID | Story ID  | Objective                                                           | Current evidence                                                                                                                                    | Current status | Scope                                                                                                   | Dependencies               | Acceptance criteria                                                                           | Verification method                                           | Required evidence artifact                                 | Responsible role                  | Risk if unresolved                                                    | Complexity | Owner approval required |
 | ------- | ---------- | ---------- | --------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------- | -------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------- | --------------------------------- | --------------------------------------------------------------------- | ---------- | ----------------------- |
 | EP-WS02 | WS-02      | F-WS02-01  | S-WS02-01 | Define the actual backend boundary and provider configuration path. | OD-03 approves Supabase; repo has no verified project configuration or service connection.                                                          | BLOCKED        | Confirm provider, environment, and service topology.                                                    | OD-03, OD-05, OD-08, OD-09 | Provider and topology are documented, environment-separated, and externally verifiable.       | Repo review plus provider dashboard or configuration evidence | Backend architecture document with environment map         | Principal architect               | Architecture may be disconnected from actual deployment               | M          | Yes                     |
-| EP-WS02 | WS-02      | F-WS02-02  | S-WS02-02 | Reconcile migration ownership and repository workflow conflict.     | [AGENTS.md](../../AGENTS.md) says Lovable manages database schema and migrations; OD-04 says repository-managed migrations are the source of truth. | BLOCKED        | Resolve workflow ownership, review process, and migration authority.                                    | OD-04, AGENTS.md           | One authoritative migration workflow is documented and accepted by the platform owner.        | Policy reconciliation + workflow review                       | Decision reconciliation note and workflow ownership record | Platform owner + engineering lead | Migrations can be applied inconsistently or outside policy            | M          | Yes                     |
+| EP-WS02 | WS-02 | F-WS02-02 | S-WS02-02 | Define the operational migration workflow under OD-11. | Historical Phase 0 finding: `AGENTS.md` then directed schema and migrations through Lovable, conflicting with OD-04. OD-11 resolved migration source ownership on 2026-11-15; the former restriction is not active policy. | PARTIAL | Define validation, CI/CD integration, and approval gates, release/rollback procedures, and production change authorization. | OD-04, OD-11, `AGENTS.md` | Document and approve operational procedures; repository remains the migration source of truth under OD-11. | Workflow review | Migration validation/release/rollback workflow record | Platform owner + engineering lead | Migrations may be applied inconsistently or without authorization. | M | Yes |
 | EP-WS02 | WS-02      | F-WS02-03  | S-WS02-03 | Verify Supabase project configuration and environment separation.   | No actual project config, auth config, storage config, or env evidence was found in repo.                                                           | NOT VERIFIED   | Confirm project URLs, API keys, environment separation, and storage setup only via authorized workflow. | OD-03, OD-05, OD-08        | Project variables, auth, storage, DB, and environment separation are documented and verified. | Platform config validation (read-only, no secrets exposed)    | Environment matrix and config inventory                    | DevSecOps + platform owner        | Deployment may be insecure or misconfigured                           | M          | Yes                     |
 | EP-WS02 | WS-02      | F-WS02-04  | S-WS02-04 | Define frontend/backend/data boundaries with evidence.              | Current code is prototype UI using mock data; no API layer or server functions found.                                                               | PARTIAL        | Separate original UI prototype from backend service contract and evidence requirements.                 | OD-03, OD-05, OD-08, OD-09 | Boundary is explicit with server-side enforcement and tested API interfaces.                  | Architecture review and implementation evidence               | Interface and backend contract matrix                      | Principal architect               | The app may continue to confuse UI state with real policy enforcement | M          | Yes                     |
 
@@ -253,7 +257,7 @@ These are not implementation tasks; they are evidence-gathering dependencies.
 
 - Security architecture signoff.
 - Privacy/legal review for youth-player data handling.
-- Platform/operations review for migration and environment ownership.
+- Platform/operations review for project/environment topology, migration validation, CI/CD integration, release/rollback, and approval procedures. Migration source ownership is settled by OD-11.
 - Product owner scope signoff for omitted workflow details.
 
 ## Execution boundaries
@@ -295,7 +299,7 @@ A remediation item is complete only when all of the following are satisfied:
 #### WS-02 complete when:
 
 - Supabase provider configuration and environment responsibilities are verified.
-- migration ownership conflict is reconciled and workflow is documented.
+- OD-11 resolves migration source ownership; the operational workflow for validation, CI/CD, release/rollback, and production approval is documented and verified.
 - frontend/backend/data boundaries are explicitly stated and supported by evidence.
 
 #### WS-03 complete when:
@@ -319,7 +323,7 @@ A remediation item is complete only when all of the following are satisfied:
 The following remain required before final closure can be considered:
 
 - Product owner confirmation of missing workflow acceptance criteria.
-- Platform owner decision on Supabase and migration ownership.
+- Operational decisions remain required for Supabase project/environment topology, CLI installation/version policy, migration validation/release workflow, CI/CD integration, and approval gates, secret management, deployment/rollback procedures, and production database change authorization. Migration source ownership was resolved by OD-11 on 2026-11-15 and is not awaiting another owner decision.
 - Security review for auth, guardian, consent, authorization, audit, and retention.
 - Privacy/legal review for child-data handling and retention policies.
 - Architecture owner review for backend/provider boundary and environment separation.

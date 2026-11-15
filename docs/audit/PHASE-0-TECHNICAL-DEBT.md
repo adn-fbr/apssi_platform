@@ -1,5 +1,32 @@
 # Phase 0 Technical Debt
 
+## Current Re-audit — 2026-11-15
+
+This current finding set is based on `171182a` and supersedes the historical snapshot below. Findings describe implementation evidence and do not authorize cleanup or feature work.
+
+| ID | Description and evidence | Severity | Impact | Recommended action | Dependencies / blockers |
+| --- | --- | --- | --- | --- | --- |
+| TD-01 | Shared [mock-data.ts](../../src/lib/mock-data.ts) combines player/guardian, organization, roster, schedule, finance, match, scout and association data; its header says nothing is persisted. | HIGH | Unrelated UI domains share fixtures without durable contracts or ownership. | Keep demo data during this audit; establish domain contracts only after approved backend work begins. | Server/API boundary and OD-04 workflow reconciliation. |
+| TD-02 | Route components combine presentation, local workflow state and success toasts; account, consent, payment, referee, attendance and association verification are examples. | HIGH | UI acknowledgement can be mistaken for a durable business operation; behavior cannot be reused/authorized centrally. | Use server-side use cases with validation, authorization, idempotency and typed failure outcomes when authorized. | Approved Supabase direction; no connected project or use cases. |
+| TD-03 | There are 29 routes but only two test files/three assertions, covering root route matching and client role resolution. | HIGH | High-risk lifecycle, privacy, server, and cross-tenant behavior has no test coverage. | Prioritize server authorization/consent negatives and critical state transitions as those operations are implemented. | No API/data layer yet; exact acceptance criteria undefined. |
+| TD-04 | Current lint exits 1 with 97 errors/13 warnings, predominantly Prettier formatting violations in newer routes/shared `RolePage`; previous report's CRLF-only explanation is not current. | MEDIUM | Lint cannot serve as a green CI/release gate. | Review and fix formatting in a separately authorized code-quality task; rerun lint. This audit intentionally did not modify source. | Owner approval for source/config changes; avoid broad auto-fix without review. |
+| TD-05 | `package-lock.json` and `bun.lock` coexist despite npm being approved/declared; README documents npm; current root has no `bunfig.toml`. | MEDIUM | Lockfile ambiguity can produce install drift; previous audit references to `bunfig.toml` are stale. | Resolve artifact policy with owner before deleting or changing package files. | Owner authorization; no package operations performed. |
+| TD-06 | React Query provider exists but no remote query/mutation usage was found; route data comes from imports. | MEDIUM | Cache key, tenancy isolation, invalidation, and SSR hydration behavior are not defined for real data. | Choose loader/server-function/query ownership and identity-aware invalidation during backend design. | Server boundary/tenant model. |
+| TD-07 | Account/notification and subroute screens are static/local; notification read state is a module-level in-memory set, not durable per account. | MEDIUM | State resets with process/reload and is shared by the demo feed model. | Treat as prototype. Define durable preference/feed semantics before integration. | Authenticated account and notification delivery decisions. |
+| TD-08 | No business server/API, auth, database, storage, or payment integration is present despite approved Supabase direction. | HIGH | Production readiness cannot be inferred from SSR and CSRF infrastructure or dependencies. | Verify Supabase project and establish server-owned boundaries before real data. | Dashboard access and authorized service implementation; migration ownership is set by OD-11 but project state remains unverified. |
+| TD-09 | Fixed dates, totals, performance metrics and status labels are embedded in sample data/routes; category UI can reuse the same tournament results. | MEDIUM | Demo content can appear authoritative or internally inconsistent. | Keep sample data visibly synthetic and define date/timezone and domain contracts before live use. | Product acceptance criteria remain `UNDEFINED`. |
+| TD-10 | Build passes but emits Vite path-plugin overlap, Nitro ignored `inlineDynamicImports`, and >500 kB chunk warnings. | LOW | Configuration ambiguity and initial bundle size may affect maintainability/performance. | Review only against approved build/runtime targets; no build configuration changes in this audit. | Platform owner and deployment/performance targets. |
+
+### Current strengths and check evidence
+
+- Strict TypeScript checks are enabled; direct `./node_modules/.bin/tsc.cmd --noEmit` exited 0.
+- Generated route typing is maintained by TanStack; `src/routeTree.gen.ts` explicitly must not be hand-edited.
+- `getRouter()` creates one `QueryClient` per router/request, avoiding a shared module-level SSR cache.
+- Shared shell and kit components reduce repeated presentation. Their existence does not create domain boundaries.
+- `npm run test`: 2 files / 3 tests passed. `npm run build`: exit 0. `npm run lint`: exit 1, 97 errors / 13 warnings.
+
+## Historical Snapshot — 2026-11-11 (superseded for current checkout)
+
 This document records observed maintainability and delivery risks. Findings do not imply that the current UI should be removed; the requested scope preserves it.
 
 | ID / severity      | Finding                                                                                                                                | Evidence                                                                                                                                                                                                                | Consequence                                                                                                              | Recommendation                                                                                                                                                                                     |
