@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, BriefcaseBusiness, ShieldCheck, Sparkles, SquareStack } from "lucide-react";
 import hero from "@/assets/hero-grassroots.jpg";
-import { buttonVariants } from "@/components/kit";
+import { buttonVariants } from "@/components/kit-variants";
 import { cn } from "@/lib/utils";
-import { roles } from "@/lib/roles";
+import { useRole } from "@/lib/roles-context";
+import { roles } from "@/lib/roles-data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -37,10 +38,13 @@ const roleCards = roles.map((r) => ({
 
 const journey = ["SSB", "U9", "Turnamen", "Seleksi", "Akademi"];
 
-function Index() {
+export function Index() {
+  const { role } = useRole();
+  const primaryTab = role.tabs[0]!;
+  const secondaryActions = role.tabs.slice(1, 4);
+
   return (
-    <div className="space-y-8 lg:space-y-12">
-      {/* Hero */}
+    <div className="space-y-6 lg:space-y-8">
       <section className="relative -mx-4 -mt-5 overflow-hidden sm:mx-0 sm:mt-0 sm:rounded-3xl">
         <img
           src={hero}
@@ -50,37 +54,165 @@ function Index() {
           className="absolute inset-0 h-full w-full object-cover object-[60%_center]"
         />
         <div className="bg-hero-fade absolute inset-0" />
-        <div className="relative flex min-h-[520px] flex-col justify-end p-5 text-pitch-foreground sm:min-h-[560px] sm:p-10">
+        <div className="relative flex min-h-[420px] flex-col justify-end p-5 text-pitch-foreground sm:min-h-[440px] sm:p-10">
           <p className="w-fit rounded-full bg-signal px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-signal-foreground animate-rise">
-            Grassroots Football · Indonesia
+            Workspace · {role.product}
           </p>
-          <h1 className="mt-4 max-w-2xl text-[40px] font-extrabold leading-[0.95] animate-rise sm:text-6xl lg:text-7xl">
-            Every player has a football journey.
+          <h1 className="mt-4 max-w-2xl text-[40px] font-extrabold leading-[0.95] animate-rise sm:text-5xl lg:text-6xl">
+            {role.label} workspace
           </h1>
-          <p className="mt-4 max-w-md text-base text-pitch-foreground/85 animate-rise sm:text-lg">
-            Satu Football ID yang menemani anak dari latihan pertama di SSB sampai akademi.
+          <p className="mt-4 max-w-xl text-base text-pitch-foreground/85 animate-rise sm:text-lg">
+            {role.desc} Use this dashboard to move directly into the current role context and adjust
+            the workspace when needed.
           </p>
           <div className="mt-6 flex flex-col gap-2.5 animate-rise sm:flex-row">
-            <Link to="/player" className={cn(buttonVariants({ variant: "signal", size: "lg" }))}>
-              Lihat Football Passport <ArrowRight className="h-4 w-4" />
+            <Link
+              to={primaryTab.to}
+              className={cn(buttonVariants({ variant: "signal", size: "lg" }))}
+            >
+              Open {primaryTab.label} <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link to="/ssb" className={cn(buttonVariants({ variant: "chalkOutline", size: "lg" }))}>
-              Saya pengelola SSB
+            <Link
+              to="/account"
+              className={cn(buttonVariants({ variant: "chalkOutline", size: "lg" }))}
+            >
+              Switch workspace
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Roles */}
+      <section className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="rounded-3xl border bg-card p-5 shadow-card">
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            Active role
+          </p>
+          <div className="mt-3 flex items-center justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-bold">{role.label}</h2>
+              <p className="mt-1 text-sm text-muted-foreground">{role.person}</p>
+            </div>
+            <div className="rounded-2xl bg-signal px-3 py-2 text-sm font-bold text-signal-foreground">
+              {role.initials}
+            </div>
+          </div>
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            <div className="rounded-2xl bg-secondary p-3">
+              <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground">Focus</p>
+              <p className="mt-1 font-bold">{role.product}</p>
+            </div>
+            <div className="rounded-2xl bg-secondary p-3">
+              <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
+                Primary
+              </p>
+              <p className="mt-1 font-bold">{primaryTab.label}</p>
+            </div>
+            <div className="rounded-2xl bg-secondary p-3">
+              <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground">Mode</p>
+              <p className="mt-1 font-bold">Prototype</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-3xl border bg-card p-5 shadow-card">
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            Quick actions
+          </p>
+          <div className="mt-3 space-y-2.5">
+            <Link
+              to={primaryTab.to}
+              className="flex items-center justify-between rounded-2xl border border-primary/20 bg-secondary px-3 py-2.5 text-sm font-semibold transition-colors hover:bg-muted"
+            >
+              <span className="flex items-center gap-2">
+                <BriefcaseBusiness className="h-4 w-4 text-primary" />
+                Open {primaryTab.label}
+              </span>
+              <ArrowRight className="h-4 w-4 text-primary" />
+            </Link>
+            <Link
+              to="/account"
+              className="flex items-center justify-between rounded-2xl border bg-card px-3 py-2.5 text-sm font-semibold transition-colors hover:bg-muted"
+            >
+              <span className="flex items-center gap-2">
+                <SquareStack className="h-4 w-4 text-muted-foreground" />
+                Switch workspace
+              </span>
+              <ArrowRight className="h-4 w-4 text-muted-foreground" />
+            </Link>
+            {secondaryActions.map((action) => (
+              <Link
+                key={action.to}
+                to={action.to}
+                className="flex items-center justify-between rounded-2xl border bg-card px-3 py-2.5 text-sm transition-colors hover:bg-muted"
+              >
+                <span className="flex items-center gap-2 font-semibold">
+                  <action.icon className="h-4 w-4 text-muted-foreground" />
+                  {action.label}
+                </span>
+                <ArrowRight className="h-4 w-4 text-muted-foreground" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="rounded-3xl border bg-card p-5 shadow-card">
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            Workspace overview
+          </p>
+          <h2 className="mt-2 text-xl font-bold">What this role area is for</h2>
+          <ul className="mt-4 space-y-3">
+            {role.tabs.map((tab) => (
+              <li key={tab.to} className="rounded-2xl border bg-secondary/40 p-3">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="flex items-center gap-2 text-sm font-semibold">
+                    <tab.icon className="h-4 w-4 text-primary" />
+                    {tab.label}
+                  </span>
+                  <Link to={tab.to} className="text-xs font-semibold text-primary">
+                    Open
+                  </Link>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="rounded-3xl border bg-card p-5 shadow-card">
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            First use
+          </p>
+          <h2 className="mt-2 text-xl font-bold">No live operational data yet</h2>
+          <p className="mt-3 text-sm text-muted-foreground">
+            This workspace is ready for role-specific records and activity once the product data
+            model is connected. Until then, the best next step is to open the role dashboard or
+            switch to another role from the available list.
+          </p>
+          <div className="mt-4 flex flex-col gap-2">
+            <Link
+              to={primaryTab.to}
+              className={cn(buttonVariants({ variant: "signal", size: "sm" }))}
+            >
+              View {primaryTab.label}
+            </Link>
+            <Link to="/account" className={cn(buttonVariants({ variant: "outline", size: "sm" }))}>
+              Demo role settings
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section>
         <div className="mb-4 flex items-end justify-between">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-              Masuk sebagai
+              Demo peran
             </p>
             <h2 className="text-2xl font-bold">Satu ekosistem, banyak peran</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Pilih peran untuk membuka layar utamanya. Menu bawah ikut menyesuaikan.
+              Pilihan peran hanya mengubah tampilan prototipe, bukan akses atau izin akun.
             </p>
           </div>
         </div>
@@ -105,7 +237,6 @@ function Index() {
         </div>
       </section>
 
-      {/* Journey + principle */}
       <section className="grid grid-cols-1 gap-3 lg:grid-cols-[1.4fr_1fr]">
         <div className="pitch-stripes overflow-hidden rounded-3xl p-5 text-pitch-foreground sm:p-7">
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-pitch-muted">
@@ -140,18 +271,18 @@ function Index() {
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-1">
           <div className="rounded-3xl border bg-card p-5 shadow-card">
             <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-              Verified Active Players
+              Active track
             </p>
-            <p className="mt-2 font-display text-4xl font-extrabold tabular">1.248</p>
-            <p className="mt-1 text-xs text-muted-foreground">Pilot Makassar · 14 SSB</p>
+            <p className="mt-2 font-display text-4xl font-extrabold tabular">{role.tabs.length}</p>
+            <p className="mt-1 text-xs text-muted-foreground">role views connected</p>
           </div>
           <div className="rounded-3xl border bg-card p-5 shadow-card">
             <ShieldCheck className="h-6 w-6 text-primary" />
             <p className="mt-2 font-display text-base font-bold leading-tight">
-              Persetujuan wali di setiap data anak
+              Shared role navigation stays prototype-only.
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Scout hanya melihat pemain yang diizinkan.
+              Frontend role selection is for workspace flow, not server-side authorization.
             </p>
           </div>
         </div>

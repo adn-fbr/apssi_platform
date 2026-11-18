@@ -12,8 +12,10 @@ import {
   Segmented,
   Switch,
 } from "@/components/kit";
-import { roles, useRole, type RoleId } from "@/lib/roles";
+import { roles, type RoleId } from "@/lib/roles-data";
+import { useRole } from "@/lib/roles-context";
 import { cn } from "@/lib/utils";
+import { signOutCurrentSessionFn } from "@/lib/authentication.functions";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
@@ -42,6 +44,7 @@ function AccountPage() {
     weekly: true,
   });
   const [lang, setLang] = useState<"id" | "en">("id");
+  const [logoutPending, setLogoutPending] = useState(false);
 
   const pick = (id: RoleId) => {
     const r = roles.find((x) => x.id === id);
@@ -57,6 +60,28 @@ function AccountPage() {
     { key: "weekly", label: "Ringkasan mingguan", sub: "Setiap Senin pagi" },
   ];
 
+  const logout = async () => {
+    if (logoutPending) return;
+    setLogoutPending(true);
+    try {
+      const result = await signOutCurrentSessionFn();
+      if (result === "unavailable") {
+        toast.error("Tidak dapat mengakhiri sesi. Coba lagi.");
+        return;
+      }
+      if (result === "signed_out_unconfirmed") {
+        toast("Sesi lokal diakhiri", {
+          description: "Server tidak dapat memastikan pencabutan sesi saat ini.",
+        });
+      }
+      await navigate({ to: "/login", replace: true });
+    } catch {
+      toast.error("Tidak dapat mengakhiri sesi. Coba lagi.");
+    } finally {
+      setLogoutPending(false);
+    }
+  };
+
   return (
     <div className="mx-auto max-w-3xl">
       <PageHeader eyebrow="Akun" title="Akun & Peran" />
@@ -66,9 +91,9 @@ function AccountPage() {
         <div className="min-w-0 flex-1">
           <p className="truncate font-display text-xl font-bold">{role.person}</p>
           <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <Phone className="h-3.5 w-3.5" /> +62 812-••••-4471
+            <Phone className="h-3.5 w-3.5" /> Profil demonstrasi
             <Pill tone="success" className="ml-1">
-              Terverifikasi
+              Data contoh
             </Pill>
           </p>
         </div>
@@ -197,14 +222,8 @@ function AccountPage() {
             </ul>
           </Panel>
 
-          <Btn
-            variant="outline"
-            className="w-full"
-            onClick={() =>
-              toast("Anda keluar dari prototipe", { description: "Belum ada akun sungguhan." })
-            }
-          >
-            <LogOut className="h-4 w-4" /> Keluar
+          <Btn variant="outline" className="w-full" onClick={logout} disabled={logoutPending}>
+            <LogOut className="h-4 w-4" /> {logoutPending ? "Keluar…" : "Keluar"}
           </Btn>
         </div>
       </div>

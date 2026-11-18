@@ -8,16 +8,8 @@ import {
   Users,
   ChevronRight,
 } from "lucide-react";
-import {
-  Avatar,
-  Meter,
-  PageHeader,
-  Panel,
-  Pill,
-  SectionTitle,
-  Stat,
-  buttonVariants,
-} from "@/components/kit";
+import { Avatar, Meter, PageHeader, Panel, Pill, SectionTitle, Stat } from "@/components/kit";
+import { buttonVariants } from "@/components/kit-variants";
 import { coach, roster, sessionPlan } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 

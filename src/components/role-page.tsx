@@ -24,7 +24,12 @@ export function RolePage({
       {stats && (
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {stats.map((s) => (
-            <Stat key={s.label} label={s.label} value={s.value} {...(s.sub ? { sub: s.sub } : {})} />
+            <Stat
+              key={s.label}
+              label={s.label}
+              value={s.value}
+              {...(s.sub ? { sub: s.sub } : {})}
+            />
           ))}
         </div>
       )}
@@ -40,7 +45,11 @@ export function RolePage({
                     <p className="truncate text-sm font-semibold">{r.title}</p>
                     {r.sub && <p className="truncate text-xs text-muted-foreground">{r.sub}</p>}
                   </div>
-                  {r.meta && <span className="font-mono text-xs tabular text-muted-foreground">{r.meta}</span>}
+                  {r.meta && (
+                    <span className="font-mono text-xs tabular text-muted-foreground">
+                      {r.meta}
+                    </span>
+                  )}
                   {r.tag && <Pill tone={r.tone ?? "neutral"}>{r.tag}</Pill>}
                 </li>
               ))}

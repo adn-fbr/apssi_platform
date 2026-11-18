@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import type { AppPath, RoleId } from "@/lib/roles";
+import type { AppPath, RoleId } from "@/lib/roles-data";
 
 export type NoticeKind = "jadwal" | "tagihan" | "izin" | "turnamen" | "laporan" | "sistem";
 
