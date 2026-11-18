@@ -1,5 +1,71 @@
 # Phase 0 Route Functional Audit
 
+## Current Route Audit — 2026-11-15
+
+**Authority:** The route map below is from the current generated tree and source at `171182a`; it supersedes the 16-route historical table below. `PARTIAL` means a route/UI and/or local interaction exists, but it does not mean the business workflow is implemented. No real child data was used in this audit or runtime checks.
+
+| Public route | Source file | Observed UI / interaction | Status | Business persistence / trusted server operation |
+| --- | --- | --- | --- | --- |
+| `/` | [index.tsx](../../src/routes/index.tsx) | Role cards and product claims | PARTIAL | NOT IMPLEMENTED |
+| `/account` | [account.tsx](../../src/routes/account.tsx) | Demo role selection, local notification/language preferences, toast-only PIN/export/logout | PARTIAL | NOT IMPLEMENTED |
+| `/association` | [association.tsx](../../src/routes/association.tsx) | Static region tree and local drill-down | PARTIAL | NOT IMPLEMENTED |
+| `/association/verification` | [association_.verification.tsx](../../src/routes/association_.verification.tsx) | Static queue; approve/reject/request-document transitions are local state and toast | PARTIAL | NOT IMPLEMENTED |
+| `/coach` | [coach.tsx](../../src/routes/coach.tsx) | Static coach, teams, session plan, attendance summaries | PARTIAL | NOT IMPLEMENTED |
+| `/coach/assessment` | [coach_.assessment.tsx](../../src/routes/coach_.assessment.tsx) | Local ratings, note, completion state and toast | PARTIAL | NOT IMPLEMENTED |
+| `/coach/report` | [coach_.report.tsx](../../src/routes/coach_.report.tsx) | Static match and development report summaries | PARTIAL | NOT IMPLEMENTED |
+| `/coach/teams` | [coach_.teams.tsx](../../src/routes/coach_.teams.tsx) | Static lineup and tactics | PARTIAL | NOT IMPLEMENTED |
+| `/notifications` | [notifications.tsx](../../src/routes/notifications.tsx) | Static role feed; mark-read state lives in a module-level in-memory set | PARTIAL | NOT IMPLEMENTED; no delivery service |
+| `/opportunities` | [opportunities.tsx](../../src/routes/opportunities.tsx) | Local filter and application state; scout applicant action is toast only | PARTIAL | NOT IMPLEMENTED |
+| `/organizer` | [organizer.tsx](../../src/routes/organizer.tsx) | Static registrations/checklist; referee assignment is local state | PARTIAL | NOT IMPLEMENTED |
+| `/organizer/draw` | [organizer_.draw.tsx](../../src/routes/organizer_.draw.tsx) | Static groups and venue allocation | PARTIAL | NOT IMPLEMENTED |
+| `/organizer/results` | [organizer_.results.tsx](../../src/routes/organizer_.results.tsx) | Static results and certificate summaries | PARTIAL | NOT IMPLEMENTED |
+| `/parent` | [parent.tsx](../../src/routes/parent.tsx) | Static child dashboard; pay and consent controls update local React state | PARTIAL | NOT IMPLEMENTED |
+| `/parent/consent` | [parent_.consent.tsx](../../src/routes/parent_.consent.tsx) | Local purpose toggles/revocation and in-memory activity list | PARTIAL | NOT IMPLEMENTED |
+| `/payments` | [payments.tsx](../../src/routes/payments.tsx) | Select method and mark a mock invoice paid locally | PARTIAL | NOT IMPLEMENTED; no payment provider |
+| `/player` | [player.tsx](../../src/routes/player.tsx) | Static passport, journey, ratings, match history; share/QR are toast/faux UI | PARTIAL | NOT IMPLEMENTED |
+| `/referee` | [referee.tsx](../../src/routes/referee.tsx) | Assignment responses update local state | PARTIAL | NOT IMPLEMENTED |
+| `/referee/profile` | [referee_.profile.tsx](../../src/routes/referee_.profile.tsx) | Static license and assignment history | PARTIAL | NOT IMPLEMENTED |
+| `/referee/report` | [referee_.report.tsx](../../src/routes/referee_.report.tsx) | Local match events/score; submit only toasts | PARTIAL | NOT IMPLEMENTED |
+| `/schedule` | [schedule.tsx](../../src/routes/schedule.tsx) | Static week agenda with client role/day filters | PARTIAL | NOT IMPLEMENTED |
+| `/scout` | [scout.tsx](../../src/routes/scout.tsx) | Client-side filters, consent filter, shortlist and contact toast | PARTIAL | NOT IMPLEMENTED; no server filtering |
+| `/scout/watchlist` | [scout_.watchlist.tsx](../../src/routes/scout_.watchlist.tsx) | Static watchlist/invitation summaries | PARTIAL | NOT IMPLEMENTED |
+| `/ssb` | [ssb.tsx](../../src/routes/ssb.tsx) | Static roster; ID lookup returns a hard-coded person; attendance toggles locally | PARTIAL | NOT IMPLEMENTED |
+| `/ssb/finance` | [ssb_.finance.tsx](../../src/routes/ssb_.finance.tsx) | Static totals; reminder controls update local state and toast | PARTIAL | NOT IMPLEMENTED |
+| `/ssb/roster` | [ssb_.roster.tsx](../../src/routes/ssb_.roster.tsx) | Static roster/team and document summaries | PARTIAL | NOT IMPLEMENTED |
+| `/ssb/training` | [ssb_.training.tsx](../../src/routes/ssb_.training.tsx) | Local attendance selection/save feedback; non-U10 groups reuse U10 sample roster | PARTIAL | NOT IMPLEMENTED |
+| `/tournament` | [tournament.tsx](../../src/routes/tournament.tsx) | Static fixtures/standings; category selection does not select category-specific data | PARTIAL | NOT IMPLEMENTED |
+
+The generated route tree is [src/routeTree.gen.ts](../../src/routeTree.gen.ts). It contains 29 public routes. Route UI is present across the product surfaces; no route in this table proves a server-backed business transaction.
+
+### Cross-route implementation layers
+
+| Layer | Status | Evidence / result |
+| --- | --- | --- |
+| Route rendering and local interactions | PARTIAL | 29 route definitions; local state, filters and toasts are visible in source. |
+| Mock data | VERIFIED | [mock-data.ts](../../src/lib/mock-data.ts) labels its contents as demo data not persisted; role-specific notifications are also static. |
+| Persistent database operations | NOT IMPLEMENTED | No schema, DB client, or data-access function was found in source. External service configuration is UNKNOWN. |
+| Server-side business logic/API | NOT IMPLEMENTED | No `createServerFn`, API route, route loader, or business server function was found; `src/server.ts` is an SSR wrapper. |
+| Authentication / session protection | NOT IMPLEMENTED in checked-in app code | Account and role screens are demo UX. External auth configuration is UNKNOWN. |
+| Authorization / tenant scope | NOT IMPLEMENTED in checked-in app code | Route ownership and role switching are client navigation only. |
+| Input validation | PARTIAL | Some client-side input checks exist; no server schemas or business validation boundary was found. Zod/RHF dependencies alone are not implementation evidence. |
+| Testing | PARTIAL | `app-routing.test.tsx` checks `/`; `roles.test.ts` checks two client role-resolution cases. No domain/persistence/security tests. |
+
+### Blueprint traceability
+
+All BR-01 through BR-12 appear in the baseline and have screen/sample-data representations, but none has a complete production workflow evidenced. BR-01/02/03: player journey and static Football ID; BR-04: role selector; BR-05/09: SSB/org screens; BR-06/07: parent/consent/scout screens; BR-08: competition/organizer/referee screens; BR-10: assessment UI; BR-11: no API contract; BR-12: screens cover the stated focus, not operational completion. Overall implementation status for each theme: `PARTIAL`; API-first technical implementation: `NOT IMPLEMENTED`. Missing workflow acceptance criteria remain `UNDEFINED` per BRB-001.
+
+### Findings
+
+| ID | Description and evidence | Severity | Impact | Recommended action | Dependencies / blockers |
+| --- | --- | --- | --- | --- | --- |
+| RF-01 | Labels such as pay, submit, save, assign, approve, notify, and revoke can produce local state/toast only; e.g. [payments.tsx](../../src/routes/payments.tsx#L34-L35), [payments.tsx](../../src/routes/payments.tsx#L122-L125), [parent_.consent.tsx](../../src/routes/parent_.consent.tsx#L119-L134). | HIGH | Users may interpret a prototype acknowledgement as an authoritative business outcome. | Keep these paths clearly prototype-only until server outcomes and failure states exist; do not connect real records to the current handlers. | Approved server boundary and use cases; product acceptance criteria. |
+| RF-02 | Scout data is imported to the browser and filtered by a local consent Boolean at [scout.tsx](../../src/routes/scout.tsx#L59-L70). | HIGH | UI filtering does not prevent access to records delivered to the client. | Implement purpose/consent filtering before response creation on an authenticated server boundary and test direct requests/revocation. | Auth, policy, data model, consent semantics. |
+| RF-03 | New route screens include additional static and local-only flows; notifications are in-memory and route-specific reports/rosters/draws are static. | MEDIUM | A screen count can overstate workflow coverage. | Track UI, local state, persistence, server rules, and authorization separately in future acceptance evidence. | Product-owner acceptance criteria. |
+| RF-04 | Public tournament category labels change while fixture and standings arrays remain shared; schedule dates are hard-coded. | MEDIUM | Screens can show inconsistent or misleading competition/calendar state. | Define authoritative competition/date/time behavior and test it before live data. | Product decisions remain `UNDEFINED` where not in BRB-001. |
+| RF-05 | Existing tests cover one route match and two role-resolution cases only. | MEDIUM | Security and business regressions would be untested. | Add focused workflow and negative authorization tests when server operations exist. | Backend and approved policies. |
+
+## Historical Snapshot — 2026-11-11 (superseded for current checkout)
+
 **Assessment basis:** static source inspection against BRB-001. Interactions marked as local are browser/component state or feedback only; they are not evidence of persistence or a production workflow. Detailed workflow acceptance criteria are `UNDEFINED`; no separate PRD is assumed.
 
 | Route               | Intended purpose                                                           | Available interactions                                                            | Mock dependency / observed state                                                                                                      | Missing business logic and incomplete workflow                                                                                                                                               | Status      |

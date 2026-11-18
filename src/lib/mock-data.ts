@@ -322,7 +322,7 @@ export const fixtures = [
 ];
 
 // ── Jadwal (shared agenda) ───────────────────────────────────────────
-import type { RoleId } from "@/lib/roles";
+import type { RoleId } from "@/lib/roles-data";
 
 export const week = [
   { d: 9, day: "Sen" },

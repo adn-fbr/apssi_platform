@@ -3,7 +3,10 @@ import { Bell, Check, ChevronDown, UserCircle } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Drawer } from "vaul";
 import { cn } from "@/lib/utils";
-import { activeTab, RoleProvider, roles, useRole, type RoleId } from "@/lib/roles";
+import { RoleProvider } from "@/lib/roles";
+import { activeTab } from "@/lib/role-navigation";
+import { roles, type RoleId } from "@/lib/roles-data";
+import { useRole } from "@/lib/roles-context";
 import { unreadCount, useNotifications } from "@/lib/notifications";
 
 export function Logo({ className, onDark }: { className?: string; onDark?: boolean }) {
@@ -96,7 +99,7 @@ function MobileRoleSwitcher() {
       <Drawer.Trigger asChild>
         <button
           className="flex h-9 items-center gap-1.5 rounded-full border bg-card py-1 pl-1 pr-2.5 text-sm font-bold"
-          aria-label={`Peran aktif: ${role.label}. Ganti peran`}
+          aria-label={`Peran demo aktif: ${role.label}. Ganti tampilan`}
         >
           <span className="flex h-7 w-7 items-center justify-center rounded-full bg-signal text-signal-foreground">
             <Icon className="h-3.5 w-3.5" />
@@ -109,9 +112,9 @@ function MobileRoleSwitcher() {
         <Drawer.Overlay className="fixed inset-0 z-50 bg-pitch-deep/50" />
         <Drawer.Content className="safe-bottom fixed inset-x-0 bottom-0 z-50 flex max-h-[85vh] flex-col rounded-t-3xl bg-card px-4 pt-3 outline-none">
           <Drawer.Handle className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-border" />
-          <Drawer.Title className="font-display text-lg font-bold">Masuk sebagai</Drawer.Title>
+          <Drawer.Title className="font-display text-lg font-bold">Peran demo</Drawer.Title>
           <Drawer.Description className="mb-3 text-xs text-muted-foreground">
-            Satu akun, banyak peran. Menu bawah menyesuaikan peran Anda.
+            Pilihan ini hanya mengubah tampilan prototipe, bukan akses atau izin akun.
           </Drawer.Description>
           <div className="overflow-y-auto pb-4">
             <RoleList
@@ -203,7 +206,7 @@ function ShellInner({ children }: { children: ReactNode }) {
         </nav>
 
         <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.18em] text-sidebar-foreground/50">
-          Ganti peran
+          Peran demo
         </p>
         <div className="mt-2">
           <RoleList dark onPick={switchRole} />

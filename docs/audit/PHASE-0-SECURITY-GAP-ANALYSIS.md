@@ -1,5 +1,42 @@
 # Phase 0 Security Gap Analysis
 
+## Current Security Re-audit — 2026-11-15
+
+**Scope:** static review of current source/config and non-sensitive local checks. No live endpoint, Supabase/Lovable dashboard, production configuration, or real child data was used. No exploit or penetration test was run. `UNKNOWN` means repository evidence cannot establish external state; `BLOCKED` means the control cannot be meaningfully tested without a server/data boundary and authorized environment.
+
+### Ranked findings
+
+| ID | Description and evidence | Status | Severity | Impact | Recommended action | Dependencies / blockers |
+| --- | --- | --- | --- | --- | --- | --- |
+| SG-01 | No authentication/session guard or server-side authorization path is present. Role selection is a hard-coded browser persona persisted in localStorage ([roles.tsx](../../src/lib/roles.tsx#L252-L263)); Start has error/CSRF middleware but no auth middleware ([start.ts](../../src/start.ts#L17-L35)). | NOT IMPLEMENTED in repo; external auth UNKNOWN | CRITICAL | If real data were connected to current UI paths, client role state would not authenticate or authorize access. | Keep real data disconnected until authenticated server operations enforce default-deny policy from trusted identity and grants. | Supabase Auth is approved in OD-05; project/session config and operation policy remain unverified/undefined. |
+| SG-02 | Player fixtures include a child's name, birth year, location, guardian display name, stable-looking Football ID and performance data; scout fixture includes age, region, performance and a consent Boolean ([mock-data.ts](../../src/lib/mock-data.ts#L1-L24), [mock-data.ts](../../src/lib/mock-data.ts#L664-L774)). These values are bundled into UI imports. Provenance is not established by the repository. | PARTIAL; synthetic provenance UNKNOWN | HIGH | If any values derive from real children, they are exposed in source/client assets without access controls. | Confirm provenance with data owner; keep fixtures synthetic and never bundle real child records. Do not treat initials or masked ID fragments as anonymization. | Data-owner confirmation; no real data used in this audit. |
+| SG-03 | Scout filtering is performed in the browser (`matched.filter(p => p.consent)`) after `scoutPool` is imported ([scout.tsx](../../src/routes/scout.tsx#L59-L70)); shortlist/contact actions are local/toast-only. | VERIFIED client filter; server enforcement NOT IMPLEMENTED | HIGH | Presentation filtering cannot stop a client from inspecting already-delivered data and does not enforce consent purpose or revocation. | Enforce eligibility and purpose-specific active consent before server response and on detail/contact paths; test direct access and revocation. | Authenticated API, consent policy and data model. |
+| SG-04 | Parent/guardian identity and child links are fixture values; consent toggles/revocation alter component state and a displayed local list ([parent.tsx](../../src/routes/parent.tsx#L69-L70), [parent.tsx](../../src/routes/parent.tsx#L260-L261), [parent_.consent.tsx](../../src/routes/parent_.consent.tsx#L106-L134)). | PARTIAL UI; trusted relationship NOT IMPLEMENTED | HIGH | A display name, child ID, or local switch cannot prove guardian authority or persist/revoke access. | Implement verified relationship authorization and auditable, purpose-scoped consent on the server after owner-approved policies. | OD-06/07 approve direction; proof, scope, age transition, disputes and withdrawal effects remain undefined. |
+| SG-05 | Organization, coach, scout, referee and association scope is represented by demo role/person labels and static fixtures; no tenant/policy checks exist. | NOT IMPLEMENTED in repo; external RLS UNKNOWN | HIGH | Cross-organization and cross-guardian access cannot be assessed or denied by this client-only prototype. | Implement and test server/data-layer default-deny scope; include negative tests for manipulated resource/organization IDs. | OD-08/09 approved direction; actual project/schema/policies absent; ownership conflict resolved by OD-11. |
+| SG-06 | The consent view renders seeded “audit” rows; no server audit write is present ([parent_.consent.tsx](../../src/routes/parent_.consent.tsx#L55-L79), [parent_.consent.tsx](../../src/routes/parent_.consent.tsx#L106-L134)). | PARTIAL UI; audit capability NOT IMPLEMENTED | HIGH | Access, consent changes, and denials would not be attributable from this code. | Add restricted append-oriented server audit events for defined sensitive actions, with approved retention and minimized fields. | OD-10 direction approved; event coverage/retention and actual service are unverified. |
+| SG-07 | `src/start.ts` configures TanStack CSRF middleware for server functions, but no business server function exists. | PARTIAL | MEDIUM | CSRF is useful request protection, not authentication, authorization, input validation, or tenant isolation. | Retain and test CSRF behavior when mutations are introduced; add separate auth/policy validation. | Server mutation design; no endpoint available for tests. |
+| SG-08 | Zod and React Hook Form are dependencies, but no business schemas/server validation were found. Some input checks are client-only. | PARTIAL | MEDIUM | Client checks are bypassable; malformed/unauthorized writes cannot be evaluated because no business API exists. | Define server-authoritative validation for approved operations and negative tests; do not infer safety from package presence. | Use-case contracts and acceptance criteria. |
+| SG-09 | No `.env*`/`.dev.vars`, Supabase SDK, DB schema, payment/storage integration, or secret value was found in the checkout. Dashboard configuration and deployment bindings are unavailable; error telemetry is optional Lovable runtime integration ([lovable-error-reporting.ts](../../src/lib/lovable-error-reporting.ts#L25-L48)). | Repository search VERIFIED; external state UNKNOWN | MEDIUM | Repository absence cannot prove external secret hygiene, environment separation, logging redaction, or deployment headers. | Verify service configuration, secret handling/rotation, logging access/redaction, backups, and security headers through authorized platform review. | Platform/dashboard access and operations owner. |
+
+### Required control verification status
+
+| Control | Status | Evidence / limitation |
+| --- | --- | --- |
+| Authentication | NOT IMPLEMENTED in checked-in app; external state UNKNOWN | No provider/client/session guard. OD-05 approves Supabase Auth direction only. |
+| Server-side authorization / RBAC / tenant isolation | NOT IMPLEMENTED in checked-in app; external RLS UNKNOWN | No business endpoint, policy, or schema to test. |
+| Guardian relationship | PARTIAL UI | OD-06 direction is many-to-many; no verification or access enforcement. |
+| Consent creation/revocation | PARTIAL UI | Local state only; no purpose-versioned server record or revocation propagation. |
+| Scout server filtering | NOT IMPLEMENTED | Client filter only; no endpoint available for server-side consent tests. |
+| Cross-user/cross-organization access | BLOCKED | No server/data endpoint and no approved environment credentials. |
+| Input/API security | PARTIAL / NOT IMPLEMENTED | No business API; client validation only. |
+| CSRF | PARTIAL | Framework middleware configured for server functions; no server mutation to test. |
+| Audit logging | PARTIAL UI / NOT IMPLEMENTED capability | Seeded display only. |
+| Secrets/environment | UNKNOWN outside repository | No secret was inspected or reproduced. |
+
+Legal, consent, retention, age and guardian policies remain owner/legal decisions. No legal requirement is inferred here. Do not connect real youth records before the controls above are implemented and independently verified.
+
+## Historical Snapshot — 2026-11-11 (superseded for current checkout)
+
 **Scope note:** source-only review; no live deployment, cloud dashboard, provider configuration, penetration test, or external infrastructure was available. No vulnerability exploit test was performed.
 
 Status terms: **VERIFIED** means directly evidenced; **PARTIAL** means only a UI/sample implementation exists; **NOT VERIFIED** means the required control could not be established from available evidence; **BLOCKED** means verification needs an unavailable endpoint, environment, or owner decision; **NOT APPLICABLE** means outside the defined scope. Do not interpret `NOT VERIFIED` as proof that no external service exists.

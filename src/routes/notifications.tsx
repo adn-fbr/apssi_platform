@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { Btn, PageHeader, Panel, Segmented } from "@/components/kit";
 import { markRead, unreadCount, useNotifications, type NoticeKind } from "@/lib/notifications";
-import { useRole } from "@/lib/roles";
+import { useRole } from "@/lib/roles-context";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/notifications")({

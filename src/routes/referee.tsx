@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { BadgeCheck, CalendarDays, MapPin, Users, FileText } from "lucide-react";
 import { toast } from "sonner";
-import { Btn, PageHeader, Panel, Pill, SectionTitle, Stat, buttonVariants } from "@/components/kit";
+import { Btn, PageHeader, Panel, Pill, SectionTitle, Stat } from "@/components/kit";
+import { buttonVariants } from "@/components/kit-variants";
 import { assignments, referee } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 

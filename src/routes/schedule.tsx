@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CalendarX2, Dumbbell, Flag, MapPin, Trophy, Wallet, ClipboardList } from "lucide-react";
 import { PageHeader, Panel, Pill } from "@/components/kit";
 import { agenda, TODAY, week, type AgendaKind } from "@/lib/mock-data";
-import { useRole } from "@/lib/roles";
+import { useRole } from "@/lib/roles-context";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/schedule")({

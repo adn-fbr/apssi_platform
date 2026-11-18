@@ -6,6 +6,8 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  redirect,
+  useRouterState,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
@@ -14,6 +16,8 @@ import { AppShell } from "@/components/app-shell";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { getAuthenticationStateFn } from "../lib/authentication.functions";
+import { requiresAuthenticatedUser } from "../lib/authentication-routes";
 
 function NotFoundComponent() {
   return (
@@ -76,6 +80,14 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  beforeLoad: async ({ location }) => {
+    if (!requiresAuthenticatedUser(location.pathname)) return;
+
+    const authenticationState = await getAuthenticationStateFn();
+    if (authenticationState !== "authenticated") {
+      throw redirect({ to: "/login" });
+    }
+  },
   head: () => ({
     // Replace these placeholders with the app's name and description when first building the app.
     // Each content route, / included, must still set its own head(). Never add og:image or
@@ -135,13 +147,18 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell>
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+      {pathname === "/login" ? (
         <Outlet />
-      </AppShell>
+      ) : (
+        <AppShell>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </AppShell>
+      )}
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );

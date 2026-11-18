@@ -4,7 +4,7 @@ import { Lock, CalendarClock, Users, Star, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { Btn, Meter, PageHeader, Panel, Pill } from "@/components/kit";
 import { opportunities } from "@/lib/mock-data";
-import { useRole } from "@/lib/roles";
+import { useRole } from "@/lib/roles-context";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/opportunities")({
